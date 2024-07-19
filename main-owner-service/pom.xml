@@ -92,7 +92,7 @@ limitations under the License.
         <version>3.4.0</version>
         <configuration>
           <to>
-            <image>gcr.io/local-axle-425708-t0/main-owner-service</image>
+            <image>gcr.io/PROJECT_ID/main-owner-service</image>
           </to>
         </configuration>
       </plugin>

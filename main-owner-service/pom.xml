@@ -16,7 +16,7 @@ limitations under the License.
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.example.run</groupId>
-  <artifactId>pubsub</artifactId>
+  <artifactId>main-owner-service</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <!--  The parent pom defines common style checks and testing strategies for our samples.
 	Removing or replacing it should not affect the execution of the samples in anyway.  -->
@@ -92,7 +92,7 @@ limitations under the License.
         <version>3.4.0</version>
         <configuration>
           <to>
-            <image>gcr.io/PROJECT_ID/pubsub</image>
+            <image>gcr.io/local-axle-425708-t0/main-owner-service</image>
           </to>
         </configuration>
       </plugin>

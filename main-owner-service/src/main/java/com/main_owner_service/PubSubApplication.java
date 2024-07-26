@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.cloudrun;
+package com.main_owner_service;
 
 // [START cloudrun_pubsub_server]
 import org.springframework.boot.SpringApplication;

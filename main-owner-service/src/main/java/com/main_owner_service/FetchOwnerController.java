@@ -14,24 +14,23 @@
  * limitations under the License.
  */
 
-package com.example.cloudrun;
+package com.main_owner_service;
 
 // [START cloudrun_pubsub_handler]
-import com.example.cloudrun.Body;
-import java.util.Base64;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Base64;
 
 // PubsubController consumes a Pub/Sub message.
 @RestController
-public class PubSubController {
-  @RequestMapping(value = "/save-labeled-owner", method = RequestMethod.POST)
-  public ResponseEntity<String> receiveMessage(@RequestBody Body body) {
+public class FetchOwnerController {
+
+  @GetMapping(value = "/fetch-owner")
+  public ResponseEntity<String> fetchOwner(@RequestBody Body body) {
     // Get PubSub message from request body.
     Body.Message message = body.getMessage();
     if (message == null) {

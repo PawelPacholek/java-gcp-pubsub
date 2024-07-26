@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.cloudrun;
+package com.main_owner_service;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;

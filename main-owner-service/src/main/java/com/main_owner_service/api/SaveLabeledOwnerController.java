@@ -14,25 +14,24 @@
  * limitations under the License.
  */
 
-package com.main_owner_service;
+package com.main_owner_service.api;
 
-// [START cloudrun_pubsub_handler]
+import java.util.Base64;
 
+import com.main_owner_service.api.models.PubsubBody;
+import com.main_owner_service.domain.SaveLabeledOwnerUseCase;
+import com.main_owner_service.domain.models.LabeledOwner;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Base64;
-
-// PubsubController consumes a Pub/Sub message.
 @RestController
-public class FetchOwnerController {
+public class SaveLabeledOwnerController {
 
-  @GetMapping(value = "/fetch-owner")
-  public ResponseEntity<String> fetchOwner(@RequestBody Body body) {
-    // Get PubSub message from request body.
-    Body.Message message = body.getMessage();
+  @PostMapping(value = "/save-labeled-owner")
+  public ResponseEntity<String> saveLabeledOwner(@RequestBody PubsubBody body) {
+    PubsubBody.Message message = body.getMessage();
     if (message == null) {
       String msg = "Bad Request: invalid Pub/Sub message format";
       System.out.println(msg);
@@ -44,8 +43,11 @@ public class FetchOwnerController {
         !StringUtils.isEmpty(data) ? new String(Base64.getDecoder().decode(data)) : "World";
     String msg = "Hello " + target + "!";
 
+    //TODO Deserialize target
+    LabeledOwner labeledOwner = new LabeledOwner(null, target, null, null, null, null);
+    new SaveLabeledOwnerUseCase().saveLabeledOwner(labeledOwner);
+
     System.out.println(msg);
     return new ResponseEntity<>(msg, HttpStatus.OK);
   }
 }
-// [END cloudrun_pubsub_handler]

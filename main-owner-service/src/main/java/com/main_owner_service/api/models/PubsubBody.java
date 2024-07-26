@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package com.main_owner_service;
+package com.main_owner_service.api.models;
 
-// Body.Message is the payload of a Pub/Sub event. Please refer to the docs for
+// PubsubBody.Message is the payload of a Pub/Sub event. Please refer to the docs for
 // additional information regarding Pub/Sub events.
-public class Body {
+public class PubsubBody {
 
   private Message message;
 
-  public Body() {}
+  public PubsubBody() {}
 
   public Message getMessage() {
     return message;

@@ -5,8 +5,13 @@ import com.main_owner_service.domain.models.LabeledOwner;
 
 public class FetchOwnerUseCase {
 
+    private final OwnerGateway ownerGateway;
+
+    public FetchOwnerUseCase(OwnerGateway ownerGateway) {
+        this.ownerGateway = ownerGateway;
+    }
+
     public LabeledOwner fetchLabeledOwner(Long id) {
-        OwnerGateway ownerGateway = null;
         return ownerGateway.fetch(id);
     }
 

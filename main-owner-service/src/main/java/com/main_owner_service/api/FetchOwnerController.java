@@ -11,9 +11,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class FetchOwnerController {
 
+  private final FetchOwnerUseCase fetchOwnerUseCase;
+
+  FetchOwnerController(FetchOwnerUseCase fetchOwnerUseCase) {
+    this.fetchOwnerUseCase = fetchOwnerUseCase;
+  }
+
   @GetMapping(value = "/fetch-owner")
   public ResponseEntity<String> fetchOwner(@RequestBody Long ownerId) {
-    LabeledOwner labeledOwner = new FetchOwnerUseCase().fetchLabeledOwner(ownerId);
+    LabeledOwner labeledOwner = fetchOwnerUseCase.fetchLabeledOwner(ownerId);
     return new ResponseEntity<>(labeledOwner.toString(), HttpStatus.OK);
   }
 }

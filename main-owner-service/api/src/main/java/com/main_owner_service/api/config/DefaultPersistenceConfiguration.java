@@ -12,7 +12,7 @@ public class DefaultPersistenceConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public OwnerGateway testOwnerGateway() {
+    public OwnerGateway defaultOwnerGateway() {
         return new OwnerGateway() {
             @Override
             public void save(LabeledOwner labeledOwner) {
@@ -28,7 +28,7 @@ public class DefaultPersistenceConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public InitialOwnerSender testInitialOwnerSender() {
+    public InitialOwnerSender defaultInitialOwnerSender() {
         return initialOwner -> {
         };
     }

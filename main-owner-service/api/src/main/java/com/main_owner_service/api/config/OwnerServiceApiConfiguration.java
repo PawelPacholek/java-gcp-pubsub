@@ -1,8 +1,8 @@
 package com.main_owner_service.api.config;
 
-import com.main_owner_service.domain.FetchOwnerUseCase;
-import com.main_owner_service.domain.SaveLabeledOwnerUseCase;
-import com.main_owner_service.domain.UploadOwnerUseCase;
+import com.main_owner_service.domain.usecases.FetchOwnerUseCase;
+import com.main_owner_service.domain.usecases.SaveLabeledOwnerUseCase;
+import com.main_owner_service.domain.usecases.UploadOwnerUseCase;
 import com.main_owner_service.domain.helpers.InitialOwnerSender;
 import com.main_owner_service.domain.helpers.OwnerGateway;
 import org.springframework.context.annotation.Bean;

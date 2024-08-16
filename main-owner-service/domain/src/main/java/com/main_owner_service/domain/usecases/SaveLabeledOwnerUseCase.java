@@ -1,4 +1,4 @@
-package com.main_owner_service.domain;
+package com.main_owner_service.domain.usecases;
 
 import com.main_owner_service.domain.helpers.OwnerGateway;
 import com.main_owner_service.domain.models.LabeledOwner;

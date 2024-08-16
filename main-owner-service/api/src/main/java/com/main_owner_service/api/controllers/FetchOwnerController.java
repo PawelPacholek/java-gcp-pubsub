@@ -1,6 +1,6 @@
 package com.main_owner_service.api.controllers;
 
-import com.main_owner_service.domain.FetchOwnerUseCase;
+import com.main_owner_service.domain.usecases.FetchOwnerUseCase;
 import com.main_owner_service.domain.models.LabeledOwner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

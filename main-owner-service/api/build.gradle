@@ -25,7 +25,7 @@ repositories {
 }
 
 bootRun {
-    mainClassName = 'com.example.cloudrun.PubSubApplication'
+    mainClassName = 'com.main_owner_service.api.MainOwnerServiceApplication'
 }
 
 group = 'demo'

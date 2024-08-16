@@ -19,7 +19,7 @@ package com.main_owner_service.api.controllers;
 import java.util.Base64;
 
 import com.main_owner_service.api.models.PubsubBody;
-import com.main_owner_service.domain.SaveLabeledOwnerUseCase;
+import com.main_owner_service.domain.usecases.SaveLabeledOwnerUseCase;
 import com.main_owner_service.domain.models.LabeledOwner;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;

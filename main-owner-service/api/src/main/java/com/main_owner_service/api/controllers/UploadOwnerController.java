@@ -1,7 +1,7 @@
 package com.main_owner_service.api.controllers;
 
 import com.main_owner_service.api.models.UploadedOwner;
-import com.main_owner_service.domain.UploadOwnerUseCase;
+import com.main_owner_service.domain.usecases.UploadOwnerUseCase;
 import com.main_owner_service.domain.models.InitialOwner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

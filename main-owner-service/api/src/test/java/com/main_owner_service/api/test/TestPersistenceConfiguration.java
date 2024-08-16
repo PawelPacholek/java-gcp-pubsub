@@ -1,4 +1,4 @@
-package com.main_owner_service.api;
+package com.main_owner_service.api.test;
 
 import com.main_owner_service.domain.helpers.InitialOwnerSender;
 import com.main_owner_service.domain.helpers.OwnerGateway;

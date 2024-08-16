@@ -1,4 +1,4 @@
-module java.gcp.pubsub.main.owner.service.api.main {
+open module java.gcp.pubsub.main.owner.service.api.main {
     requires com.fasterxml.jackson.annotation;
     requires java.gcp.pubsub.main.owner.service.domain.main;
     requires org.apache.commons.lang3;

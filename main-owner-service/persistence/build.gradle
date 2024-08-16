@@ -24,10 +24,6 @@ repositories {
     mavenCentral()
 }
 
-bootRun {
-    mainClassName = 'com.example.cloudrun.PubSubApplication'
-}
-
 group = 'demo'
 version = '1.0.0-SNAPSHOT'
 description = 'Spring Cloud GCP Pub/Sub Code Sample'
@@ -42,9 +38,4 @@ dependencies {
     implementation 'com.google.cloud:spring-cloud-gcp-starter-pubsub'
     implementation 'org.springframework.boot:spring-boot-starter-web:'
     implementation 'org.springframework.integration:spring-integration-core'
-    testImplementation 'com.google.truth:truth:1.4.0'
-    testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.springframework.boot:spring-boot-test'
-    testImplementation 'org.springframework.boot:spring-boot-test-autoconfigure'
-    testImplementation 'org.springframework:spring-test'
 }

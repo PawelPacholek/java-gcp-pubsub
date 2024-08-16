@@ -6,4 +6,5 @@ open module java.gcp.pubsub.main.owner.service.api.main {
     requires spring.boot.autoconfigure;
     requires spring.context;
     requires spring.web;
+    requires jdk.unsupported;
 }

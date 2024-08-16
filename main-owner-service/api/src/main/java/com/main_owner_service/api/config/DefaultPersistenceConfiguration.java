@@ -1,17 +1,17 @@
-package com.main_owner_service.api.test;
+package com.main_owner_service.api.config;
 
 import com.main_owner_service.domain.helpers.InitialOwnerSender;
 import com.main_owner_service.domain.helpers.OwnerGateway;
 import com.main_owner_service.domain.models.LabeledOwner;
-import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Configuration;
 
-@TestConfiguration
-public class TestPersistenceConfiguration {
+@Configuration
+public class DefaultPersistenceConfiguration {
 
     @Bean
-    @Primary
+    @ConditionalOnMissingBean
     public OwnerGateway testOwnerGateway() {
         return new OwnerGateway() {
             @Override
@@ -27,7 +27,7 @@ public class TestPersistenceConfiguration {
     }
 
     @Bean
-    @Primary
+    @ConditionalOnMissingBean
     public InitialOwnerSender testInitialOwnerSender() {
         return initialOwner -> {
         };

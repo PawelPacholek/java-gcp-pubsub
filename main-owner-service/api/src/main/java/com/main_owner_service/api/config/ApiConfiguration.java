@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class OwnerServiceApiConfiguration {
+public class ApiConfiguration {
 
   @Bean
   public FetchOwnerUseCase fetchOwnerUseCase(OwnerGateway ownerGateway) {

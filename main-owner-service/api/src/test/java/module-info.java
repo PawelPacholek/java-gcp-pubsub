@@ -8,4 +8,5 @@ open module java.gcp.pubsub.main.owner.service.api.test {
     requires spring.context;
     requires spring.test;
     requires spring.web;
+    requires spring.boot.autoconfigure;
 }

@@ -1,4 +1,4 @@
-package com.main_owner_service.api;
+package com.main_owner_service.api.controllers;
 
 import com.main_owner_service.domain.FetchOwnerUseCase;
 import com.main_owner_service.domain.models.LabeledOwner;

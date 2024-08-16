@@ -1,4 +1,4 @@
-package com.main_owner_service.api;
+package com.main_owner_service.api.controllers;
 
 import com.main_owner_service.api.models.UploadedOwner;
 import com.main_owner_service.domain.UploadOwnerUseCase;
@@ -14,10 +14,16 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 public class UploadOwnerController {
 
-  @PostMapping(value = "/upload-owner", consumes = APPLICATION_JSON_VALUE)
+  private final UploadOwnerUseCase uploadOwnerUseCase;
+
+    public UploadOwnerController(UploadOwnerUseCase uploadOwnerUseCase) {
+        this.uploadOwnerUseCase = uploadOwnerUseCase;
+    }
+
+    @PostMapping(value = "/upload-owner", consumes = APPLICATION_JSON_VALUE)
   public ResponseEntity<String> uploadOwner(@RequestBody UploadedOwner owner) {
     InitialOwner initialOwner = owner.toDomain();
-    new UploadOwnerUseCase().uploadInitialOwner(initialOwner);
+    uploadOwnerUseCase.uploadInitialOwner(initialOwner);
     return new ResponseEntity<>("", HttpStatus.OK);
   }
 }

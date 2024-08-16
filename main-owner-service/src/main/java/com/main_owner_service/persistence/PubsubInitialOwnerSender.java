@@ -9,13 +9,13 @@ import com.google.common.util.concurrent.MoreExecutors;
 import com.google.protobuf.ByteString;
 import com.google.pubsub.v1.PubsubMessage;
 import com.google.pubsub.v1.TopicName;
-import com.main_owner_service.domain.helpers.PubsubSender;
+import com.main_owner_service.domain.helpers.InitialOwnerSender;
 import com.main_owner_service.domain.models.InitialOwner;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-public class PubsubSenderImp implements PubsubSender {
+public class PubsubInitialOwnerSender implements InitialOwnerSender {
 
     private static final String PROJECT_ID = "local-axle-425708-t0";
     private static final String TOPIC_ID = "initialOwner";

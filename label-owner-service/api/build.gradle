@@ -25,7 +25,7 @@ repositories {
 }
 
 bootRun {
-    mainClassName = 'com.main_owner_service.api.MainOwnerServiceApplication'
+    mainClassName = 'com.label_owner_service.api.LabelOwnerServiceApplication'
 }
 
 group = 'demo'

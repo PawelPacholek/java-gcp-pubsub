@@ -16,12 +16,14 @@
 
 package com.label_owner_service.api.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.label_owner_service.api.models.PubsubBody;
 import com.label_owner_service.domain.models.InitialOwner;
 import com.label_owner_service.domain.usecases.LabelOwnerUseCase;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,7 +40,7 @@ public class LabelOwnerController {
     }
 
     @PostMapping(value = "/label-owner")
-    public ResponseEntity<String> saveLabeledOwner(@RequestBody PubsubBody body) {
+    public ResponseEntity<String> saveLabeledOwner(@RequestBody PubsubBody body) throws JsonProcessingException {
         PubsubBody.Message message = body.getMessage();
         if (message == null) {
             String msg = "Bad Request: invalid Pub/Sub message format";
@@ -47,15 +49,21 @@ public class LabelOwnerController {
         }
 
         String data = message.getData();
-        String target =
-                !StringUtils.isEmpty(data) ? new String(Base64.getDecoder().decode(data)) : "World";
-        String msg = "Hello " + target + "!";
+        if (data == null) {
+            String msg = "Bad Request: no data found";
+            System.out.println(msg);
+            return new ResponseEntity<>(msg, HttpStatus.BAD_REQUEST);
+        }
 
-        //TODO Deserialize target
-        InitialOwner initialOwner = new InitialOwner(null, target, null, null, null);
-        labelOwnerUseCase.labelAndSendOwner(initialOwner);
-
-        System.out.println(msg);
-        return new ResponseEntity<>(msg, HttpStatus.OK);
+        String target = new String(Base64.getDecoder().decode(data));
+        InitialOwner labeledOwner = new ObjectMapper().readValue(target, InitialOwner.class);
+        labelOwnerUseCase.labelAndSendOwner(labeledOwner);
+        return new ResponseEntity<>("", HttpStatus.OK);
     }
+
+    @ExceptionHandler({IllegalArgumentException.class, JsonProcessingException.class})
+    public ResponseEntity<String> handleException(Exception exception) {
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
 }

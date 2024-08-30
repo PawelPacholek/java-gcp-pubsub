@@ -26,7 +26,6 @@ public class TestPersistenceConfiguration {
 
     @Bean
     public InitialOwnerSender testInitialOwnerSender() {
-        return initialOwner -> {
-        };
+        return System.out::println;
     }
 }

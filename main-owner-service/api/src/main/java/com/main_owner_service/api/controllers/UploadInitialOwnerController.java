@@ -14,16 +14,16 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 public class UploadInitialOwnerController {
 
-  private final UploadInitialOwnerUseCase uploadOwnerUseCase;
+    private final UploadInitialOwnerUseCase uploadOwnerUseCase;
 
     public UploadInitialOwnerController(UploadInitialOwnerUseCase uploadOwnerUseCase) {
         this.uploadOwnerUseCase = uploadOwnerUseCase;
     }
 
     @PostMapping(value = "/upload-initial-owner", consumes = APPLICATION_JSON_VALUE)
-  public ResponseEntity<String> uploadOwner(@RequestBody UploadedOwner owner) {
-    InitialOwner initialOwner = owner.toDomain();
-    uploadOwnerUseCase.uploadInitialOwner(initialOwner);
-    return new ResponseEntity<>("", HttpStatus.OK);
-  }
+    public ResponseEntity<String> uploadOwner(@RequestBody UploadedOwner owner) {
+        InitialOwner initialOwner = owner.toDomain();
+        uploadOwnerUseCase.uploadInitialOwner(initialOwner);
+        return new ResponseEntity<>("", HttpStatus.OK);
+    }
 }

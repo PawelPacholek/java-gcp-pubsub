@@ -5,6 +5,7 @@ import com.main_owner_service.domain.models.LabeledOwner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,8 +18,8 @@ public class FetchLabeledOwnerController {
     this.fetchOwnerUseCase = fetchOwnerUseCase;
   }
 
-  @GetMapping(value = "/fetch-labeled-owner")
-  public ResponseEntity<String> fetchOwner(@RequestBody Long ownerId) {
+  @GetMapping(value = "/fetch-labeled-owner/{id}")
+  public ResponseEntity<String> fetchOwner(@PathVariable("id") Long ownerId) {
     LabeledOwner labeledOwner = fetchOwnerUseCase.fetchLabeledOwner(ownerId);
     return new ResponseEntity<>(labeledOwner.toString(), HttpStatus.OK);
   }

@@ -1,6 +1,7 @@
 open module java.gcp.pubsub.main.owner.service.api.main {
     requires java.gcp.pubsub.main.owner.service.domain.main;
     requires com.fasterxml.jackson.annotation;
+    requires com.fasterxml.jackson.databind;
     requires org.apache.commons.lang3;
     requires spring.boot;
     requires spring.boot.autoconfigure;

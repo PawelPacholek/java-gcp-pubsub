@@ -17,6 +17,7 @@
 package com.main_owner_service.api.test;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Test;
@@ -36,54 +37,70 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 @ContextConfiguration(classes = TestPersistenceConfiguration.class)
 public class SaveLabeledOwnerControllerTests {
 
-  @Autowired private MockMvc mockMvc;
+    @Autowired
+    private MockMvc mockMvc;
 
-  @Test
-  public void addEmptyBody() throws Exception {
-    mockMvc.perform(saveLabeledOwner()).andExpect(status().isBadRequest());
-  }
+    @Test
+    public void addEmptyBody() throws Exception {
+        mockMvc.perform(saveLabeledOwner()).andExpect(status().isBadRequest());
+    }
 
-  @Test
-  public void addNoMessage() throws Exception {
-    String mockBody = "{}";
+    @Test
+    public void addNoMessage() throws Exception {
+        String mockBody = "{}";
+        mockMvc
+                .perform(saveLabeledOwner().contentType(MediaType.APPLICATION_JSON).content(mockBody))
+                .andExpect(status().isBadRequest());
+    }
 
-    mockMvc
-        .perform(saveLabeledOwner().contentType(MediaType.APPLICATION_JSON).content(mockBody))
-        .andExpect(status().isBadRequest());
-  }
+    @Test
+    public void addInvalidMimetype() throws Exception {
+        String mockBody = "{\"message\":{\"data\":\"dGVzdA==\","
+                + "\"attributes\":{},\"messageId\":\"91010751788941\""
+                + ",\"publishTime\":\"2017-09-25T23:16:42.302Z\"}}";
+        mockMvc
+                .perform(saveLabeledOwner().contentType(MediaType.TEXT_HTML).content(mockBody))
+                .andExpect(status().isUnsupportedMediaType());
+    }
 
-  @Test
-  public void addInvalidMimetype() throws Exception {
-    String mockBody = "{\"message\":{\"data\":\"dGVzdA==\","
-                      + "\"attributes\":{},\"messageId\":\"91010751788941\""
-                      + ",\"publishTime\":\"2017-09-25T23:16:42.302Z\"}}";
+    @Test
+    public void addMinimalBody() throws Exception {
+        String mockBody = "{\"message\":{}}";
+        mockMvc
+                .perform(saveLabeledOwner().contentType(MediaType.APPLICATION_JSON).content(mockBody))
+                .andExpect(status().isBadRequest());
+    }
 
-    mockMvc
-        .perform(saveLabeledOwner().contentType(MediaType.TEXT_HTML).content(mockBody))
-        .andExpect(status().isUnsupportedMediaType());
-  }
+    @Test
+    public void addInvalidData() throws Exception {
+        String mockBody = "{\"message\":{\"data\":\"eyJpZCI6NywibmFtZSI6Im5hb\"}}";
+        mockMvc
+                .perform(saveLabeledOwner().contentType(MediaType.APPLICATION_JSON).content(mockBody))
+                .andExpect(status().isBadRequest());
+    }
 
-  @Test
-  public void addMinimalBody() throws Exception {
-    String mockBody = "{\"message\":{}}";
+    @Test
+    public void addInvalidOwner() throws Exception {
+        String mockBody = "{\"message\":{\"data\":\"eyJpZCI9NywibmFtZSI6Im5hbWUxIiwiYWRkcmVzcyI6ImFkZHJlc3MyIiwicGhvbmUiOiJwaG9uZTMiLCJlbWFpbCI6ImVtYWlsNCIsImxhYmVscyI6W119\"}}";
+        mockMvc
+                .perform(saveLabeledOwner().contentType(MediaType.APPLICATION_JSON).content(mockBody))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("Unexpected character ('=' (code 61)): was expecting a colon to separate field name and value\n" +
+                        " at [Source: (String)\"{\"id\"=7,\"name\":\"name1\",\"address\":\"address2\",\"phone\":\"phone3\",\"email\":\"email4\",\"labels\":[]}\"; line: 1, column: 7]"));
+    }
 
-    mockMvc
-        .perform(saveLabeledOwner().contentType(MediaType.APPLICATION_JSON).content(mockBody))
-        .andExpect(status().isOk());
-  }
+    @Test
+    public void addFullBody() throws Exception {
+        String mockBody = "{\"message\":{\"data\":\"eyJpZCI6NywibmFtZSI6Im5hbWUxIiwiYWRkcmVzcyI6ImFkZHJlc3MyIiwicGhvbmUiOiJwaG9uZTMiLCJlbWFpbCI6ImVtYWlsNCIsImxhYmVscyI6W119\","
+                + "\"attributes\":{},\"messageId\":\"91010751788941\""
+                + ",\"publishTime\":\"2017-09-25T23:16:42.302Z\"}}";
+        mockMvc
+                .perform(saveLabeledOwner().contentType(MediaType.APPLICATION_JSON).content(mockBody))
+                .andExpect(status().isOk());
+    }
 
-  @Test
-  public void addFullBody() throws Exception {
-    String mockBody = "{\"message\":{\"data\":\"dGVzdA==\","
-                      + "\"attributes\":{},\"messageId\":\"91010751788941\""
-                      + ",\"publishTime\":\"2017-09-25T23:16:42.302Z\"}}";
-    mockMvc
-        .perform(saveLabeledOwner().contentType(MediaType.APPLICATION_JSON).content(mockBody))
-        .andExpect(status().isOk());
-  }
-
-  private static MockHttpServletRequestBuilder saveLabeledOwner() {
-    return post("/save-labeled-owner");
-  }
+    private static MockHttpServletRequestBuilder saveLabeledOwner() {
+        return post("/save-labeled-owner");
+    }
 
 }

@@ -1,5 +1,5 @@
-module java.gcp.pubsub.main.owner.service.persistence.main {
-    requires java.gcp.pubsub.main.owner.service.domain.main;
+module java.gcp.pubsub.label.owner.service.persistence.main {
+    requires java.gcp.pubsub.label.owner.service.domain.main;
     requires com.google.api.apicommon;
     requires com.google.common;
     requires gax;

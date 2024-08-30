@@ -16,9 +16,6 @@
 
 package com.main_owner_service.api.test;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,17 +27,21 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = TestPersistenceConfiguration.class)
-public class PubSubControllerTests {
+public class FetchLabeledOwnerControllerTests {
 
   @Autowired private MockMvc mockMvc;
 
   @Test
   public void addEmptyBody() throws Exception {
-    mockMvc.perform(saveLabeledOwner()).andExpect(status().isBadRequest());
+    mockMvc.perform(fetchLabeledOwner()).andExpect(status().isBadRequest());
   }
 
   @Test
@@ -48,7 +49,7 @@ public class PubSubControllerTests {
     String mockBody = "{}";
 
     mockMvc
-        .perform(saveLabeledOwner().contentType(MediaType.APPLICATION_JSON).content(mockBody))
+        .perform(fetchLabeledOwner().contentType(MediaType.APPLICATION_JSON).content(mockBody))
         .andExpect(status().isBadRequest());
   }
 
@@ -59,7 +60,7 @@ public class PubSubControllerTests {
                       + ",\"publishTime\":\"2017-09-25T23:16:42.302Z\"}}";
 
     mockMvc
-        .perform(saveLabeledOwner().contentType(MediaType.TEXT_HTML).content(mockBody))
+        .perform(fetchLabeledOwner().contentType(MediaType.TEXT_HTML).content(mockBody))
         .andExpect(status().isUnsupportedMediaType());
   }
 
@@ -68,7 +69,7 @@ public class PubSubControllerTests {
     String mockBody = "{\"message\":{}}";
 
     mockMvc
-        .perform(saveLabeledOwner().contentType(MediaType.APPLICATION_JSON).content(mockBody))
+        .perform(fetchLabeledOwner().contentType(MediaType.APPLICATION_JSON).content(mockBody))
         .andExpect(status().isOk());
   }
 
@@ -78,12 +79,12 @@ public class PubSubControllerTests {
                       + "\"attributes\":{},\"messageId\":\"91010751788941\""
                       + ",\"publishTime\":\"2017-09-25T23:16:42.302Z\"}}";
     mockMvc
-        .perform(saveLabeledOwner().contentType(MediaType.APPLICATION_JSON).content(mockBody))
+        .perform(fetchLabeledOwner().contentType(MediaType.APPLICATION_JSON).content(mockBody))
         .andExpect(status().isOk());
   }
 
-  private static MockHttpServletRequestBuilder saveLabeledOwner() {
-    return post("/save-labeled-owner");
+  private static MockHttpServletRequestBuilder fetchLabeledOwner() {
+    return get("/fetch-labeled-owner");
   }
 
 }

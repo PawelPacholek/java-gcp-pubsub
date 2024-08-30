@@ -3,11 +3,11 @@ package com.main_owner_service.domain.usecases;
 import com.main_owner_service.domain.helpers.InitialOwnerSender;
 import com.main_owner_service.domain.models.InitialOwner;
 
-public class UploadOwnerUseCase {
+public class UploadInitialOwnerUseCase {
 
     private final InitialOwnerSender initialOwnerSender;
 
-    public UploadOwnerUseCase(InitialOwnerSender initialOwnerSender) {
+    public UploadInitialOwnerUseCase(InitialOwnerSender initialOwnerSender) {
         this.initialOwnerSender = initialOwnerSender;
     }
 

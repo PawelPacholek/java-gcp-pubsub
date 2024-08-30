@@ -14,12 +14,12 @@ public class TestPersistenceConfiguration {
         return new OwnerGateway() {
             @Override
             public void save(LabeledOwner labeledOwner) {
-
+                System.out.println(labeledOwner);
             }
 
             @Override
             public LabeledOwner fetch(Long id) {
-                return null;
+                return new LabeledOwner(id, null, null, null, null, null);
             }
         };
     }

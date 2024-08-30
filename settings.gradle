@@ -3,4 +3,7 @@ rootProject.name = 'java-gcp-pubsub'
 include 'main-owner-service:api'
 include 'main-owner-service:domain'
 include 'main-owner-service:persistence'
-include 'label-owner-service'
+include 'label-owner-service:api'
+include 'label-owner-service:domain'
+include 'label-owner-service:persistence'
+

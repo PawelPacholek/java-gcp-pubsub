@@ -1,8 +1,8 @@
 package com.main_owner_service.api.config;
 
-import com.main_owner_service.domain.usecases.FetchOwnerUseCase;
+import com.main_owner_service.domain.usecases.FetchLabeledOwnerUseCase;
 import com.main_owner_service.domain.usecases.SaveLabeledOwnerUseCase;
-import com.main_owner_service.domain.usecases.UploadOwnerUseCase;
+import com.main_owner_service.domain.usecases.UploadInitialOwnerUseCase;
 import com.main_owner_service.domain.helpers.InitialOwnerSender;
 import com.main_owner_service.domain.helpers.OwnerGateway;
 import org.springframework.context.annotation.Bean;
@@ -12,8 +12,8 @@ import org.springframework.context.annotation.Configuration;
 public class ApiConfiguration {
 
   @Bean
-  public FetchOwnerUseCase fetchOwnerUseCase(OwnerGateway ownerGateway) {
-    return new FetchOwnerUseCase(ownerGateway);
+  public FetchLabeledOwnerUseCase fetchOwnerUseCase(OwnerGateway ownerGateway) {
+    return new FetchLabeledOwnerUseCase(ownerGateway);
   }
 
   @Bean
@@ -22,8 +22,8 @@ public class ApiConfiguration {
   }
 
   @Bean
-  public UploadOwnerUseCase uploadOwnerUseCase(InitialOwnerSender initialOwnerSender) {
-    return new UploadOwnerUseCase(initialOwnerSender);
+  public UploadInitialOwnerUseCase uploadOwnerUseCase(InitialOwnerSender initialOwnerSender) {
+    return new UploadInitialOwnerUseCase(initialOwnerSender);
   }
 
 }

@@ -12,4 +12,5 @@ module java.gcp.pubsub.main.owner.service.persistence.main {
     requires spring.cloud.gcp.pubsub;
     requires spring.messaging;
     requires spring.beans;
+    requires spring.boot.autoconfigure;
 }

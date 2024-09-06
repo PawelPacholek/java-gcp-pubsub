@@ -11,18 +11,45 @@ import com.google.pubsub.v1.PubsubMessage;
 import com.google.pubsub.v1.TopicName;
 import com.main_owner_service.domain.ports.InitialOwnerSender;
 import com.main_owner_service.domain.models.InitialOwner;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.integration.annotation.MessagingGateway;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.MessageChannel;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class PubsubInitialOwnerSender implements InitialOwnerSender {
 
+  /*  @Autowired
+    private PubsubOutboundGateway messagingGateway; */
+
     private static final String PROJECT_ID = "local-axle-425708-t0";
     private static final String TOPIC_ID = "initialOwner";
 
+/*      private final MessageChannel initialOwnerChannel;
+
+    public PubsubInitialOwnerSender(MessageChannel initialOwnerChannel) {
+        this.initialOwnerChannel = initialOwnerChannel;
+    }*/
+
+    private final PersistenceConfiguration.MyGate gateway;
+
+    public PubsubInitialOwnerSender(PersistenceConfiguration.MyGate gateway) {
+        this.gateway = gateway;
+    }
+
     @Override
     public void send(InitialOwner initialOwner) {
-        TopicName topicName = TopicName.of(PROJECT_ID, TOPIC_ID);
+     //   Message message = new Message() {
+     //   }
+      //  initialOwnerChannel.send(message);
+
+        gateway.send(initialOwner.toString());
+
+
+      /*  TopicName topicName = TopicName.of(PROJECT_ID, TOPIC_ID);
         Publisher publisher = null;
 
         try {
@@ -72,7 +99,7 @@ public class PubsubInitialOwnerSender implements InitialOwnerSender {
                     throw new RuntimeException(e);
                 }
             }
-        }
+        }*/
     }
 
 }

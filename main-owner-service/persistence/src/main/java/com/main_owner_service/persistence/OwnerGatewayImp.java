@@ -1,6 +1,6 @@
 package com.main_owner_service.persistence;
 
-import com.main_owner_service.domain.helpers.OwnerGateway;
+import com.main_owner_service.domain.ports.OwnerGateway;
 import com.main_owner_service.domain.models.LabeledOwner;
 
 public class OwnerGatewayImp implements OwnerGateway {

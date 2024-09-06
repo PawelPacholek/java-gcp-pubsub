@@ -9,7 +9,7 @@ import com.google.common.util.concurrent.MoreExecutors;
 import com.google.protobuf.ByteString;
 import com.google.pubsub.v1.PubsubMessage;
 import com.google.pubsub.v1.TopicName;
-import com.main_owner_service.domain.helpers.InitialOwnerSender;
+import com.main_owner_service.domain.ports.InitialOwnerSender;
 import com.main_owner_service.domain.models.InitialOwner;
 
 import java.io.IOException;

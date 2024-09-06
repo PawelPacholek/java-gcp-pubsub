@@ -1,4 +1,4 @@
-package com.main_owner_service.domain.helpers;
+package com.main_owner_service.domain.ports;
 
 import com.main_owner_service.domain.models.InitialOwner;
 

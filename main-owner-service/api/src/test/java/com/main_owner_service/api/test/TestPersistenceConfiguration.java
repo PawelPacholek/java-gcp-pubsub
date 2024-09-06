@@ -1,7 +1,7 @@
 package com.main_owner_service.api.test;
 
-import com.main_owner_service.domain.helpers.InitialOwnerSender;
-import com.main_owner_service.domain.helpers.OwnerGateway;
+import com.main_owner_service.domain.ports.InitialOwnerSender;
+import com.main_owner_service.domain.ports.OwnerGateway;
 import com.main_owner_service.domain.models.LabeledOwner;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;

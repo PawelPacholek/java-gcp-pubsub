@@ -14,31 +14,33 @@
  * limitations under the License.
  */
 
-package com.main_owner_service.api.controllers;
+package com.main_owner_service.api.listeners;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.main_owner_service.api.models.PubsubBody;
+import com.google.cloud.spring.pubsub.support.BasicAcknowledgeablePubsubMessage;
+import com.google.cloud.spring.pubsub.support.GcpPubSubHeaders;
 import com.main_owner_service.domain.models.LabeledOwner;
 import com.main_owner_service.domain.usecases.SaveLabeledOwnerUseCase;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.integration.annotation.ServiceActivator;
+import org.springframework.messaging.handler.annotation.Header;
 
-import java.util.Base64;
-
-@RestController
-public class SaveLabeledOwnerController {
+//@RestController
+public class SaveLabeledOwnerListener {
 
     private final SaveLabeledOwnerUseCase saveLabeledOwnerUseCase;
 
-    public SaveLabeledOwnerController(SaveLabeledOwnerUseCase saveLabeledOwnerUseCase) {
+    public SaveLabeledOwnerListener(SaveLabeledOwnerUseCase saveLabeledOwnerUseCase) {
         this.saveLabeledOwnerUseCase = saveLabeledOwnerUseCase;
     }
 
+    @ServiceActivator(inputChannel = "labeledOwnerChannel")
+    public void messageReceiver(
+            LabeledOwner labeledOwner,
+            @Header(GcpPubSubHeaders.ORIGINAL_MESSAGE) BasicAcknowledgeablePubsubMessage message
+    ) {
+        saveLabeledOwnerUseCase.saveLabeledOwner(labeledOwner);
+        message.ack();
+    }
+/*
     @PostMapping(value = "/save-labeled-owner")
     public ResponseEntity<String> saveLabeledOwner(@RequestBody PubsubBody body) throws JsonProcessingException {
         PubsubBody.Message message = body.getMessage();
@@ -65,5 +67,5 @@ public class SaveLabeledOwnerController {
     public ResponseEntity<String> handleException(Exception exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
-
+*/
 }

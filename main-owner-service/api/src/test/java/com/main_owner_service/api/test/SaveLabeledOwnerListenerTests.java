@@ -35,7 +35,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 @SpringBootTest
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = TestPersistenceConfiguration.class)
-public class SaveLabeledOwnerControllerTests {
+public class SaveLabeledOwnerListenerTests {
 
     @Autowired
     private MockMvc mockMvc;

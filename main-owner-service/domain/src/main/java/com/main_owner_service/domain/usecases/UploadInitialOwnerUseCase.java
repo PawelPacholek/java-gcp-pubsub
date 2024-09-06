@@ -1,6 +1,6 @@
 package com.main_owner_service.domain.usecases;
 
-import com.main_owner_service.domain.helpers.InitialOwnerSender;
+import com.main_owner_service.domain.ports.InitialOwnerSender;
 import com.main_owner_service.domain.models.InitialOwner;
 
 public class UploadInitialOwnerUseCase {

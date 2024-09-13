@@ -35,9 +35,7 @@ public class PersistenceConfiguration {
 
   @MessagingGateway(defaultRequestChannel = "initialOwnerChannel")
   public interface MyGate {
-
-  void send(String out);
-
+    void send(String out);
   }
 
   @Bean

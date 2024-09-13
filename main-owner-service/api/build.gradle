@@ -40,6 +40,7 @@ dependencies {
     implementation 'com.github.spotbugs:spotbugs-annotations:4.8.3'
     implementation 'com.google.cloud:spring-cloud-gcp-pubsub-stream-binder'
     implementation 'com.google.cloud:spring-cloud-gcp-starter-pubsub'
+    implementation 'com.google.cloud:spring-cloud-gcp-pubsub'
     implementation 'org.springframework.boot:spring-boot-starter-web:'
     implementation 'org.springframework.integration:spring-integration-core'
     testImplementation 'com.google.truth:truth:1.4.0'

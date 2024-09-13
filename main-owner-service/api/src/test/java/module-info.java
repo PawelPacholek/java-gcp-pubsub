@@ -9,4 +9,5 @@ open module java.gcp.pubsub.main.owner.service.api.test {
     requires spring.test;
     requires spring.web;
     requires spring.boot.autoconfigure;
+    requires spring.cloud.gcp.pubsub;
 }

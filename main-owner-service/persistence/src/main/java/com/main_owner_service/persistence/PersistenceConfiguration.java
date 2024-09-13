@@ -16,8 +16,8 @@ import org.springframework.messaging.handler.annotation.Header;
 @Configuration
 public class PersistenceConfiguration {
 
-  @Autowired
-  private MyGate gateway;
+//  @Autowired
+//  private MyGate gateway;
 
   @Bean
   public OwnerGatewayImp ownerGatewayImp() {

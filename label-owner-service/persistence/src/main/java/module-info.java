@@ -6,5 +6,11 @@ module java.gcp.pubsub.label.owner.service.persistence.main {
     requires google.cloud.pubsub;
     requires proto.google.cloud.pubsub.v1;
     requires protobuf.java;
+    requires spring.cloud.gcp.autoconfigure;
     requires spring.context;
+    requires spring.integration.core;
+    requires spring.cloud.gcp.pubsub;
+    requires spring.messaging;
+    requires spring.beans;
+    requires spring.boot.autoconfigure;
 }

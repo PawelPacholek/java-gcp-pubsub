@@ -20,6 +20,22 @@ public class PubsubLabeledOwnerSender implements LabeledOwnerSender {
     private static final String PROJECT_ID = "local-axle-425708-t0";
     private static final String TOPIC_ID = "initialOwner";
 
+    private final PersistenceConfiguration.MyGate gateway;
+
+    public PubsubLabeledOwnerSender(PersistenceConfiguration.MyGate gateway) {
+        this.gateway = gateway;
+    }
+
+    @Override
+    public void send(LabeledOwner initialOwner) {
+        //   Message message = new Message() {
+        //   }
+        //  initialOwnerChannel.send(message);
+
+        gateway.send(initialOwner.toString());
+
+
+/*
     @Override
     public void send(LabeledOwner labeledOwner) {
         TopicName topicName = TopicName.of(PROJECT_ID, TOPIC_ID);
@@ -74,5 +90,5 @@ public class PubsubLabeledOwnerSender implements LabeledOwnerSender {
             }
         }
     }
-
+*/
 }

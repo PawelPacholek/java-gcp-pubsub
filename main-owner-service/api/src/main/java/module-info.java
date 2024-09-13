@@ -12,4 +12,5 @@ open module java.gcp.pubsub.main.owner.service.api.main {
     requires spring.messaging;
     requires jdk.unsupported;
     requires spring.cloud.gcp.pubsub;
+    uses com.google.cloud.spring.pubsub.support.BasicAcknowledgeablePubsubMessage;
 }

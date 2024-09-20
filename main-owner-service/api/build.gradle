@@ -41,8 +41,6 @@ dependencies {
 
            // platform('com.google.cloud:spring-cloud-gcp-dependencies:5.6.0'),
             'com.google.cloud:spring-cloud-gcp-pubsub:5.6.0',
-            'com.google.cloud:spring-cloud-gcp-pubsub-stream-binder:5.6.0',
-            'com.google.cloud:spring-cloud-gcp-pubsub-stream-binder:5.6.0',
             'com.google.cloud:spring-cloud-gcp-starter-pubsub:5.6.0',
 
             //platform('org.springframework.boot:spring-boot-dependencies:2.7.18'),

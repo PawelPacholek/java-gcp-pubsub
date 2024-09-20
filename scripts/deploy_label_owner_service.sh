@@ -1,2 +1,2 @@
-gradle jib -D image=europe-central2-docker.pkg.dev/local-axle-425708-t0/project-repository/label-owner-service
+../gradlew jib -D image=europe-central2-docker.pkg.dev/local-axle-425708-t0/project-repository/label-owner-service
 gcloud run deploy label-owner-service --image europe-central2-docker.pkg.dev/local-axle-425708-t0/project-repository/label-owner-service --no-allow-unauthenticated

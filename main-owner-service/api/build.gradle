@@ -17,7 +17,7 @@
 plugins {
     id 'application'
     id 'java'
-    id 'org.springframework.boot' version '2.7.18'
+    id 'org.springframework.boot' version '3.3.3'
 }
 
 repositories {
@@ -36,20 +36,25 @@ java.sourceCompatibility = JavaVersion.VERSION_21
 dependencies {
     implementation(
             project(':main-owner-service:domain'),
-            platform('com.google.cloud:spring-cloud-gcp-dependencies:5.6.0'),
-            platform('org.springframework.boot:spring-boot-dependencies:2.7.18'),
+
             'com.github.spotbugs:spotbugs-annotations:4.8.3',
-            'com.google.cloud:spring-cloud-gcp-pubsub',
-            'com.google.cloud:spring-cloud-gcp-pubsub-stream-binder',
-            'com.google.cloud:spring-cloud-gcp-starter-pubsub',
-            'org.springframework.boot:spring-boot-starter-web:',
-            'org.springframework.integration:spring-integration-core'
+
+           // platform('com.google.cloud:spring-cloud-gcp-dependencies:5.6.0'),
+            'com.google.cloud:spring-cloud-gcp-pubsub:5.6.0',
+            'com.google.cloud:spring-cloud-gcp-pubsub-stream-binder:5.6.0',
+            'com.google.cloud:spring-cloud-gcp-pubsub-stream-binder:5.6.0',
+            'com.google.cloud:spring-cloud-gcp-starter-pubsub:5.6.0',
+
+            //platform('org.springframework.boot:spring-boot-dependencies:2.7.18'),
+            'org.springframework.boot:spring-boot-starter-web:3.3.3',
+            'org.springframework.integration:spring-integration-core:6.3.4',
+            'org.springframework:spring-web:6.1.13',
     )
     testImplementation(
             'com.google.truth:truth:1.4.0',
             'junit:junit:4.13.2',
-            'org.springframework.boot:spring-boot-test',
-            'org.springframework.boot:spring-boot-test-autoconfigure',
-            'org.springframework:spring-test'
+            'org.springframework.boot:spring-boot-test:3.3.3',
+            'org.springframework.boot:spring-boot-test-autoconfigure:3.3.3',
+            'org.springframework:spring-test:6.1.13'
     )
 }

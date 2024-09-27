@@ -36,23 +36,12 @@ java.sourceCompatibility = JavaVersion.VERSION_21
 dependencies {
     implementation(
             project(':main-owner-service:domain'),
-
-            'com.github.spotbugs:spotbugs-annotations:4.8.3',
-
-           // platform('com.google.cloud:spring-cloud-gcp-dependencies:5.6.0'),
-            'com.google.cloud:spring-cloud-gcp-pubsub:5.6.0',
-            'com.google.cloud:spring-cloud-gcp-starter-pubsub:5.6.0',
-
-            //platform('org.springframework.boot:spring-boot-dependencies:2.7.18'),
+            'com.google.cloud:spring-cloud-gcp-starter-pubsub:5.6.1',
             'org.springframework.boot:spring-boot-starter-web:3.3.3',
             'org.springframework.integration:spring-integration-core:6.3.4',
-            'org.springframework:spring-web:6.1.13',
     )
     testImplementation(
-            'com.google.truth:truth:1.4.0',
             'junit:junit:4.13.2',
-            'org.springframework.boot:spring-boot-test:3.3.3',
             'org.springframework.boot:spring-boot-test-autoconfigure:3.3.3',
-            'org.springframework:spring-test:6.1.13'
     )
 }

@@ -8,10 +8,6 @@ repositories {
   mavenCentral()
 }
 
-bootRun {
-  mainClassName = 'com.label_owner_service.api.LabelOwnerServiceApplication'
-}
-
 group = 'demo'
 version = '1.0.0-SNAPSHOT'
 description = 'Spring Cloud GCP Pub/Sub Code Sample'
@@ -28,6 +24,8 @@ dependencies {
           'org.springframework.boot:spring-boot-starter-web:3.3.3',
           'org.springframework.integration:spring-integration-core:6.3.4',
           'junit:junit:4.13.2',
+          'org.assertj:assertj-core:3.26.3',
           'org.springframework.boot:spring-boot-test-autoconfigure:3.3.3',
+          'org.testcontainers:gcloud:1.20.1'
   )
 }

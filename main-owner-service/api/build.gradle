@@ -29,6 +29,25 @@ version = '1.0.0-SNAPSHOT'
 description = 'Spring Cloud GCP Pub/Sub Code Sample'
 java.sourceCompatibility = JavaVersion.VERSION_21
 
+compileJava {
+    //inputs.property("moduleName", moduleName)
+    doFirst {
+
+  //      '--add-modules'
+   //     '/home/pawel/.gradle/caches/modules-2/files-2.1/com.google.cloud/spring-cloud-gcp-pubsub/5.6.1/cadd0fe84ed4094c6203eb748405cf5cd0cebfcd/spring-cloud-gcp-pubsub-5.6.1.jar'
+
+        var compilerArgs = new ArrayList<>(options.getAllCompilerArgs())
+
+        int i = compilerArgs.indexOf('--module-path')
+        compilerArgs.set(i + 1, compilerArgs.get(i + 1) + ":/home/pawel/.gradle/caches/modules-2/files-2.1/com.google.cloud/spring-cloud-gcp-pubsub/5.6.1/cadd0fe84ed4094c6203eb748405cf5cd0cebfcd/spring-cloud-gcp-pubsub-5.6.1.jar")
+
+        options.compilerArgs = compilerArgs //options.getAllCompilerArgs().add() [
+  //              '--module-path', classpath.asPath,
+   //     ]
+   //     classpath = files()
+    }
+}
+
 dependencies {
     implementation(
             project(':main-owner-service:domain'),

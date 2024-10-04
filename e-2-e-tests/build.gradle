@@ -1,0 +1,33 @@
+plugins {
+  id 'application'
+  id 'java'
+  id 'org.springframework.boot' version '3.3.3'
+}
+
+repositories {
+  mavenCentral()
+}
+
+bootRun {
+  mainClassName = 'com.label_owner_service.api.LabelOwnerServiceApplication'
+}
+
+group = 'demo'
+version = '1.0.0-SNAPSHOT'
+description = 'Spring Cloud GCP Pub/Sub Code Sample'
+java.sourceCompatibility = JavaVersion.VERSION_21
+
+dependencies {
+
+  testImplementation(
+          project(':main-owner-service:api'),
+          project(':main-owner-service:persistence'),
+          project(':label-owner-service:api'),
+          project(':label-owner-service:persistence'),
+          'com.google.cloud:spring-cloud-gcp-starter-pubsub:5.6.1',
+          'org.springframework.boot:spring-boot-starter-web:3.3.3',
+          'org.springframework.integration:spring-integration-core:6.3.4',
+          'junit:junit:4.13.2',
+          'org.springframework.boot:spring-boot-test-autoconfigure:3.3.3',
+  )
+}

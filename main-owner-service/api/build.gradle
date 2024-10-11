@@ -18,6 +18,7 @@ plugins {
     id 'application'
     id 'java'
     id 'org.springframework.boot' version '3.3.3'
+    id 'com.google.cloud.tools.jib' version '3.4.3'
 }
 
 repositories {
@@ -45,3 +46,5 @@ dependencies {
             'org.springframework.boot:spring-boot-test-autoconfigure:3.3.3',
     )
 }
+
+// jib.to.image = 'gcr.io/my-gcp-project/my-app'

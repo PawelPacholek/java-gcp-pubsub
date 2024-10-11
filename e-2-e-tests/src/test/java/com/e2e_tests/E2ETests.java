@@ -22,25 +22,25 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-//@RunWith(SpringRunner.class)
+@RunWith(SpringRunner.class)
 //@AutoConfigureMockMvc
-//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE, classes = E2ETests.App.class)
-@ContextConfiguration(classes = E2ETestConfiguration.class, initializers = PubSubEmulatorInitializer.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE, classes = E2ETests.App.class)
+@ContextConfiguration(/*classes = E2ETestConfiguration.class, */initializers = PubSubEmulatorInitializer.class)
 public class E2ETests {
 
- /*   @SpringBootApplication
+    @SpringBootApplication
     public static class App {
 
         public static void main(String... args) {
             SpringApplication.run(App.class, args);
         }
 
-        @Bean
-        PubSubTopicClient pubSubClient(PubSubTemplate template) {
-            return new PubSubTopicClient(template, "instance", "topic");
-        }
+   //     @Bean
+     //   PubSubTopicClient pubSubClient(PubSubTemplate template) {
+    //        return new PubSubTopicClient(template, "instance", "topic");
+     //   }
 
-    }*/
+    }
 
   //  @Autowired
  //  PubSubTopicClient pubSubTopicClient;

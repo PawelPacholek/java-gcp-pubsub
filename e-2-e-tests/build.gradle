@@ -23,9 +23,18 @@ dependencies {
           'com.google.cloud:spring-cloud-gcp-starter-pubsub:5.6.1',
           'org.springframework.boot:spring-boot-starter-web:3.3.3',
           'org.springframework.integration:spring-integration-core:6.3.4',
-          'junit:junit:4.13.2',
+          'org.junit.jupiter:junit-jupiter-api:5.11.2',
           'org.assertj:assertj-core:3.26.3',
           'org.springframework.boot:spring-boot-test-autoconfigure:3.3.3',
           'org.testcontainers:gcloud:1.20.1'
   )
+}
+
+test {
+  useJUnitPlatform()
+  systemProperty('junit.jupiter.extensions.autodetection.enabled', true)
+  testLogging {
+    exceptionFormat = 'full'
+  }
+  maxHeapSize = '2g'
 }

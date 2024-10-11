@@ -16,8 +16,8 @@
 
 package com.main_owner_service.api.test;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+//import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,16 +30,16 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
+//@RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = TestPersistenceConfiguration.class)
-public class FetchLabeledOwnerControllerTests {
+class FetchLabeledOwnerControllerTests {
 
   @Autowired private MockMvc mockMvc;
 
   @Test
-  public void happyPath() throws Exception {
+  void happyPath() throws Exception {
     mockMvc.perform(fetchLabeledOwner(4L))
             .andExpect(status().isOk())
             .andExpect(content().string("LabeledOwner[id=4, name=null, address=null, phone=null, email=null, labels=null]"));

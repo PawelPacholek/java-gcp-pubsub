@@ -15,7 +15,7 @@ public class E2ETestConfiguration {
 
   //  @Bean
   //  PubSubTemplate pubSubTemplate(PubSubAdmin pubsubAdmin) {
-  //      return new PubSubTemplate(pubsubAdmin);
+   //     return new PubSubTemplate(pubsubAdmin);
   //  }
 
 }

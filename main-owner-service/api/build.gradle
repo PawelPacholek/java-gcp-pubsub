@@ -42,9 +42,19 @@ dependencies {
             'org.springframework.integration:spring-integration-core:6.3.4',
     )
     testImplementation(
-            'junit:junit:4.13.2',
+            'org.junit.jupiter:junit-jupiter-api:5.11.2',
+            'org.hamcrest:hamcrest:3.0',
             'org.springframework.boot:spring-boot-test-autoconfigure:3.3.3',
     )
 }
 
 // jib.to.image = 'gcr.io/my-gcp-project/my-app'
+
+test {
+    useJUnitPlatform()
+    systemProperty('junit.jupiter.extensions.autodetection.enabled', true)
+//    testLogging {
+ //       exceptionFormat = 'full'
+ //   }
+  //  maxHeapSize = '2g'
+}

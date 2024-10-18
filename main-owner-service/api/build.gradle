@@ -21,6 +21,13 @@ plugins {
     id 'com.google.cloud.tools.jib' version '3.4.3'
 }
 
+// jib.to.image = 'gcr.io/PROJECT_ID/main-owner-service'
+ jib.to.image = 'gcr.io/local-axle-425708-t0/main-owner-service'
+
+//jib.to.image = 'local-test/main-owner-service'
+
+tasks.build.dependsOn tasks.jib
+
 repositories {
     mavenCentral()
 }
@@ -46,5 +53,3 @@ dependencies {
             'org.springframework.boot:spring-boot-test-autoconfigure:3.3.3',
     )
 }
-
-// jib.to.image = 'gcr.io/my-gcp-project/my-app'

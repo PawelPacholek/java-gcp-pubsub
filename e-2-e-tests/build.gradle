@@ -26,6 +26,7 @@ dependencies {
           'junit:junit:4.13.2',
           'org.assertj:assertj-core:3.26.3',
           'org.springframework.boot:spring-boot-test-autoconfigure:3.3.3',
-          'org.testcontainers:gcloud:1.20.1'
+          'org.testcontainers:gcloud:1.20.1',
+          'com.google.cloud.tools:jib-core:0.26.0'
   )
 }

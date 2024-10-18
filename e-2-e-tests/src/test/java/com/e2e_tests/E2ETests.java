@@ -1,5 +1,6 @@
 package com.e2e_tests;
 
+import com.e2e_tests.main_owner_service.MainOwnerService;
 import com.e2e_tests.pubsub_emulator.PubSubEmulator;
 import com.e2e_tests.pubsub_emulator.PubSubEmulatorInitializer;
 import com.google.cloud.spring.pubsub.PubSubAdmin;
@@ -18,6 +19,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.testcontainers.containers.GenericContainer;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -66,10 +68,14 @@ public class E2ETests {
 
     @Test
     public void simleE2Etest() throws Exception {
+        GenericContainer mainOwnerService = MainOwnerService.startContainer();
+
         String mockBody = """
                 {"id":7,"name":"name1","address":"address2","phone":"phone3","email":"email4"}""";
         //    mockMvc.perform(uploadInitialOwner().contentType(MediaType.APPLICATION_JSON).content(mockBody))
         //           .andExpect(status().isOk());
+
+        mainOwnerService.stop();
     }
 
     private static MockHttpServletRequestBuilder uploadInitialOwner() {

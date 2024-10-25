@@ -81,20 +81,25 @@ public class E2ETests {
         var httpClient = HttpClients.createDefault();
 
         GenericContainer mainOwnerService = MainOwnerService.startContainer();
-        int mappedPort = mainOwnerService.getMappedPort(8080);
 
-        String body = """
-                {"id":7,"name":"name1","address":"address2","phone":"phone3","email":"email4"}""";
+        try {
 
-        var uploadInitialOwnerRequest = new BasicHttpEntityEnclosingRequest(
-                POST,
-                "http://localhost:%s/upload-initial-owner".formatted(mappedPort)
-        );
-        uploadInitialOwnerRequest.setEntity(new StringEntity(body, UTF_8));
+            int mappedPort = mainOwnerService.getMappedPort(8080);
 
-        httpClient.execute(new HttpHost("localhost", mappedPort), uploadInitialOwnerRequest);
+            String body = """
+                    {"id":7,"name":"name1","address":"address2","phone":"phone3","email":"email4"}""";
 
-        mainOwnerService.stop();
+            var uploadInitialOwnerRequest = new BasicHttpEntityEnclosingRequest(
+                    POST,
+                    "http://localhost:%s/upload-initial-owner".formatted(mappedPort)
+            );
+            uploadInitialOwnerRequest.setEntity(new StringEntity(body, UTF_8));
+
+            httpClient.execute(new HttpHost("localhost", mappedPort), uploadInitialOwnerRequest);
+
+        } finally {
+            mainOwnerService.stop();
+        }
     }
 
 }

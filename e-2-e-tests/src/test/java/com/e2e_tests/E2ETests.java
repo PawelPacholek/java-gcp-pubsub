@@ -5,6 +5,12 @@ import com.e2e_tests.pubsub_emulator.PubSubEmulator;
 import com.e2e_tests.pubsub_emulator.PubSubEmulatorInitializer;
 import com.google.cloud.spring.pubsub.PubSubAdmin;
 import com.google.cloud.spring.pubsub.core.PubSubTemplate;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpHost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicHttpEntityEnclosingRequest;
+import org.apache.http.message.BasicHttpRequest;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,6 +27,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.testcontainers.containers.GenericContainer;
 
+import java.net.URI;
+
+import static com.google.api.client.http.HttpMethods.POST;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -68,18 +78,23 @@ public class E2ETests {
 
     @Test
     public void simleE2Etest() throws Exception {
-        GenericContainer mainOwnerService = MainOwnerService.startContainer();
+        var httpClient = HttpClients.createDefault();
 
-        String mockBody = """
+        GenericContainer mainOwnerService = MainOwnerService.startContainer();
+        int mappedPort = mainOwnerService.getMappedPort(8080);
+
+        String body = """
                 {"id":7,"name":"name1","address":"address2","phone":"phone3","email":"email4"}""";
-        //    mockMvc.perform(uploadInitialOwner().contentType(MediaType.APPLICATION_JSON).content(mockBody))
-        //           .andExpect(status().isOk());
+
+        var uploadInitialOwnerRequest = new BasicHttpEntityEnclosingRequest(
+                POST,
+                "http://localhost:%s/upload-initial-owner".formatted(mappedPort)
+        );
+        uploadInitialOwnerRequest.setEntity(new StringEntity(body, UTF_8));
+
+        httpClient.execute(new HttpHost("localhost", mappedPort), uploadInitialOwnerRequest);
 
         mainOwnerService.stop();
-    }
-
-    private static MockHttpServletRequestBuilder uploadInitialOwner() {
-        return post("/upload-initial-owner");
     }
 
 }

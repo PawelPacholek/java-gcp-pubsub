@@ -20,7 +20,8 @@ public class MainOwnerService {
                }
        );
 
-       GenericContainer<?> container = new GenericContainer<>(mainOwnerServiceImage);
+       GenericContainer<?> container = new GenericContainer<>(mainOwnerServiceImage)
+               .withExposedPorts(8080);
        container.start();
        return container;
    }

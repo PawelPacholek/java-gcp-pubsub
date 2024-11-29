@@ -16,7 +16,14 @@ import java.util.stream.Collectors
  * limitations under the License.
  */
 
+/*buildscript {
+    repositories {
+        mavenCentral()
+    }
+}*/
+
 plugins {
+    //id 'java-gradle-plugin'
     id 'application'
     id 'java'
     id 'org.springframework.boot' version '3.3.3'
@@ -36,9 +43,9 @@ java.sourceCompatibility = JavaVersion.VERSION_21
 //    options.compilerArgs << '-parameters'
 //}
 
-compileJava {
+//compileJava {
     //inputs.property("moduleName", moduleName)
-    doFirst {
+ //   doFirst {
 
    //     options.compilerArgs += [
    //             '--add-modules', 'spring.cloud.gcp.pubsub'
@@ -49,7 +56,7 @@ compileJava {
     //      classpath.asPath.replace(":/home/pawel/.gradle/caches/modules-2/files-2.1/com.google.api/gax/2.53.0/a9fecddbbd2e40e82a646618cae6c17c449e1557/gax-2.53.0.jar", "")
     //     ]
 
-        options.compilerArgs += [
+ /*       options.compilerArgs += [
                      '--module-path',
                       """
 /home/pawel/java-gcp-pubsub/main-owner-service/domain/build/libs/domain-1.0.0-SNAPSHOT.jar:
@@ -128,10 +135,11 @@ compileJava {
 
         System.out.println(options.compilerArgs.stream().collect(Collectors.joining("\n\n")).replace(":", "\n"))
     }
-}
+} */
 
 dependencies {
     implementation(
+            gradleApi(),
             project(':main-owner-service:domain'),
             'com.google.cloud:spring-cloud-gcp-starter-pubsub:5.6.1',
             'org.springframework.boot:spring-boot-starter-web:3.3.3',

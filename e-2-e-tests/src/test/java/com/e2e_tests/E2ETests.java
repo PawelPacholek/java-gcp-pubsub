@@ -77,7 +77,7 @@ public class E2ETests {
     }
 
     @Test
-    public void simleE2Etest() throws Exception {
+    public void simpleEndToEndTest() throws Exception {
         var httpClient = HttpClients.createDefault();
 
         GenericContainer mainOwnerService = MainOwnerService.startContainer();

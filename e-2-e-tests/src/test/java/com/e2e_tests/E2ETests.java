@@ -95,8 +95,8 @@ public class E2ETests {
             );
             uploadInitialOwnerRequest.setEntity(new StringEntity(body, UTF_8));
 
-            httpClient.execute(new HttpHost("localhost", mappedPort), uploadInitialOwnerRequest);
-
+            var r = httpClient.execute(new HttpHost("localhost", mappedPort), uploadInitialOwnerRequest);
+            System.out.println(r);
         } finally {
             mainOwnerService.stop();
         }

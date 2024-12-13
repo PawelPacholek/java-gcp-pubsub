@@ -1,6 +1,9 @@
 # Google App Engine generated folder
 appengine-generated/
 
+# Logs
+*.log
+
 # Java
 *.class
 

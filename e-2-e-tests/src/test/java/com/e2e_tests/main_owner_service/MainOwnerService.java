@@ -20,12 +20,14 @@ public class MainOwnerService {
         JibImage mainOwnerServiceImage =
                 new JibImage(imageName, MainOwnerService::buildJibContainer);
 
+        MountableFile entrypoint =
+                MountableFile.forHostPath(Path.of("src/test/java/com/e2e_tests/main_owner_service/entrypoint.sh"));
 
         GenericContainer<?> container = new GenericContainer<>(mainOwnerServiceImage)
                 //.withCommand("sleep infinity")
                 .withEnv("GOOGLE_CLOUD_PROJECT", "test-project-bla")
                 //.withEnv("GOOGLE_APPLICATION_CREDENTIALS", "path_to_file")
-               // .withCopyFileToContainer(MountableFile.forHostPath(Path.of("./entrypoint.sh")), "/app/entrypoint.sh")
+                .withCopyFileToContainer(entrypoint, "/app/entrypoint.sh")
             //    .withExposedPorts(8080)
                 ;
         container.start();
@@ -34,16 +36,17 @@ public class MainOwnerService {
 
     private static JibContainerBuilder buildJibContainer(JibContainerBuilder builder) {
         return builder
-             //     .setEntrypoint("/app/entrypoint.sh")
-                .setEntrypoint(
-                        "java",
-                        "-cp",
-                        "@/app/jib-classpath-file",
-                        "com.main_owner_service.run.MainOwnerServiceApplication",
-                        ";",
-                        "sleep",
-                        "infinity"
-                )
+             //     .setEntrypoint("sudo chmod 777 /app/entrypoint.sh ; /app/entrypoint.sh")
+                .setEntrypoint("/app/entrypoint.sh")
+            //    .setEntrypoint(
+                 //       "java",
+                  //      "-cp",
+                 //       "@/app/jib-classpath-file",
+                 //       "com.main_owner_service.run.MainOwnerServiceApplication",
+                 //       ";",
+                //        "sleep",
+                //        "infinity"
+             //   )
                 //.addEnvironmentVariable()
                 //.setProgramArguments()
               //  .setExposedPorts(Port.tcp(8080))

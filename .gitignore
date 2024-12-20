@@ -3,6 +3,7 @@ appengine-generated/
 
 # Logs
 *.log
+*.gz
 
 # Java
 *.class

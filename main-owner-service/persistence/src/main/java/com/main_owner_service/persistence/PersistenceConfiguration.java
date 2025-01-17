@@ -6,24 +6,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.integration.annotation.Gateway;
 import org.springframework.integration.annotation.MessagingGateway;
 import org.springframework.integration.annotation.ServiceActivator;
+import org.springframework.integration.channel.DirectChannel;
 import org.springframework.integration.channel.PublishSubscribeChannel;
+import org.springframework.integration.config.EnableIntegration;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
 import org.springframework.messaging.handler.annotation.Header;
 
 @Configuration
+@EnableIntegration
 public class PersistenceConfiguration {
-
-//  @Autowired
-//  private MyGate gateway;
 
   @Bean
   public OwnerGatewayImp ownerGatewayImp() {
     return new OwnerGatewayImp();
   }
-
+/*
   @Bean
   public PubsubInitialOwnerSender pubsubInitialOwnerSender(
       //    @Qualifier("initialOwnerChannel") MessageChannel initialOwnerChannel
@@ -32,12 +33,14 @@ public class PersistenceConfiguration {
     //return new PubsubInitialOwnerSender(initialOwnerChannel);
     return new PubsubInitialOwnerSender(gateway);
   }
-
-  @MessagingGateway(defaultRequestChannel = "initialOwnerChannel")
+*/
+/*
   public interface MyGate {
+
+    @Gateway(requestChannel = "initialOwnerChannel")
     void send(String out);
   }
-
+*/
   @Bean
   public MessageChannel initialOwnerChannel() {
     return new PublishSubscribeChannel();

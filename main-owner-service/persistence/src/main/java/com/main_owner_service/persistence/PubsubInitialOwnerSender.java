@@ -20,8 +20,10 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+@Component
 public class PubsubInitialOwnerSender implements InitialOwnerSender {
 
+    //private PersistenceConfiguration.MyGate gateway;
   /*  @Autowired
     private PubsubOutboundGateway messagingGateway; */
 
@@ -34,11 +36,16 @@ public class PubsubInitialOwnerSender implements InitialOwnerSender {
         this.initialOwnerChannel = initialOwnerChannel;
     }*/
 
-    private final PersistenceConfiguration.MyGate gateway;
+    private final MyGate gateway;
 
-    public PubsubInitialOwnerSender(PersistenceConfiguration.MyGate gateway) {
+    @Autowired
+    public PubsubInitialOwnerSender(MyGate gateway) {
         this.gateway = gateway;
     }
+
+    //   public PubsubInitialOwnerSender(PersistenceConfiguration.MyGate gateway) {
+  //      this.gateway = gateway;
+  //  }
 
     @Override
     public void send(InitialOwner initialOwner) {
@@ -46,7 +53,7 @@ public class PubsubInitialOwnerSender implements InitialOwnerSender {
      //   }
       //  initialOwnerChannel.send(message);
 
-        gateway.send(initialOwner.toString());
+        gateway.sendMessage(initialOwner.toString());
 
 
       /*  TopicName topicName = TopicName.of(PROJECT_ID, TOPIC_ID);

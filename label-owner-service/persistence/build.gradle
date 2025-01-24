@@ -36,8 +36,4 @@ dependencies {
             'org.springframework.boot:spring-boot-starter-web:3.3.3',
             'org.springframework.integration:spring-integration-core:6.3.4',
     )
-    testImplementation(
-            'junit:junit:4.13.2',
-            'org.springframework.boot:spring-boot-test-autoconfigure:3.3.3',
-    )
 }

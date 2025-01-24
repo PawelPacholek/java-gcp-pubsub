@@ -10,21 +10,18 @@ import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.ClassicHttpRequest;
 import org.apache.hc.core5.http.impl.io.DefaultClassicHttpRequestFactory;
 import org.apache.hc.core5.http.io.entity.StringEntity;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.testcontainers.containers.GenericContainer;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
 
-@RunWith(SpringRunner.class)
 //@AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE, classes = E2ETests.App.class)
 @ContextConfiguration(/*classes = E2ETestConfiguration.class, */initializers = PubSubEmulatorInitializer.class)
@@ -54,7 +51,7 @@ public class E2ETests {
 
   //  @Autowired
   //  private MockMvc mockMvc;
-  @Before
+  @BeforeEach
   public void preparePubsubEmulator() {
     PubSubEmulator.createTopicAndSubscription(
       "labeledOwner",

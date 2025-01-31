@@ -7,5 +7,5 @@ include 'main-owner-service:run'
 include 'label-owner-service:api'
 include 'label-owner-service:domain'
 include 'label-owner-service:persistence'
+include 'label-owner-service:run'
 include 'e-2-e-tests'
-

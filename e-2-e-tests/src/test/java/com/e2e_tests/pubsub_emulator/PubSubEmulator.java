@@ -39,7 +39,7 @@ public class PubSubEmulator {
   static Map<String, Object> properties() {
     return Map.of(
       "spring.cloud.gcp.pubsub.emulator-host", requireNonNull(shared).getEmulatorEndpoint(),
-      "spring.cloud.gcp.project-id", "test-project"
+      "spring.cloud.gcp.project-id", "test-project-bla"
     );
   }
 

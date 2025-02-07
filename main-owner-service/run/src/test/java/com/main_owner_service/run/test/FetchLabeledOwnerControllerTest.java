@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-package com.main_owner_service.api.test;
+package com.main_owner_service.run.test;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
@@ -29,20 +28,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@ContextConfiguration(classes = TestPersistenceConfiguration.class)
-public class FetchLabeledOwnerControllerTests {
+public class FetchLabeledOwnerControllerTest {
 
-  @Autowired private MockMvc mockMvc;
+    @Autowired
+    private MockMvc mockMvc;
 
-  @Test
-  public void happyPath() throws Exception {
-    mockMvc.perform(fetchLabeledOwner(4L))
-            .andExpect(status().isOk());
-            //.andExpect(content().string("LabeledOwner[id=4, name=null, address=null, phone=null, email=null, labels=null]"));
-  }
+    @Test
+    public void happyPath() throws Exception {
+        mockMvc.perform(fetchLabeledOwner(4L))
+                .andExpect(status().isOk());
+    }
 
-  private static MockHttpServletRequestBuilder fetchLabeledOwner(Long id) {
-    return get("/fetch-labeled-owner/" + id);
-  }
+    private static MockHttpServletRequestBuilder fetchLabeledOwner(Long id) {
+        return get("/fetch-labeled-owner/" + id);
+    }
 
 }

@@ -4,6 +4,7 @@ import com.google.cloud.spring.pubsub.core.PubSubTemplate;
 import com.google.cloud.spring.pubsub.integration.outbound.PubSubMessageHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
@@ -23,8 +24,11 @@ import org.springframework.messaging.handler.annotation.Header;
 public class PersistenceConfiguration {
 
   @Bean
-  JedisConnectionFactory jedisConnectionFactory() {
-    return new JedisConnectionFactory();
+  JedisConnectionFactory jedisConnectionFactory(@Value("${redis.host}") String host, @Value("${redis.port}") int port) {
+    JedisConnectionFactory jedisConFactory = new JedisConnectionFactory();
+    jedisConFactory.setHostName(host);
+    jedisConFactory.setPort(port);
+    return jedisConFactory;
   }
 
   @Bean

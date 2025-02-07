@@ -35,6 +35,8 @@ dependencies {
             'com.google.cloud:spring-cloud-gcp-starter-pubsub:5.6.1',
             'org.springframework.boot:spring-boot-starter-web:3.3.3',
             'org.springframework.integration:spring-integration-core:6.3.4',
+            'org.springframework.data:spring-data-redis:3.3.3',
+            'redis.clients:jedis:5.2.0'
     )
 
     testImplementation(

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.integration.annotation.Gateway;
 import org.springframework.integration.annotation.MessagingGateway;
 import org.springframework.integration.annotation.ServiceActivator;
@@ -21,8 +23,20 @@ import org.springframework.messaging.handler.annotation.Header;
 public class PersistenceConfiguration {
 
   @Bean
-  public OwnerGatewayImp ownerGatewayImp() {
-    return new OwnerGatewayImp();
+  JedisConnectionFactory jedisConnectionFactory() {
+    return new JedisConnectionFactory();
+  }
+
+  @Bean
+  public RedisTemplate<Long, String> redisTemplate(JedisConnectionFactory jedisConnectionFactory) {
+    RedisTemplate<Long, String> template = new RedisTemplate<>();
+    template.setConnectionFactory(jedisConnectionFactory);
+    return template;
+  }
+
+  @Bean
+  public OwnerGatewayImp ownerGatewayImp(RedisTemplate<Long, String> redisClient) {
+    return new OwnerGatewayImp(redisClient);
   }
 /*
   @Bean

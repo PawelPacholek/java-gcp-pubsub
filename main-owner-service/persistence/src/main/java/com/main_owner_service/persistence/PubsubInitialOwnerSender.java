@@ -20,6 +20,8 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import static com.main_owner_service.persistence.DataClassSerialization.serialize;
+
 @Component
 public class PubsubInitialOwnerSender implements InitialOwnerSender {
 
@@ -53,7 +55,7 @@ public class PubsubInitialOwnerSender implements InitialOwnerSender {
      //   }
       //  initialOwnerChannel.send(message);
 
-        gateway.sendMessage(initialOwner.toString());
+        gateway.sendMessage(serialize(initialOwner));
 
 
       /*  TopicName topicName = TopicName.of(PROJECT_ID, TOPIC_ID);

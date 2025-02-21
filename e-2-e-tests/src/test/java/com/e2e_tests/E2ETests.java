@@ -73,6 +73,7 @@ public class E2ETests {
   public void simpleEndToEndTest() {
     GenericContainer mainOwnerService = MainOwnerService.startContainer();
     GenericContainer labelOwnerService = LabelOwnerService.startContainer();
+    //mainOwnerService.getLogs();
     try {
       int mainOwnerServiceMappedPort = mainOwnerService.getMappedPort(8080);
       Long ownerId = 7L;
@@ -83,7 +84,7 @@ public class E2ETests {
 
       sleep(10);
 
-      ClassicHttpRequest fetchRequest = createFetchRequest(8L, mainOwnerServiceMappedPort);
+      ClassicHttpRequest fetchRequest = createFetchRequest(ownerId, mainOwnerServiceMappedPort);
       MyResponse fetchResponse = sendRequest(fetchRequest);
       System.out.println(fetchResponse);
     } finally {

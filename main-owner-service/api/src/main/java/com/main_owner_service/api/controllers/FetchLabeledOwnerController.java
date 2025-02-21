@@ -1,5 +1,6 @@
 package com.main_owner_service.api.controllers;
 
+import com.main_owner_service.api.helpers.DataClassSerialization;
 import com.main_owner_service.domain.usecases.FetchLabeledOwnerUseCase;
 import com.main_owner_service.domain.models.LabeledOwner;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,6 @@ public class FetchLabeledOwnerController {
   @GetMapping(value = "/fetch-labeled-owner/{id}")
   public ResponseEntity<String> fetchOwner(@PathVariable("id") Long ownerId) {
     LabeledOwner labeledOwner = fetchOwnerUseCase.fetchLabeledOwner(ownerId);
-    return new ResponseEntity<>(labeledOwner.toString(), HttpStatus.OK);
+    return new ResponseEntity<>(DataClassSerialization.serialize(labeledOwner), HttpStatus.OK);
   }
 }

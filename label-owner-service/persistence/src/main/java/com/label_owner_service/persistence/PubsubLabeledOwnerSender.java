@@ -11,28 +11,32 @@ import com.google.pubsub.v1.PubsubMessage;
 import com.google.pubsub.v1.TopicName;
 import com.label_owner_service.domain.helpers.LabeledOwnerSender;
 import com.label_owner_service.domain.models.LabeledOwner;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+
+import static com.label_owner_service.persistence.DataClassSerialization.serialize;
 
 public class PubsubLabeledOwnerSender implements LabeledOwnerSender {
 
     private static final String PROJECT_ID = "local-axle-425708-t0";
     private static final String TOPIC_ID = "initialOwner";
 
-    private final PersistenceConfiguration.MyGate gateway;
+    private final MyGate gateway;
 
-    public PubsubLabeledOwnerSender(PersistenceConfiguration.MyGate gateway) {
+    @Autowired
+    public PubsubLabeledOwnerSender(MyGate gateway) {
         this.gateway = gateway;
     }
 
     @Override
-    public void send(LabeledOwner initialOwner) {
+    public void send(LabeledOwner labeledOwner) {
         //   Message message = new Message() {
         //   }
-        //  initialOwnerChannel.send(message);
+        //  initialOwnerChannel.send(message);l
 
-        gateway.send(initialOwner.toString());
+        gateway.sendMessage(serialize(labeledOwner));
 
 
 /*

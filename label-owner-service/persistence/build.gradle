@@ -36,4 +36,15 @@ dependencies {
             'org.springframework.boot:spring-boot-starter-web:3.3.3',
             'org.springframework.integration:spring-integration-core:6.3.4',
     )
+
+    testImplementation(
+            'org.junit.jupiter:junit-jupiter-api:5.11.4',
+            'org.assertj:assertj-core:3.27.3',
+            'org.springframework.boot:spring-boot-test-autoconfigure:3.3.3',
+    )
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.11.4'
+}
+
+test {
+    useJUnitPlatform()
 }

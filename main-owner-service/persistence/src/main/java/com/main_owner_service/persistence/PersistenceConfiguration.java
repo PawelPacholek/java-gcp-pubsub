@@ -22,7 +22,7 @@ import org.springframework.messaging.handler.annotation.Header;
 @Configuration
 @EnableIntegration
 public class PersistenceConfiguration {
-
+/*
   @Bean
   JedisConnectionFactory jedisConnectionFactory(@Value("${redis.host}") String host, @Value("${redis.port}") int port) {
     JedisConnectionFactory jedisConFactory = new JedisConnectionFactory();
@@ -42,23 +42,14 @@ public class PersistenceConfiguration {
   public OwnerGatewayImp ownerGatewayImp(RedisTemplate<Long, String> redisClient) {
     return new OwnerGatewayImp(redisClient);
   }
-/*
+*/
   @Bean
-  public PubsubInitialOwnerSender pubsubInitialOwnerSender(
-      //    @Qualifier("initialOwnerChannel") MessageChannel initialOwnerChannel
-       MyGate gateway
-  ) {
-    //return new PubsubInitialOwnerSender(initialOwnerChannel);
-    return new PubsubInitialOwnerSender(gateway);
+  public OwnerGatewayInMemoryImp ownerGatewayImp() {
+    return new OwnerGatewayInMemoryImp();
   }
-*/
-/*
-  public interface MyGate {
 
-    @Gateway(requestChannel = "initialOwnerChannel")
-    void send(String out);
-  }
-*/
+
+
   @Bean
   public MessageChannel initialOwnerChannel() {
     return new PublishSubscribeChannel();

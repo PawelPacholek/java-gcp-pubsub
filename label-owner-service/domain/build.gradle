@@ -27,3 +27,15 @@ group = 'demo'
 version = '1.0.0-SNAPSHOT'
 description = 'Spring Cloud GCP Pub/Sub Code Sample'
 java.sourceCompatibility = JavaVersion.VERSION_21
+
+dependencies {
+    testImplementation(
+            'org.junit.jupiter:junit-jupiter-api:5.11.4',
+            'org.assertj:assertj-core:3.27.3'
+    )
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.11.4'
+}
+
+test {
+    useJUnitPlatform()
+}

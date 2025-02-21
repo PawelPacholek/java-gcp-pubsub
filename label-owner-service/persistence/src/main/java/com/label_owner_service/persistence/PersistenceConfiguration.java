@@ -14,25 +14,11 @@ import org.springframework.messaging.MessageHandler;
 public class PersistenceConfiguration {
 
   @Bean
-  public PubsubLabeledOwnerSender pubsubLabeledOwnerSender(
-          //    @Qualifier("initialOwnerChannel") MessageChannel initialOwnerChannel
-          MyGate gateway
-  ) {
-    //return new PubsubInitialOwnerSender(initialOwnerChannel);
-    return new PubsubLabeledOwnerSender(gateway);
-  }
-
-  @MessagingGateway(defaultRequestChannel = "labeledOwnerChannel")
-  public interface MyGate {
-    void send(String out);
-  }
-
-  @Bean
   public MessageChannel labeledOwnerChannel() {
     return new PublishSubscribeChannel();
   }
 
-  // Create an outbound channel adapter to send messages from the input message channel to the topic `initialOwner`.
+  // Create an outbound channel adapter to send messages from the input message channel to the topic `labeledOwner`.
   @Bean
   @ServiceActivator(inputChannel = "labeledOwnerChannel")
   public MessageHandler messageSender(PubSubTemplate pubsubTemplate) {

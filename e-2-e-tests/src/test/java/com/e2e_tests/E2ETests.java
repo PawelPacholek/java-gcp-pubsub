@@ -78,16 +78,14 @@ public class E2ETests {
       Long ownerId = 7L;
 
       ClassicHttpRequest uploadRequest = createUploadRequest(ownerId, mainOwnerServiceMappedPort);
-      ClassicHttpResponse uploadResponse = sendRequest(uploadRequest);
-      String uploadResponseBody = getBody(uploadResponse);
-      System.out.println(uploadResponseBody);
+      MyResponse uploadResponse = sendRequest(uploadRequest);
+      System.out.println(uploadResponse);
 
       sleep(10);
 
-      ClassicHttpRequest fetchRequest = createFetchRequest(ownerId, mainOwnerServiceMappedPort);
-      ClassicHttpResponse fetchResponse = sendRequest(fetchRequest);
-      String fetchResponseBody = getBody(fetchResponse);
-      System.out.println(fetchResponseBody);
+      ClassicHttpRequest fetchRequest = createFetchRequest(8L, mainOwnerServiceMappedPort);
+      MyResponse fetchResponse = sendRequest(fetchRequest);
+      System.out.println(fetchResponse);
     } finally {
       mainOwnerService.stop();
       labelOwnerService.stop();
@@ -117,21 +115,17 @@ public class E2ETests {
     }
   }
 
-  private ClassicHttpResponse sendRequest(ClassicHttpRequest apacheRequest) {
+  private MyResponse sendRequest(ClassicHttpRequest apacheRequest) {
     try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
-      return httpClient.execute(apacheRequest, r -> r);
+      return httpClient.execute(
+        apacheRequest,
+        r -> new MyResponse(r.getCode(), EntityUtils.toString(r.getEntity()))
+      );
     } catch (IOException e) {
       throw new UncheckedIOException(e.getMessage(), e);
     }
   }
 
-  private String getBody(ClassicHttpResponse response) {
-    try {
-      return EntityUtils.toString(response.getEntity());
-    } catch (IOException | ParseException e) {
-      throw new RuntimeException(e);
-    }
-  }
-
+  private record MyResponse(int status, String body) {}
 
 }

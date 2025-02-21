@@ -6,11 +6,14 @@ import com.e2e_tests.pubsub_emulator.PubSubEmulator;
 import com.e2e_tests.pubsub_emulator.PubSubEmulatorInitializer;
 import com.google.cloud.spring.pubsub.PubSubAdmin;
 import com.google.cloud.spring.pubsub.core.PubSubTemplate;
+import org.apache.commons.lang3.ThreadUtils;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.ClassicHttpRequest;
 import org.apache.hc.core5.http.ClassicHttpResponse;
+import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.impl.io.DefaultClassicHttpRequestFactory;
+import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,6 +26,7 @@ import org.testcontainers.containers.GenericContainer;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.time.Duration;
 
 //@AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE, classes = E2ETests.App.class)
@@ -67,34 +71,49 @@ public class E2ETests {
 
   @Test
   public void simpleEndToEndTest() {
-
     GenericContainer mainOwnerService = MainOwnerService.startContainer();
     GenericContainer labelOwnerService = LabelOwnerService.startContainer();
-
     try {
-
       int mainOwnerServiceMappedPort = mainOwnerService.getMappedPort(8080);
-
       Long ownerId = 7L;
 
-      String body = """
-        {"id":%s,"name":"name1","address":"address2","phone":"phone3","email":"email4"}""".formatted(ownerId);
-      String uploadUri = "http://localhost:%s/upload-initial-owner".formatted(mainOwnerServiceMappedPort);
-      ClassicHttpRequest uploadRequest = DefaultClassicHttpRequestFactory.INSTANCE.newHttpRequest("POST", uploadUri);
-      uploadRequest.setEntity(new StringEntity(body));
-      uploadRequest.setHeader("Content-Type", "application/json");
-
+      ClassicHttpRequest uploadRequest = createUploadRequest(ownerId, mainOwnerServiceMappedPort);
       ClassicHttpResponse uploadResponse = sendRequest(uploadRequest);
-      System.out.println(uploadResponse);
+      String uploadResponseBody = getBody(uploadResponse);
+      System.out.println(uploadResponseBody);
 
-      String fetchUri = "http://localhost:%s/fetch-labeled-owner/%s".formatted(mainOwnerServiceMappedPort, ownerId);
-      ClassicHttpRequest fetchRequest = DefaultClassicHttpRequestFactory.INSTANCE.newHttpRequest("GET", fetchUri);
+      sleep(10);
 
+      ClassicHttpRequest fetchRequest = createFetchRequest(ownerId, mainOwnerServiceMappedPort);
       ClassicHttpResponse fetchResponse = sendRequest(fetchRequest);
-      System.out.println(fetchResponse);
+      String fetchResponseBody = getBody(fetchResponse);
+      System.out.println(fetchResponseBody);
     } finally {
       mainOwnerService.stop();
       labelOwnerService.stop();
+    }
+  }
+
+  private ClassicHttpRequest createUploadRequest(Long ownerId, int mainOwnerServiceMappedPort) {
+    String body = """
+        {"id":%s,"name":"name1","address":"address2","phone":"phone3","email":"email4"}""".formatted(ownerId);
+    String uploadUri = "http://localhost:%s/upload-initial-owner".formatted(mainOwnerServiceMappedPort);
+    ClassicHttpRequest uploadRequest = DefaultClassicHttpRequestFactory.INSTANCE.newHttpRequest("POST", uploadUri);
+    uploadRequest.setEntity(new StringEntity(body));
+    uploadRequest.setHeader("Content-Type", "application/json");
+    return uploadRequest;
+  }
+
+  private ClassicHttpRequest createFetchRequest(Long ownerId, int mainOwnerServiceMappedPort) {
+    String fetchUri = "http://localhost:%s/fetch-labeled-owner/%s".formatted(mainOwnerServiceMappedPort, ownerId);
+    return DefaultClassicHttpRequestFactory.INSTANCE.newHttpRequest("GET", fetchUri);
+  }
+
+  private void sleep(int seconds) {
+    try {
+      ThreadUtils.sleep(Duration.ofSeconds(seconds));
+    } catch (InterruptedException e) {
+      throw new RuntimeException(e);
     }
   }
 
@@ -103,6 +122,14 @@ public class E2ETests {
       return httpClient.execute(apacheRequest, r -> r);
     } catch (IOException e) {
       throw new UncheckedIOException(e.getMessage(), e);
+    }
+  }
+
+  private String getBody(ClassicHttpResponse response) {
+    try {
+      return EntityUtils.toString(response.getEntity());
+    } catch (IOException | ParseException e) {
+      throw new RuntimeException(e);
     }
   }
 

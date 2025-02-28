@@ -154,6 +154,17 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.11.4'
 }
 
+tasks.withType(JavaCompile).configureEach {
+    //javaCompiler.
+    //modularity.setInferModulePath(false)
+    /*List<String> args = options.getCompilerArgs()
+    options.setCompilerArgs(List.of(
+            '--module-path',
+            '/home/pawel/.gradle/caches/modules-2/files-2.1/com.google.cloud/spring-cloud-gcp-pubsub/5.6.1/cadd0fe84ed4094c6203eb748405cf5cd0cebfcd/spring-cloud-gcp-pubsub-5.6.1.jar'
+    ))
+    */
+}
+
 test {
     useJUnitPlatform()
 }

@@ -24,12 +24,12 @@ public class MainOwnerService {
         String credentialsPath = "/app/gcloud_mock_credentials.json";
 
         GenericContainer<?> container = new GenericContainer<>(mainOwnerServiceImage)
-                .withEnv("GOOGLE_CLOUD_PROJECT", emulatorProperties.projectId())
                 .withEnv("PUBSUB_PROJECT_ID", emulatorProperties.projectId())
                 .withEnv("PUBSUB_EMULATOR_HOST", emulatorProperties.emulatorEndpoint())
+                .withEnv("GOOGLE_CLOUD_PROJECT", emulatorProperties.projectId())
                 .withEnv("GOOGLE_APPLICATION_CREDENTIALS", credentialsPath)
-                .withCopyFileToContainer(entrypoint, "/app/entrypoint.sh")
                 .withCopyFileToContainer(credentials, credentialsPath)
+                .withCopyFileToContainer(entrypoint, "/app/entrypoint.sh")
                 .withExposedPorts(8080)
                 ;
         container.start();

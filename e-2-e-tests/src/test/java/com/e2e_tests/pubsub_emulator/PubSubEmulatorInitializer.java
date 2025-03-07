@@ -14,7 +14,7 @@ public class PubSubEmulatorInitializer implements ApplicationContextInitializer<
       () -> applicationContext.getBean(PubSubAdmin.class),
       () -> applicationContext.getBean(PubSubTemplate.class)
     );
-    var props = PubSubEmulator.properties();
+    var props = PubSubEmulator.propertiesMap();
     applicationContext.getEnvironment()
       .getPropertySources()
       .addFirst(new MapPropertySource("pubsub-emulator", props));

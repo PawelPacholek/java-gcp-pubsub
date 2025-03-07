@@ -71,7 +71,8 @@ public class E2ETests {
 
   @Test
   public void simpleEndToEndTest() {
-    GenericContainer mainOwnerService = MainOwnerService.startContainer();
+    PubSubEmulator.EmulatorProperties emulatorProperties = PubSubEmulator.properties();
+    GenericContainer mainOwnerService = MainOwnerService.startContainer(emulatorProperties);
     GenericContainer labelOwnerService = LabelOwnerService.startContainer();
     try {
       int mainOwnerServiceMappedPort = mainOwnerService.getMappedPort(8080);

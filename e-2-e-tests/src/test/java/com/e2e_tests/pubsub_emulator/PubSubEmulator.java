@@ -22,6 +22,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class PubSubEmulator {
 
+  private static final String PROJECT_ID = "test-project-bla";
+  private static String EMULATOR_HOST;
+
   private static PubSubEmulatorContainer shared;
   private static MemoizedSupplier<PubSubAdmin> admin;
   private static MemoizedSupplier<PubSubTemplate> template;
@@ -34,12 +37,17 @@ public class PubSubEmulator {
     var imageName = DockerImageName.parse("gcr.io/google.com/cloudsdktool/cloud-sdk:420.0.0-emulators");
     shared = new PubSubEmulatorContainer(imageName).withLogConsumer(frame -> System.out.println(frame.getUtf8String()));
     shared.start();
+    EMULATOR_HOST = requireNonNull(shared).getEmulatorEndpoint();
   }
 
-  static Map<String, Object> properties() {
+  public static EmulatorProperties properties() {
+    return new EmulatorProperties(PROJECT_ID, EMULATOR_HOST);
+  }
+
+  static Map<String, Object> propertiesMap() {
     return Map.of(
-      "spring.cloud.gcp.pubsub.emulator-host", requireNonNull(shared).getEmulatorEndpoint(),
-      "spring.cloud.gcp.project-id", "test-project-bla"
+      "spring.cloud.gcp.pubsub.emulator-host", EMULATOR_HOST,
+      "spring.cloud.gcp.project-id", PROJECT_ID
     );
   }
 
@@ -87,5 +95,7 @@ public class PubSubEmulator {
           throw new RuntimeException(e);
       }
   }
+
+  public record EmulatorProperties(String projectId, String emulatorEndpoint) {}
 
 }

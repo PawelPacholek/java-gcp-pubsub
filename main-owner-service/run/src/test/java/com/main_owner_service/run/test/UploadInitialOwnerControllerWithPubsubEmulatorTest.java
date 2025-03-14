@@ -18,11 +18,13 @@ package com.main_owner_service.run.test;
 
 import com.pubsub_emulator.PubSubEmulator;
 import com.pubsub_emulator.PubSubEmulatorInitializer;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.event.annotation.BeforeTestClass;
@@ -38,6 +40,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class UploadInitialOwnerControllerWithPubsubEmulatorTest {
 
     @Autowired
+    private ApplicationContext applicationContext;
+
+    @Autowired
     private MockMvc mockMvc;
 
     @BeforeEach
@@ -47,6 +52,18 @@ public class UploadInitialOwnerControllerWithPubsubEmulatorTest {
           "main-owner-service-to-labeledOwner-subscription"
         );
         PubSubEmulator.createTopicAndSubscription(
+          "initialOwner",
+          "label-owner-service-to-initialOwner-subscription"
+        );
+    }
+
+    @AfterEach
+    public void cleanPubsubEmulator() {
+        PubSubEmulator.deleteTopicAndSubscription(
+          "labeledOwner",
+          "main-owner-service-to-labeledOwner-subscription"
+        );
+        PubSubEmulator.deleteTopicAndSubscription(
           "initialOwner",
           "label-owner-service-to-initialOwner-subscription"
         );

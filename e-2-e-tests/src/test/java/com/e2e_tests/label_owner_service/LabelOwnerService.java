@@ -1,6 +1,6 @@
 package com.e2e_tests.label_owner_service;
 
-import com.e2e_tests.pubsub_emulator.PubSubEmulator;
+import com.pubsub_emulator.PubSubEmulator;
 import com.google.cloud.tools.jib.api.JibContainerBuilder;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.jib.JibImage;

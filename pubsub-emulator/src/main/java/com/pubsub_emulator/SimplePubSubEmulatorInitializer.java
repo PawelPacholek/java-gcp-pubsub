@@ -1,12 +1,11 @@
-package com.e2e_tests.pubsub_emulator;
+package com.pubsub_emulator;
 
 import com.google.cloud.spring.pubsub.PubSubAdmin;
 import com.google.cloud.spring.pubsub.core.PubSubTemplate;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.core.env.MapPropertySource;
 
-public class PubSubEmulatorInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+public class SimplePubSubEmulatorInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
   @Override
   public void initialize(ConfigurableApplicationContext applicationContext) {
@@ -14,10 +13,6 @@ public class PubSubEmulatorInitializer implements ApplicationContextInitializer<
       () -> applicationContext.getBean(PubSubAdmin.class),
       () -> applicationContext.getBean(PubSubTemplate.class)
     );
-    var props = PubSubEmulator.propertiesMap();
-    applicationContext.getEnvironment()
-      .getPropertySources()
-      .addFirst(new MapPropertySource("pubsub-emulator", props));
   }
 
 }

@@ -2,19 +2,19 @@ package com.e2e_tests;
 
 import com.e2e_tests.label_owner_service.LabelOwnerService;
 import com.e2e_tests.main_owner_service.MainOwnerService;
-import com.e2e_tests.pubsub_emulator.PubSubEmulator;
-import com.e2e_tests.pubsub_emulator.PubSubEmulatorInitializer;
 import com.google.cloud.spring.pubsub.PubSubAdmin;
 import com.google.cloud.spring.pubsub.core.PubSubTemplate;
+import com.pubsub_emulator.PubSubEmulator;
+import com.pubsub_emulator.PubSubEmulatorInitializer;
+import com.pubsub_emulator.SimplePubSubEmulatorInitializer;
 import org.apache.commons.lang3.ThreadUtils;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.ClassicHttpRequest;
-import org.apache.hc.core5.http.ClassicHttpResponse;
-import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.impl.io.DefaultClassicHttpRequestFactory;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.io.entity.StringEntity;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +64,18 @@ public class E2ETests {
       "main-owner-service-to-labeledOwner-subscription"
     );
     PubSubEmulator.createTopicAndSubscription(
+      "initialOwner",
+      "label-owner-service-to-initialOwner-subscription"
+    );
+  }
+
+  @AfterEach
+  public void cleanPubsubEmulator() {
+    PubSubEmulator.deleteTopicAndSubscription(
+      "labeledOwner",
+      "main-owner-service-to-labeledOwner-subscription"
+    );
+    PubSubEmulator.deleteTopicAndSubscription(
       "initialOwner",
       "label-owner-service-to-initialOwner-subscription"
     );

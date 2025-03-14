@@ -10,33 +10,22 @@ repositories {
 
 group = 'demo'
 version = '1.0.0-SNAPSHOT'
-description = 'Spring Cloud GCP Pub/Sub Code Sample'
+description = 'Pubsub emulator'
 java.sourceCompatibility = JavaVersion.VERSION_21
 
 dependencies {
-
-  testImplementation(
-          project(':pubsub-emulator'),
-          project(':main-owner-service:api'),
-          project(':main-owner-service:persistence'),
-          project(':label-owner-service:api'),
-          project(':label-owner-service:persistence'),
+  implementation(
           'com.google.cloud:spring-cloud-gcp-starter-pubsub:5.6.1',
           'org.springframework.boot:spring-boot-starter-web:3.3.3',
           'org.springframework.integration:spring-integration-core:6.3.4',
-          'org.junit.jupiter:junit-jupiter-api:5.11.4',
           'org.springframework.boot:spring-boot-test-autoconfigure:3.3.3',
           'org.testcontainers:gcloud:1.20.1',
           'com.google.cloud.tools:jib-core:0.26.0',
+
+          'org.assertj:assertj-core:3.27.3',
 
           'org.apache.commons:commons-text:1.12.0',
           'org.apache.httpcomponents.core5:httpcore5:5.2.4',
           'org.apache.httpcomponents.client5:httpclient5:5.3.1'
   )
-  testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.11.4'
-
-}
-
-test {
-  useJUnitPlatform()
 }

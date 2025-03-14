@@ -51,6 +51,7 @@ dependencies {
             platform('com.google.cloud:libraries-bom:26.55.0') // For e2e tests
     )
     testImplementation(
+            project(':pubsub-emulator'),
             'org.junit.jupiter:junit-jupiter-api:5.11.4',
             'org.assertj:assertj-core:3.27.3',
             'org.springframework.boot:spring-boot-test-autoconfigure:3.3.3',

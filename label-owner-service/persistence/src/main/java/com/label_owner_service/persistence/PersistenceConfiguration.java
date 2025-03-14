@@ -26,7 +26,7 @@ public class PersistenceConfiguration {
 
     adapter.setSuccessCallback(
             ((ackId, message) ->
-                    System.out.println("Message was sent via the outbound channel adapter to topic-two!")));
+                    System.out.println(message + " was sent via the outbound channel adapter to labeledOwner topic")));
 
     adapter.setFailureCallback(
             (cause, message) -> System.err.println("Error sending " + message + " due to " + cause));

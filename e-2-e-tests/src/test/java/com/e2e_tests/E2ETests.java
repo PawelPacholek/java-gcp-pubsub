@@ -73,7 +73,7 @@ public class E2ETests {
   public void simpleEndToEndTest() {
     PubSubEmulator.EmulatorProperties emulatorProperties = PubSubEmulator.properties();
     GenericContainer mainOwnerService = MainOwnerService.startContainer(emulatorProperties);
-    GenericContainer labelOwnerService = LabelOwnerService.startContainer();
+    GenericContainer labelOwnerService = LabelOwnerService.startContainer(emulatorProperties);
     try {
       int mainOwnerServiceMappedPort = mainOwnerService.getMappedPort(8080);
       Long ownerId = 7L;
@@ -87,9 +87,12 @@ public class E2ETests {
       ClassicHttpRequest fetchRequest = createFetchRequest(ownerId, mainOwnerServiceMappedPort);
       MyResponse fetchResponse = sendRequest(fetchRequest);
       System.out.println(fetchResponse);
-      System.out.println("-----------------------------------------");
+      System.out.println("-main-owner-service-logs-start-");
       System.out.println(mainOwnerService.getLogs());
-      System.out.println("-----------------------------------------");
+      System.out.println("-main-owner-service-logs-end-");
+      System.out.println("-label-owner-service-logs-start-");
+      System.out.println(labelOwnerService.getLogs());
+      System.out.println("-label-owner-service-logs-end-");
     } finally {
       mainOwnerService.stop();
       labelOwnerService.stop();

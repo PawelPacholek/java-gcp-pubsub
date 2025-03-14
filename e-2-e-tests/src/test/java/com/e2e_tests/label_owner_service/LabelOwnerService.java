@@ -1,5 +1,6 @@
 package com.e2e_tests.label_owner_service;
 
+import com.e2e_tests.pubsub_emulator.PubSubEmulator;
 import com.google.cloud.tools.jib.api.JibContainerBuilder;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.jib.JibImage;
@@ -9,7 +10,7 @@ import java.nio.file.Path;
 
 public class LabelOwnerService {
 
-    public static GenericContainer<?> startContainer() {
+    public static GenericContainer<?> startContainer(PubSubEmulator.EmulatorProperties emulatorProperties) {
         String imageName = "gcr.io/local-axle-425708-t0/label-owner-service";
 
         JibImage labelOwnerServiceImage =
@@ -23,7 +24,9 @@ public class LabelOwnerService {
         String credentialsPath = "/app/gcloud_mock_credentials.json";
 
         GenericContainer<?> container = new GenericContainer<>(labelOwnerServiceImage)
-                .withEnv("GOOGLE_CLOUD_PROJECT", "test-project-bla")
+          .withEnv("PUBSUB_PROJECT_ID", emulatorProperties.projectId())
+          .withEnv("PUBSUB_EMULATOR_HOST", emulatorProperties.emulatorEndpoint())
+          .withEnv("GOOGLE_CLOUD_PROJECT", emulatorProperties.projectId())
                 .withEnv("GOOGLE_APPLICATION_CREDENTIALS", credentialsPath)
                 .withCopyFileToContainer(entrypoint, "/app/entrypoint.sh")
                 .withCopyFileToContainer(credentials, credentialsPath)

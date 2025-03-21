@@ -30,7 +30,8 @@ public class MainOwnerService {
       .withEnv("GOOGLE_APPLICATION_CREDENTIALS", credentialsPath)
       .withCopyFileToContainer(credentials, credentialsPath)
       .withCopyFileToContainer(entrypoint, "/app/entrypoint.sh")
-      .withExposedPorts(8080);
+      .withExposedPorts(8080)
+      .withCreateContainerCmdModifier(cmd -> cmd.withName("MainOwnerService_container"));
     container.start();
     return container;
   }

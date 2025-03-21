@@ -30,7 +30,8 @@ public class LabelOwnerService {
       .withEnv("GOOGLE_APPLICATION_CREDENTIALS", credentialsPath)
       .withCopyFileToContainer(credentials, credentialsPath)
       .withCopyFileToContainer(entrypoint, "/app/entrypoint.sh")
-      .withExposedPorts(8081);
+      .withExposedPorts(8081)
+      .withCreateContainerCmdModifier(cmd -> cmd.withName("LabelOwnerService_container"));
     container.start();
     return container;
   }

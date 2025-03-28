@@ -88,7 +88,9 @@ public class E2ETests {
     GenericContainer labelOwnerService = LabelOwnerService.startContainer(emulatorProperties);
     try {
       System.out.println("Main owner service container name: " + mainOwnerService.getContainerName());
+      System.out.println("Main owner service debugger mapped port: " + mainOwnerService.getMappedPort(5005));
       System.out.println("Label owner service container name: " + labelOwnerService.getContainerName());
+      System.out.println("Label owner service debugger mapped port: " + labelOwnerService.getMappedPort(5005));
 
       int mainOwnerServiceMappedPort = mainOwnerService.getMappedPort(8080);
       Long ownerId = 7L;

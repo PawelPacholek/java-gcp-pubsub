@@ -28,7 +28,7 @@ public class UploadInitialOwnerController {
     public ResponseEntity<String> uploadOwner(@RequestBody UploadedOwner owner) {
         InitialOwner initialOwner = owner.toDomain();
         uploadOwnerUseCase.uploadInitialOwner(initialOwner);
-        logger.debug("---- owner upload completed ----");
+        logger.info("---- owner upload completed ----");
         return new ResponseEntity<>("", HttpStatus.OK);
     }
 }

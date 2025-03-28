@@ -30,6 +30,9 @@ plugins {
 }
 
 repositories {
+ //   flatDir {
+ //       dirs "../../jar/modified"
+ //   }
     mavenCentral()
 }
 
@@ -141,6 +144,7 @@ dependencies {
     implementation(
             gradleApi(),
             project(':main-owner-service:domain'),
+            fileTree(dir: 'jar/modified', include: ['**/*.jar']),
             'com.google.cloud:spring-cloud-gcp-starter-pubsub:5.6.1',
             'org.springframework.boot:spring-boot-starter-web:3.3.3',
             'org.springframework.integration:spring-integration-core:6.3.4',

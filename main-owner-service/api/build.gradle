@@ -144,7 +144,7 @@ dependencies {
     implementation(
             gradleApi(),
             project(':main-owner-service:domain'),
-            fileTree(dir: 'jar/modified', include: ['**/*.jar']),
+            //fileTree(dir: 'jar/modified', include: ['**/*.jar']),
             'com.google.cloud:spring-cloud-gcp-starter-pubsub:5.6.1',
             'org.springframework.boot:spring-boot-starter-web:3.3.3',
             'org.springframework.integration:spring-integration-core:6.3.4',
@@ -160,7 +160,7 @@ dependencies {
 
 tasks.withType(JavaCompile).configureEach {
     //javaCompiler.
-    //modularity.setInferModulePath(false)
+    modularity.inferModulePath.set(true)
     /*List<String> args = options.getCompilerArgs()
     options.setCompilerArgs(List.of(
             '--module-path',

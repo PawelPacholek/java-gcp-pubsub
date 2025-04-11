@@ -23,8 +23,9 @@ import com.main_owner_service.domain.usecases.SaveLabeledOwnerUseCase;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-@Component
+@Repository
 public class SaveLabeledOwnerListener {
 
     private final SaveLabeledOwnerUseCase saveLabeledOwnerUseCase;

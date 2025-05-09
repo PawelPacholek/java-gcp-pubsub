@@ -124,7 +124,7 @@ public class E2ETests {
 
   private ClassicHttpRequest createUploadRequest(Long ownerId, int mainOwnerServiceMappedPort) {
     String body = """
-        {"id":%s,"name":"name1","address":"address2","phone":"phone3","email":"email4"}""".formatted(ownerId);
+        {"id":%s,"name":"name1","address":"","phone":"+48phone3","email":"email4"}""".formatted(ownerId);
     String uploadUri = "http://localhost:%s/upload-initial-owner".formatted(mainOwnerServiceMappedPort);
     ClassicHttpRequest uploadRequest = DefaultClassicHttpRequestFactory.INSTANCE.newHttpRequest("POST", uploadUri);
     uploadRequest.setEntity(new StringEntity(body));

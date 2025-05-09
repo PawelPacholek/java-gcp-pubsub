@@ -47,11 +47,20 @@ public class LabelOwnerListener {
 
     @ServiceActivator(inputChannel = "initialOwnerChannel")
     public void messageReceiver(
-            InitialOwner initialOwner,
+      String rawInitialOwnerMessage,
+            //InitialOwner initialOwner,
             @Header(GcpPubSubHeaders.ORIGINAL_MESSAGE) BasicAcknowledgeablePubsubMessage message
     ) {
+        InitialOwner initialOwner = parseOwner(rawInitialOwnerMessage);
         labelOwnerUseCase.labelAndSendOwner(initialOwner);
         message.ack();
+    }
+
+    private InitialOwner parseOwner(String rawInitialOwnerMessage) {
+      String initialOwnerJson = rawInitialOwnerMessage
+        .replaceAll("^.*payload=\\{", "{")
+        .replaceAll("}, headers=.*$", "}");
+      return DataClassSerialization.deserialize(initialOwnerJson, InitialOwner.class);
     }
 
 

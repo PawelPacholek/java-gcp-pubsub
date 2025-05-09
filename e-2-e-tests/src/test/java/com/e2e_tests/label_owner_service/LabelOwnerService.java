@@ -25,7 +25,7 @@ public class LabelOwnerService {
 
     GenericContainer<?> container = new GenericContainer<>(labelOwnerServiceImage)
       .withEnv("PUBSUB_PROJECT_ID", emulatorProperties.projectId())
-      .withEnv("PUBSUB_EMULATOR_HOST", emulatorProperties.emulatorEndpoint())
+      .withEnv("PUBSUB_EMULATOR_HOST", emulatorProperties.emulatorEndpoint().replace("localhost", "172.17.0.1"))
       .withEnv("GOOGLE_CLOUD_PROJECT", emulatorProperties.projectId())
       .withEnv("GOOGLE_APPLICATION_CREDENTIALS", credentialsPath)
       .withCopyFileToContainer(credentials, credentialsPath)

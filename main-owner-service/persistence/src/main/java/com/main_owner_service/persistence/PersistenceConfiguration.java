@@ -48,8 +48,6 @@ public class PersistenceConfiguration {
     return new OwnerGatewayInMemoryImp();
   }
 
-
-
   @Bean
   public MessageChannel initialOwnerChannel() {
     return new PublishSubscribeChannel();

@@ -23,7 +23,6 @@ import com.main_owner_service.domain.models.LabeledOwner;
 import com.main_owner_service.domain.usecases.SaveLabeledOwnerUseCase;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.messaging.handler.annotation.Header;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -53,32 +52,4 @@ public class SaveLabeledOwnerListener {
         return DataClassSerialization.deserialize(initialOwnerJson, LabeledOwner.class);
     }
 
-/*
-    @PostMapping(value = "/save-labeled-owner")
-    public ResponseEntity<String> saveLabeledOwner(@RequestBody PubsubBody body) throws JsonProcessingException {
-        PubsubBody.Message message = body.getMessage();
-        if (message == null) {
-            String msg = "Bad Request: invalid Pub/Sub message format";
-            System.out.println(msg);
-            return new ResponseEntity<>(msg, HttpStatus.BAD_REQUEST);
-        }
-
-        String data = message.getData();
-        if (data == null) {
-            String msg = "Bad Request: no data found";
-            System.out.println(msg);
-            return new ResponseEntity<>(msg, HttpStatus.BAD_REQUEST);
-        }
-
-        String target = new String(Base64.getDecoder().decode(data));
-        LabeledOwner labeledOwner = new ObjectMapper().readValue(target, LabeledOwner.class);
-        saveLabeledOwnerUseCase.saveLabeledOwner(labeledOwner);
-        return new ResponseEntity<>("", HttpStatus.OK);
-    }
-
-    @ExceptionHandler({IllegalArgumentException.class, JsonProcessingException.class})
-    public ResponseEntity<String> handleException(Exception exception) {
-        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
-    }
-*/
 }

@@ -6,7 +6,6 @@ import com.google.cloud.spring.pubsub.PubSubAdmin;
 import com.google.cloud.spring.pubsub.core.PubSubTemplate;
 import com.pubsub_emulator.PubSubEmulator;
 import com.pubsub_emulator.PubSubEmulatorInitializer;
-import com.pubsub_emulator.SimplePubSubEmulatorInitializer;
 import org.apache.commons.lang3.ThreadUtils;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
@@ -29,9 +28,8 @@ import java.io.UncheckedIOException;
 import java.time.Duration;
 import java.util.List;
 
-//@AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE, classes = E2ETests.App.class)
-@ContextConfiguration(/*classes = E2ETestConfiguration.class, */initializers = PubSubEmulatorInitializer.class)
+@ContextConfiguration(initializers = PubSubEmulatorInitializer.class)
 public class E2ETests {
 
   @SpringBootApplication
@@ -41,23 +39,13 @@ public class E2ETests {
       SpringApplication.run(App.class, args);
     }
 
-    //     @Bean
-    //   PubSubTopicClient pubSubClient(PubSubTemplate template) {
-    //        return new PubSubTopicClient(template, "instance", "topic");
-    //   }
-
   }
 
-  //  @Autowired
-  //  PubSubTopicClient pubSubTopicClient;
   @Autowired
   PubSubAdmin admin;
   @Autowired
   PubSubTemplate template;
 
-
-  //  @Autowired
-  //  private MockMvc mockMvc;
   @BeforeEach
   public void preparePubsubEmulator() {
     PubSubEmulator.createTopicAndSubscription(

@@ -1,10 +1,8 @@
 package com.main_owner_service.api.controllers;
 
 import com.main_owner_service.api.models.UploadedOwner;
-import com.main_owner_service.domain.usecases.UploadInitialOwnerUseCase;
 import com.main_owner_service.domain.models.InitialOwner;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.main_owner_service.domain.usecases.UploadInitialOwnerUseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,8 +14,6 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 public class UploadInitialOwnerController {
 
-    private static final Logger logger = LoggerFactory.getLogger("event logger");
-
     private final UploadInitialOwnerUseCase uploadOwnerUseCase;
 
     public UploadInitialOwnerController(UploadInitialOwnerUseCase uploadOwnerUseCase) {
@@ -28,7 +24,6 @@ public class UploadInitialOwnerController {
     public ResponseEntity<String> uploadOwner(@RequestBody UploadedOwner owner) {
         InitialOwner initialOwner = owner.toDomain();
         uploadOwnerUseCase.uploadInitialOwner(initialOwner);
-        logger.info("---- owner upload completed ----");
         return new ResponseEntity<>("", HttpStatus.OK);
     }
 }

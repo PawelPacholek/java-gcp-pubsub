@@ -1,17 +1,14 @@
 package com.main_owner_service.api.controllers;
 
 import com.main_owner_service.api.helpers.DataClassSerialization;
-import com.main_owner_service.domain.usecases.FetchLabeledOwnerUseCase;
 import com.main_owner_service.domain.models.LabeledOwner;
+import com.main_owner_service.domain.usecases.FetchLabeledOwnerUseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 @RestController
 public class FetchLabeledOwnerController {

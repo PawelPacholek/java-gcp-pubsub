@@ -52,34 +52,4 @@ public class LabelOwnerListener {
       return DataClassSerialization.deserialize(initialOwnerJson, InitialOwner.class);
     }
 
-
-
-  /*
-    @PostMapping(value = "/label-owner")
-    public ResponseEntity<String> saveLabeledOwner(@RequestBody PubsubBody body) throws JsonProcessingException {
-        PubsubBody.Message message = body.getMessage();
-        if (message == null) {
-            String msg = "Bad Request: invalid Pub/Sub message format";
-            System.out.println(msg);
-            return new ResponseEntity<>(msg, HttpStatus.BAD_REQUEST);
-        }
-
-        String data = message.getData();
-        if (data == null) {
-            String msg = "Bad Request: no data found";
-            System.out.println(msg);
-            return new ResponseEntity<>(msg, HttpStatus.BAD_REQUEST);
-        }
-
-        String target = new String(Base64.getDecoder().decode(data));
-        InitialOwner labeledOwner = new ObjectMapper().readValue(target, InitialOwner.class);
-        labelOwnerUseCase.labelAndSendOwner(labeledOwner);
-        return new ResponseEntity<>("", HttpStatus.OK);
-    }
-
-    @ExceptionHandler({IllegalArgumentException.class, JsonProcessingException.class})
-    public ResponseEntity<String> handleException(Exception exception) {
-        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
-    }
-*/
 }

@@ -37,11 +37,7 @@ public class MainOwnerService {
   }
 
   private static JibContainerBuilder buildJibContainer(JibContainerBuilder builder) {
-    return builder.setEntrypoint("/app/entrypoint.sh")
-      //.addEnvironmentVariable()
-      //.setProgramArguments()
-      //  .setExposedPorts(Port.tcp(8080))
-      ;
+    return builder.setEntrypoint("/app/entrypoint.sh");
   }
 
 }

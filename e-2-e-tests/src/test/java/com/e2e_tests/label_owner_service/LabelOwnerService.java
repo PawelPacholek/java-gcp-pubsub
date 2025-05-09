@@ -37,11 +37,7 @@ public class LabelOwnerService {
   }
 
   private static JibContainerBuilder buildJibContainer(JibContainerBuilder builder) {
-    return builder.setEntrypoint("/app/entrypoint.sh")
-      //.addEnvironmentVariable()
-      //.setProgramArguments()
-      //  .setExposedPorts(Port.tcp(8081))
-      ;
+    return builder.setEntrypoint("/app/entrypoint.sh");
   }
 
 }

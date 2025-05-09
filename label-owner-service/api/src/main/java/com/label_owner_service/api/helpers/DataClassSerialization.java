@@ -1,4 +1,4 @@
-package com.label_owner_service.api.listeners;
+package com.label_owner_service.api.helpers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;

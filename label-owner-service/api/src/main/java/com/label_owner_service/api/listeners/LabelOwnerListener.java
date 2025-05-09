@@ -16,25 +16,14 @@
 
 package com.label_owner_service.api.listeners;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.cloud.spring.pubsub.support.BasicAcknowledgeablePubsubMessage;
 import com.google.cloud.spring.pubsub.support.GcpPubSubHeaders;
-import com.label_owner_service.api.models.PubsubBody;
+import com.label_owner_service.api.helpers.DataClassSerialization;
 import com.label_owner_service.domain.models.InitialOwner;
 import com.label_owner_service.domain.usecases.LabelOwnerUseCase;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.messaging.handler.annotation.Header;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Base64;
 
 @Repository
 public class LabelOwnerListener {

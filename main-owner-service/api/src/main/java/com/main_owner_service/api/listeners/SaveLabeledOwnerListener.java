@@ -18,6 +18,7 @@ package com.main_owner_service.api.listeners;
 
 import com.google.cloud.spring.pubsub.support.BasicAcknowledgeablePubsubMessage;
 import com.google.cloud.spring.pubsub.support.GcpPubSubHeaders;
+import com.main_owner_service.api.helpers.DataClassSerialization;
 import com.main_owner_service.domain.models.LabeledOwner;
 import com.main_owner_service.domain.usecases.SaveLabeledOwnerUseCase;
 import org.springframework.integration.annotation.ServiceActivator;
@@ -36,12 +37,22 @@ public class SaveLabeledOwnerListener {
 
     @ServiceActivator(inputChannel = "labeledOwnerChannel")
     public void messageReceiver(
-            LabeledOwner labeledOwner,
+      String rawLabeledOwnerMessage,
+            //LabeledOwner labeledOwner,
             @Header(GcpPubSubHeaders.ORIGINAL_MESSAGE) BasicAcknowledgeablePubsubMessage message
     ) {
+        LabeledOwner labeledOwner = parseOwner(rawLabeledOwnerMessage);
         saveLabeledOwnerUseCase.saveLabeledOwner(labeledOwner);
         message.ack();
     }
+
+    private LabeledOwner parseOwner(String rawLabeledOwnerMessage) {
+        String initialOwnerJson = rawLabeledOwnerMessage
+          .replaceAll("^.*payload=\\{", "{")
+          .replaceAll("}, headers=.*$", "}");
+        return DataClassSerialization.deserialize(initialOwnerJson, LabeledOwner.class);
+    }
+
 /*
     @PostMapping(value = "/save-labeled-owner")
     public ResponseEntity<String> saveLabeledOwner(@RequestBody PubsubBody body) throws JsonProcessingException {

@@ -52,7 +52,8 @@ public class ApiConfiguration {
     );
     adapter.setOutputChannel(messageChannel);
     adapter.setAckMode(AckMode.MANUAL);
-    adapter.setPayloadType(LabeledOwner.class);
+    //adapter.setPayloadType(LabeledOwner.class);
+    adapter.setPayloadType(String.class);
     return adapter;
   }
 

@@ -88,12 +88,7 @@ public class E2ETests {
       MyResponse uploadResponse = sendRequest(uploadRequest);
       System.out.println(uploadResponse);
 
-      sleep(5);
-
-      List<String> messages = PubSubEmulator.fetchRawMessages("label-owner-service-to-initialOwner-subscription");
-      System.out.println("Messages size: " + messages.size());
-
-      sleep(5);
+      sleep(10);
 
       ClassicHttpRequest fetchRequest = createFetchRequest(ownerId, mainOwnerServiceMappedPort);
       MyResponse fetchResponse = sendRequest(fetchRequest);

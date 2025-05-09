@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.cloud.spring.pubsub.PubSubAdmin;
 import com.google.cloud.spring.pubsub.core.PubSubTemplate;
+import com.google.protobuf.AbstractMessage;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.ObjectAssert;
 import org.assertj.core.api.RecursiveComparisonAssert;
@@ -75,6 +76,13 @@ public class PubSubEmulator {
     return template.get().pullAndAck(subscriptionId, 100, true)
       .stream()
       .map(m -> deserializer.apply(m.getAttributesOrDefault("event", ""), m.getData().toStringUtf8()))
+      .toList();
+  }
+
+  public static List<String> fetchRawMessages(String subscriptionId) {
+    return template.get().pullAndAck(subscriptionId, 100, true)
+      .stream()
+      .map(AbstractMessage::toString)
       .toList();
   }
 

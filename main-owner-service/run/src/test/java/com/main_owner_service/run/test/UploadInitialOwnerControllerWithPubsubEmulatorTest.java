@@ -31,6 +31,9 @@ import org.springframework.test.context.event.annotation.BeforeTestClass;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -75,6 +78,8 @@ public class UploadInitialOwnerControllerWithPubsubEmulatorTest {
                     {"id":7,"name":"name1","address":"address2","phone":"phone3","email":"email4"}""";
         mockMvc.perform(uploadInitialOwner().contentType(MediaType.APPLICATION_JSON).content(mockBody))
                 .andExpect(status().isOk());
+        List<String> messages = PubSubEmulator.fetchRawMessages("label-owner-service-to-initialOwner-subscription");
+        assertThat(messages).hasSize(1);
     }
 
     private static MockHttpServletRequestBuilder uploadInitialOwner() {

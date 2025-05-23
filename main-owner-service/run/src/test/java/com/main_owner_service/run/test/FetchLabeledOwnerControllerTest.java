@@ -16,19 +16,31 @@
 
 package com.main_owner_service.run.test;
 
+import com.main_owner_service.api.helpers.DataClassSerialization;
+import com.main_owner_service.domain.models.LabeledOwner;
+import com.pubsub_emulator.PubSubEmulator;
+import com.pubsub_emulator.PubSubEmulatorInitializer;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.event.annotation.AfterTestClass;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+
+import java.time.Duration;
+import java.util.List;
+import java.util.Set;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@ContextConfiguration(initializers = PubSubEmulatorInitializer.class)
 public class FetchLabeledOwnerControllerTest {
 
     @Autowired
@@ -37,13 +49,44 @@ public class FetchLabeledOwnerControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @BeforeEach
+    public void preparePubsubEmulator() {
+        PubSubEmulator.createTopicAndSubscription(
+          "labeledOwner",
+          "main-owner-service-to-labeledOwner-subscription"
+        );
+    }
+
+    @AfterTestClass
+    public void cleanPubsubEmulator() {
+        PubSubEmulator.deleteTopicAndSubscription(
+          "labeledOwner",
+          "main-owner-service-to-labeledOwner-subscription"
+        );
+    }
+
     @Test
     public void happyPath() throws Exception {
-        Object a = applicationContext.getBean("publisherTransportChannelProvider");
-        Object b = applicationContext.getBean("subscriberTransportChannelProvider");
-        System.out.printf("%s %s%n", a, b);
-        mockMvc.perform(fetchLabeledOwner(4L))
+        Long ownerId = 4L;
+        LabeledOwner labeledOwner =
+          new LabeledOwner(ownerId, "name", "address", "phone", "email", Set.of());
+        String serialized = DataClassSerialization.serialize(labeledOwner);
+        PubSubEmulator.publish("labeledOwner", serialized);
+
+        sleep(5);
+
+        List<String> messages = PubSubEmulator.fetchRawMessages("main-owner-service-to-labeledOwner-subscription");
+
+        mockMvc.perform(fetchLabeledOwner(ownerId))
                 .andExpect(status().isOk());
+    }
+
+    private void sleep(int seconds) {
+        try {
+            Thread.sleep(Duration.ofSeconds(seconds));
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static MockHttpServletRequestBuilder fetchLabeledOwner(Long id) {

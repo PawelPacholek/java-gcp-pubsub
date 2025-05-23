@@ -86,6 +86,10 @@ public class PubSubEmulator {
       .toList();
   }
 
+  public static void publish(String topic, Object message) {
+    template.get().publish(topic, message, Map.of("errorChannel", "", "replyChannel", "nullChannel"));
+  }
+
   public static void createTopicAndSubscription(String topicId, String subscriptionId) {
     admin.get().createTopic(topicId);
     admin.get().createSubscription(subscriptionId, topicId);

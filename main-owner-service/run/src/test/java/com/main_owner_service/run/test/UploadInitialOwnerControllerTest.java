@@ -16,23 +16,52 @@
 
 package com.main_owner_service.run.test;
 
+import com.pubsub_emulator.PubSubEmulator;
+import com.pubsub_emulator.PubSubEmulatorInitializer;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@ContextConfiguration(initializers = PubSubEmulatorInitializer.class)
 public class UploadInitialOwnerControllerTest {
 
     @Autowired
+    private ApplicationContext applicationContext;
+
+    @Autowired
     private MockMvc mockMvc;
+
+    @BeforeEach
+    public void preparePubsubEmulator() {
+        PubSubEmulator.createTopicAndSubscription(
+          "initialOwner",
+          "label-owner-service-to-initialOwner-subscription"
+        );
+    }
+
+    @AfterEach
+    public void cleanPubsubEmulator() {
+        PubSubEmulator.deleteTopicAndSubscription(
+          "initialOwner",
+          "label-owner-service-to-initialOwner-subscription"
+        );
+    }
 
     @Test
     public void happyPath() throws Exception {
@@ -40,6 +69,8 @@ public class UploadInitialOwnerControllerTest {
                     {"id":7,"name":"name1","address":"address2","phone":"phone3","email":"email4"}""";
         mockMvc.perform(uploadInitialOwner().contentType(MediaType.APPLICATION_JSON).content(mockBody))
                 .andExpect(status().isOk());
+        List<String> messages = PubSubEmulator.fetchRawMessages("label-owner-service-to-initialOwner-subscription");
+        assertThat(messages).hasSize(1);
     }
 
     private static MockHttpServletRequestBuilder uploadInitialOwner() {

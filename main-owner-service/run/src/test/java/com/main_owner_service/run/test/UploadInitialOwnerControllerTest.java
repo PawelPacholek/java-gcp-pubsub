@@ -24,7 +24,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationContext;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -38,11 +37,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@ContextConfiguration(initializers = PubSubEmulatorInitializer.class)
+@ContextConfiguration(initializers = PubSubEmulatorInitializer.class, classes = TestRunConfiguration.class)
 public class UploadInitialOwnerControllerTest {
-
-    @Autowired
-    private ApplicationContext applicationContext;
 
     @Autowired
     private MockMvc mockMvc;
@@ -60,6 +56,10 @@ public class UploadInitialOwnerControllerTest {
         PubSubEmulator.deleteTopicAndSubscription(
           "initialOwner",
           "label-owner-service-to-initialOwner-subscription"
+        );
+        PubSubEmulator.deleteTopicAndSubscription(
+          "labeledOwner",
+          "main-owner-service-to-labeledOwner-subscription"
         );
     }
 

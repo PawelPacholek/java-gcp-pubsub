@@ -2,8 +2,6 @@ package com.e2e_tests;
 
 import com.e2e_tests.label_owner_service.LabelOwnerService;
 import com.e2e_tests.main_owner_service.MainOwnerService;
-import com.google.cloud.spring.pubsub.PubSubAdmin;
-import com.google.cloud.spring.pubsub.core.PubSubTemplate;
 import com.pubsub_emulator.PubSubEmulator;
 import com.pubsub_emulator.PubSubEmulatorInitializer;
 import org.apache.commons.lang3.ThreadUtils;
@@ -16,7 +14,6 @@ import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,7 +23,6 @@ import org.testcontainers.containers.GenericContainer;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.time.Duration;
-import java.util.List;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE, classes = E2ETests.App.class)
 @ContextConfiguration(initializers = PubSubEmulatorInitializer.class)
@@ -40,11 +36,6 @@ public class E2ETests {
     }
 
   }
-
-  @Autowired
-  PubSubAdmin admin;
-  @Autowired
-  PubSubTemplate template;
 
   @BeforeEach
   public void preparePubsubEmulator() {

@@ -27,6 +27,7 @@ plugins {
     id 'application'
     id 'java'
     id 'org.springframework.boot' version '3.3.3'
+    id 'org.gradlex.extra-java-module-info' version '1.5'
 }
 
 repositories {
@@ -142,7 +143,7 @@ compileJava {
 
 dependencies {
     implementation(
-            gradleApi(),
+           // gradleApi(),
             project(':main-owner-service:domain'),
             //fileTree(dir: 'jar/modified', include: ['**/*.jar']),
             'com.google.cloud:spring-cloud-gcp-starter-pubsub:5.6.1',
@@ -158,6 +159,38 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.11.4'
 }
 
+extraJavaModuleInfo {
+    automaticModule('com.google.cloud:spring-cloud-gcp-pubsub', 'spring.cloud.gcp.pubsub')
+    automaticModule('com.google.cloud:spring-cloud-gcp-starter-pubsub', 'spring.cloud.gcp.starter.pubsub')
+    automaticModule('com.google.cloud:spring-cloud-gcp-starter', 'spring.cloud.gcp.starter')
+    automaticModule('com.google.cloud:spring-cloud-gcp-autoconfigure', 'spring.cloud.gcp.autoconfigure')
+    automaticModule('com.google.cloud:spring-cloud-gcp-core', 'spring.cloud.gcp.core')
+    automaticModule('com.google.cloud:google-cloud-pubsub', 'google.cloud.pubsub')
+    automaticModule('com.google.cloud:google-cloud-core', 'google.cloud.core')
+    automaticModule('com.google.api:gax', 'gax')
+    automaticModule('com.google.api:gax-grpc', 'gax.grpc')
+    automaticModule('com.google.api:gax-httpjson', 'gax.httpjson')
+    automaticModule('com.google.api.grpc:proto-google-cloud-pubsub-v1', 'proto.google.cloud.pubsub.v1')
+    automaticModule('com.google.api.grpc:proto-google-iam-v1', 'proto.google.iam.v1')
+    automaticModule('com.google.api.grpc:proto-google-common-protos', 'proto.google.common.protos')
+    automaticModule('com.google.auto.value:auto-value-annotations', 'auto.value.annotations')
+    automaticModule('com.google.code.findbugs:jsr305', 'jsr305')
+    automaticModule('com.google.guava:listenablefuture', 'listenablefuture')
+    automaticModule('io.opencensus:opencensus-api', 'opencensus.api')
+    automaticModule('io.opencensus:opencensus-contrib-http-util', 'opencensus.contrib.http.util')
+    automaticModule('io.grpc:grpc-context', 'grpc.context')
+    automaticModule('org.springframework.retry:spring-retry', 'spring.retry')
+}
+
+/*
+tasks.jar {
+    manifest {
+        attributes("Automatic-Module-Name": "spring-cloud-gcp-pubsub")
+    }
+}
+*/
+
+/*
 tasks.withType(JavaCompile).configureEach {
     //javaCompiler.
     modularity.inferModulePath.set(true)
@@ -166,9 +199,9 @@ tasks.withType(JavaCompile).configureEach {
             '--module-path',
             '/home/pawel/.gradle/caches/modules-2/files-2.1/com.google.cloud/spring-cloud-gcp-pubsub/5.6.1/cadd0fe84ed4094c6203eb748405cf5cd0cebfcd/spring-cloud-gcp-pubsub-5.6.1.jar'
     ))
-    */
-}
 
+}
+*/
 test {
     useJUnitPlatform()
 }

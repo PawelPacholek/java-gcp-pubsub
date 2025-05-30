@@ -20,8 +20,10 @@ import com.main_owner_service.api.helpers.DataClassSerialization;
 import com.main_owner_service.domain.models.LabeledOwner;
 import com.pubsub_emulator.PubSubEmulator;
 import com.pubsub_emulator.PubSubEmulatorInitializer;
+import com.redis_instance.RedisInstance;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -37,6 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@ExtendWith(RedisInstance.Shared.class)
 @ContextConfiguration(initializers = PubSubEmulatorInitializer.class, classes = TestRunConfiguration.class)
 public class FetchLabeledOwnerControllerTest {
 

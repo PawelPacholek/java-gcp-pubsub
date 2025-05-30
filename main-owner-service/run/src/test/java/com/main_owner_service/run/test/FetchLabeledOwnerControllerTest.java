@@ -40,7 +40,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ExtendWith(RedisInstance.Shared.class)
-@ContextConfiguration(initializers = PubSubEmulatorInitializer.class, classes = TestRunConfiguration.class)
+@ContextConfiguration(
+  initializers = {PubSubEmulatorInitializer.class, RedisPropertiesInitializer.class},
+  classes = TestRunConfiguration.class
+)
 public class FetchLabeledOwnerControllerTest {
 
     @Autowired

@@ -80,7 +80,7 @@ public class RedisInstance {
     });
   }
 
-  static Map<String, String> getProperties() {
+  public static Map<String, String> getProperties() {
     return shared == null ? Map.of() : shared;
   }
 

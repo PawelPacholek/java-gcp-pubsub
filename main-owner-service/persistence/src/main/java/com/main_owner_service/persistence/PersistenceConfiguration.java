@@ -24,10 +24,16 @@ import org.springframework.messaging.handler.annotation.Header;
 public class PersistenceConfiguration {
 
   @Bean
-  JedisConnectionFactory jedisConnectionFactory(@Value("${redis.host}") String host, @Value("${redis.port}") int port) {
+  JedisConnectionFactory jedisConnectionFactory(
+    @Value("${session.state.datasource.host}") String host,
+    @Value("${session.state.datasource.port}") int port,
+    @Value("${session.state.datasource.password}") String password,
+    @Value("${session.state.datasource.certificate}") String certificateAsPem
+  ) {
     JedisConnectionFactory jedisConFactory = new JedisConnectionFactory();
     jedisConFactory.setHostName(host);
     jedisConFactory.setPort(port);
+    jedisConFactory.setPassword(password);
     return jedisConFactory;
   }
 

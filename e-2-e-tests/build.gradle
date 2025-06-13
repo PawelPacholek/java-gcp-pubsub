@@ -17,6 +17,7 @@ dependencies {
 
   testImplementation(
           project(':pubsub-emulator'),
+          project(':redis-instance'),
           project(':main-owner-service:api'),
           project(':main-owner-service:persistence'),
           project(':label-owner-service:api'),

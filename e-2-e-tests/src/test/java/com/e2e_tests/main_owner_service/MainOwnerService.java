@@ -2,6 +2,7 @@ package com.e2e_tests.main_owner_service;
 
 import com.pubsub_emulator.PubSubEmulator;
 import com.google.cloud.tools.jib.api.JibContainerBuilder;
+import com.redis_instance.RedisInstance;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.jib.JibImage;
 import org.testcontainers.utility.MountableFile;
@@ -10,7 +11,10 @@ import java.nio.file.Path;
 
 public class MainOwnerService {
 
-  public static GenericContainer<?> startContainer(PubSubEmulator.EmulatorProperties emulatorProperties) {
+  public static GenericContainer<?> startContainer(
+    PubSubEmulator.EmulatorProperties emulatorProperties,
+    RedisInstance.RedisProperties redisProperties
+  ) {
     String imageName = "gcr.io/local-axle-425708-t0/main-owner-service";
 
     JibImage mainOwnerServiceImage =
@@ -24,9 +28,11 @@ public class MainOwnerService {
     String credentialsPath = "/app/gcloud_mock_credentials.json";
 
     GenericContainer<?> container = new GenericContainer<>(mainOwnerServiceImage)
-      .withEnv("PUBSUB_PROJECT_ID", emulatorProperties.projectId())
-      .withEnv("PUBSUB_EMULATOR_HOST", emulatorProperties.emulatorEndpoint().replace("localhost", "172.17.0.1"))
+      .withEnv("REDIS_HOST", withExternalLocalHost(redisProperties.host()))
+      .withEnv("REDIS_PORT", String.valueOf(redisProperties.port()))
       .withEnv("GOOGLE_CLOUD_PROJECT", emulatorProperties.projectId())
+      .withEnv("PUBSUB_PROJECT_ID", emulatorProperties.projectId())
+      .withEnv("PUBSUB_EMULATOR_HOST", withExternalLocalHost(emulatorProperties.emulatorEndpoint()))
       .withEnv("GOOGLE_APPLICATION_CREDENTIALS", credentialsPath)
       .withCopyFileToContainer(credentials, credentialsPath)
       .withCopyFileToContainer(entrypoint, "/app/entrypoint.sh")
@@ -34,6 +40,10 @@ public class MainOwnerService {
       .withCreateContainerCmdModifier(cmd -> cmd.withName("MainOwnerService_container"));
     container.start();
     return container;
+  }
+
+  private static String withExternalLocalHost(String address) {
+    return address.replace("localhost", "172.17.0.1");
   }
 
   private static JibContainerBuilder buildJibContainer(JibContainerBuilder builder) {

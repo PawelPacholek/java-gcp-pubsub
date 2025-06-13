@@ -4,6 +4,7 @@ import com.e2e_tests.label_owner_service.LabelOwnerService;
 import com.e2e_tests.main_owner_service.MainOwnerService;
 import com.pubsub_emulator.PubSubEmulator;
 import com.pubsub_emulator.PubSubEmulatorInitializer;
+import com.redis_instance.RedisInstance;
 import org.apache.commons.lang3.ThreadUtils;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
@@ -14,6 +15,7 @@ import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,6 +27,7 @@ import java.io.UncheckedIOException;
 import java.time.Duration;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE, classes = E2ETests.App.class)
+@ExtendWith(RedisInstance.Shared.class)
 @ContextConfiguration(initializers = PubSubEmulatorInitializer.class)
 public class E2ETests {
 
@@ -64,7 +67,8 @@ public class E2ETests {
   @Test
   public void simpleEndToEndTest() {
     PubSubEmulator.EmulatorProperties emulatorProperties = PubSubEmulator.properties();
-    GenericContainer mainOwnerService = MainOwnerService.startContainer(emulatorProperties);
+    RedisInstance.RedisProperties redisProperties = RedisInstance.getProperties();
+    GenericContainer mainOwnerService = MainOwnerService.startContainer(emulatorProperties, redisProperties);
     GenericContainer labelOwnerService = LabelOwnerService.startContainer(emulatorProperties);
     try {
       System.out.println("Main owner service container name: " + mainOwnerService.getContainerName());

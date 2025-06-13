@@ -11,7 +11,7 @@ import java.nio.file.Path;
 public class LabelOwnerService {
 
   public static GenericContainer<?> startContainer(PubSubEmulator.EmulatorProperties emulatorProperties) {
-    String imageName = "gcr.io/local-axle-425708-t0/label-owner-service";
+    String imageName = "europe-central2-docker.pkg.dev/local-axle-425708-t0/project-repository/label-owner-service";
 
     JibImage labelOwnerServiceImage =
       new JibImage(imageName, LabelOwnerService::buildJibContainer);

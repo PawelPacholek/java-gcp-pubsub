@@ -15,7 +15,7 @@ public class MainOwnerService {
     PubSubEmulator.EmulatorProperties emulatorProperties,
     RedisInstance.RedisProperties redisProperties
   ) {
-    String imageName = "gcr.io/local-axle-425708-t0/main-owner-service";
+    String imageName = "europe-central2-docker.pkg.dev/local-axle-425708-t0/project-repository/main-owner-service";
 
     JibImage mainOwnerServiceImage =
       new JibImage(imageName, MainOwnerService::buildJibContainer);

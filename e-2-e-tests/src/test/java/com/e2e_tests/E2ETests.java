@@ -107,7 +107,7 @@ public class E2ETests {
     int mainOwnerServicePort = 443;
     String authorization = "Bearer " + new String(E2ETests.class.getResourceAsStream("/token.log").readAllBytes());
 
-    Long ownerId = 7L;
+    Long ownerId = System.currentTimeMillis();
 
     ClassicHttpRequest uploadRequest = createUploadRequest(ownerId, url, mainOwnerServicePort);
     uploadRequest.setHeader("Authorization", authorization);

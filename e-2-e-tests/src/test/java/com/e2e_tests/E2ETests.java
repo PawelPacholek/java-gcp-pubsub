@@ -102,18 +102,22 @@ public class E2ETests {
   }
 
   @Test
-  public void simpleProductionTest() {
+  public void simpleProductionTest() throws IOException {
     String url = "https://main-owner-service-275334369032.europe-central2.run.app";
     int mainOwnerServicePort = 443;
+    String authorization = "Bearer " + new String(E2ETests.class.getResourceAsStream("/token.log").readAllBytes());
+
     Long ownerId = 7L;
 
     ClassicHttpRequest uploadRequest = createUploadRequest(ownerId, url, mainOwnerServicePort);
+    uploadRequest.setHeader("Authorization", authorization);
     MyResponse uploadResponse = sendRequest(uploadRequest);
     System.out.println(uploadResponse);
 
     sleep(10);
 
     ClassicHttpRequest fetchRequest = createFetchRequest(ownerId, url, mainOwnerServicePort);
+    fetchRequest.setHeader("Authorization", authorization);
     MyResponse fetchResponse = sendRequest(fetchRequest);
     System.out.println(fetchResponse);
   }

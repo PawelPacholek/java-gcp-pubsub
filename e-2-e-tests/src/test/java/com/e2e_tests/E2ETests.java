@@ -104,7 +104,7 @@ public class E2ETests {
   @Test
   public void simpleProductionTest() {
     String url = "https://main-owner-service-275334369032.europe-central2.run.app";
-    int mainOwnerServicePort = 8080;
+    int mainOwnerServicePort = 443;
     Long ownerId = 7L;
 
     ClassicHttpRequest uploadRequest = createUploadRequest(ownerId, url, mainOwnerServicePort);

@@ -25,9 +25,13 @@ public class MainOwnerServiceApplication {
     @Override
     public void initialize(ConfigurableApplicationContext applicationContext) {
       ConfigurableEnvironment env = applicationContext.getEnvironment();
-      String envVar = System.getenv("PUBSUB_EMULATOR_HOST");
-      if (envVar != null) {
-        Map<String, Object> props = Map.of("spring.cloud.gcp.pubsub.emulator-host", envVar);
+      String pubsubEmulatorHostVar = System.getenv("PUBSUB_EMULATOR_HOST");
+      String pubsubProjectIdVar =  System.getenv("PUBSUB_PROJECT_ID");
+      if (pubsubEmulatorHostVar != null && pubsubProjectIdVar != null) {
+        Map<String, Object> props = Map.of(
+          "spring.cloud.gcp.pubsub.emulator-host", pubsubEmulatorHostVar,
+          "spring.cloud.gcp.project-id", pubsubProjectIdVar
+        );
         env.getPropertySources().addFirst(new MapPropertySource("pubsub-emulator", props));
       }
     }

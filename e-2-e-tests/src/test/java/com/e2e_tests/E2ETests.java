@@ -76,16 +76,17 @@ public class E2ETests {
       System.out.println("Label owner service container name: " + labelOwnerService.getContainerName());
       System.out.println("Label owner service debugger mapped port: " + labelOwnerService.getMappedPort(5006));
 
-      int mainOwnerServiceMappedPort = mainOwnerService.getMappedPort(8080);
+      String host = "http://localhost";
+      int mainOwnerServicePort = mainOwnerService.getMappedPort(8080);
       Long ownerId = 7L;
 
-      ClassicHttpRequest uploadRequest = createUploadRequest(ownerId, mainOwnerServiceMappedPort);
+      ClassicHttpRequest uploadRequest = createUploadRequest(ownerId, host, mainOwnerServicePort);
       MyResponse uploadResponse = sendRequest(uploadRequest);
       System.out.println(uploadResponse);
 
       sleep(10);
 
-      ClassicHttpRequest fetchRequest = createFetchRequest(ownerId, mainOwnerServiceMappedPort);
+      ClassicHttpRequest fetchRequest = createFetchRequest(ownerId, host, mainOwnerServicePort);
       MyResponse fetchResponse = sendRequest(fetchRequest);
       System.out.println(fetchResponse);
       System.out.println("-main-owner-service-logs-start-");
@@ -100,18 +101,35 @@ public class E2ETests {
     }
   }
 
-  private ClassicHttpRequest createUploadRequest(Long ownerId, int mainOwnerServiceMappedPort) {
+  @Test
+  public void simpleProductionTest() {
+    String url = "https://main-owner-service-275334369032.europe-central2.run.app";
+    int mainOwnerServicePort = 8080;
+    Long ownerId = 7L;
+
+    ClassicHttpRequest uploadRequest = createUploadRequest(ownerId, url, mainOwnerServicePort);
+    MyResponse uploadResponse = sendRequest(uploadRequest);
+    System.out.println(uploadResponse);
+
+    sleep(10);
+
+    ClassicHttpRequest fetchRequest = createFetchRequest(ownerId, url, mainOwnerServicePort);
+    MyResponse fetchResponse = sendRequest(fetchRequest);
+    System.out.println(fetchResponse);
+  }
+
+  private ClassicHttpRequest createUploadRequest(Long ownerId, String host, int mainOwnerServicePort) {
     String body = """
         {"id":%s,"name":"name1","address":"","phone":"+48phone3","email":"email4"}""".formatted(ownerId);
-    String uploadUri = "http://localhost:%s/upload-initial-owner".formatted(mainOwnerServiceMappedPort);
+    String uploadUri = "%s:%s/upload-initial-owner".formatted(host, mainOwnerServicePort);
     ClassicHttpRequest uploadRequest = DefaultClassicHttpRequestFactory.INSTANCE.newHttpRequest("POST", uploadUri);
     uploadRequest.setEntity(new StringEntity(body));
     uploadRequest.setHeader("Content-Type", "application/json");
     return uploadRequest;
   }
 
-  private ClassicHttpRequest createFetchRequest(Long ownerId, int mainOwnerServiceMappedPort) {
-    String fetchUri = "http://localhost:%s/fetch-labeled-owner/%s".formatted(mainOwnerServiceMappedPort, ownerId);
+  private ClassicHttpRequest createFetchRequest(Long ownerId, String host, int mainOwnerServicePort) {
+    String fetchUri = "%s:%s/fetch-labeled-owner/%s".formatted(host, mainOwnerServicePort, ownerId);
     return DefaultClassicHttpRequestFactory.INSTANCE.newHttpRequest("GET", fetchUri);
   }
 

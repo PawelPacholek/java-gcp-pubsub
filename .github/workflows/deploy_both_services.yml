@@ -6,6 +6,8 @@ jobs:
   deploy:
     runs-on: ubuntu-22.04
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
       - name: Deploy Main Owner Service
         run: ./main-owner-service/deploy.sh
       - name: Deploy Label Owner Service

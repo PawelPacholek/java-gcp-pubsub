@@ -5,7 +5,6 @@ import com.e2e_tests.main_owner_service.MainOwnerService;
 import com.pubsub_emulator.PubSubEmulator;
 import com.pubsub_emulator.PubSubEmulatorInitializer;
 import com.redis_instance.RedisInstance;
-import org.apache.commons.lang3.ThreadUtils;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.ClassicHttpRequest;
@@ -139,7 +138,7 @@ public class E2ETests {
 
   private void sleep(int seconds) {
     try {
-      ThreadUtils.sleep(Duration.ofSeconds(seconds));
+      Thread.sleep(Duration.ofSeconds(seconds));
     } catch (InterruptedException e) {
       throw new RuntimeException(e);
     }

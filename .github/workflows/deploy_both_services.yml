@@ -1,0 +1,16 @@
+name: Deploy both services
+
+on: workflow_dispatch
+
+jobs:
+  deploy:
+    runs-on: [ self-hosted, deployment ]
+    steps:
+      - name: Deploy Label Owner Service
+        run: |
+          cd label-owner-service
+          ./deploy.sh
+      - name: Deploy Main Owner Service
+        run: |
+          cd main-owner-service
+          ./deploy.sh

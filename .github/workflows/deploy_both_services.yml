@@ -4,7 +4,7 @@ on: workflow_dispatch
 
 jobs:
   deploy:
-    runs-on: [ self-hosted, deployment ]
+    runs-on: ubuntu-22.04
     steps:
       - name: Deploy Label Owner Service
         run: |

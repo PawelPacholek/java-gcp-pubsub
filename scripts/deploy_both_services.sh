@@ -1,2 +1,4 @@
-gcloud run deploy label-owner-service --image europe-central2-docker.pkg.dev/local-axle-425708-t0/project-repository/label-owner-service
-gcloud run deploy main-owner-service --image europe-central2-docker.pkg.dev/local-axle-425708-t0/project-repository/main-owner-service --update-env-vars=REDIS_HOST=10.73.251.51,REDIS_PORT=6379 --vpc-connector=my-connector --region=europe-central2
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+$SCRIPT_DIR/../main-owner-service/deploy.sh
+$SCRIPT_DIR/../label-owner-service/deploy.sh

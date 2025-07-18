@@ -1,0 +1,13 @@
+name: Deploy both services
+
+on: workflow_dispatch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Push and deploy Main Owner Service
+        run: ../../main-owner-service/push_and_deploy.sh
+      - name: Push and deploy Label Owner Service
+        run: ../../label-owner-service/push_and_deploy.sh
+        

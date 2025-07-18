@@ -1,2 +1,1 @@
-../gradlew :main-owner-service:run:jib
 gcloud run deploy main-owner-service --image europe-central2-docker.pkg.dev/local-axle-425708-t0/project-repository/main-owner-service --no-allow-unauthenticated --update-env-vars=REDIS_HOST=10.73.251.51,REDIS_PORT=6379 --vpc-connector=my-connector --region=europe-central2

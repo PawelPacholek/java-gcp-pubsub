@@ -1,4 +1,4 @@
-name: Deploy both services
+name: Push and deploy both services
 
 on: workflow_dispatch
 
@@ -10,4 +10,3 @@ jobs:
         run: ../../main-owner-service/push_and_deploy.sh
       - name: Push and deploy Label Owner Service
         run: ../../label-owner-service/push_and_deploy.sh
-        

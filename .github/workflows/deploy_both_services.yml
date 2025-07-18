@@ -7,6 +7,6 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Deploy Main Owner Service
-        run: ../../main-owner-service/deploy.sh
+        run: ./main-owner-service/deploy.sh
       - name: Deploy Label Owner Service
-        run: ../../label-owner-service/deploy.sh
+        run: ./label-owner-service/deploy.sh

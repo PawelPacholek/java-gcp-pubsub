@@ -30,7 +30,7 @@ repositories {
 }
 
 bootRun {
-    mainClassName = 'com.label_owner_service.run.MainOwnerServiceApplication'
+    mainClassName = 'com.label_owner_service.run.LabelOwnerServiceApplication'
 }
 
 group = 'demo'

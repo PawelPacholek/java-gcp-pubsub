@@ -12,6 +12,11 @@ jobs:
         uses: google-github-actions/auth@v2
         with:
           credentials_json: '${{ secrets.LOCAL_AXLE_425708_T0 }}'
+      - name: Set up gcloud project
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: local-axle-425708-t0
+          install_components: 'beta'
       - name: Deploy Label Owner Service
         run: ./label-owner-service/deploy.sh
       - name: Deploy Main Owner Service

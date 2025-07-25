@@ -1,1 +1,1 @@
-gcloud run deploy label-owner-service --project local-axle-425708-t0 --image europe-central2-docker.pkg.dev/local-axle-425708-t0/project-repository/label-owner-service --no-allow-unauthenticated
+gcloud run deploy label-owner-service --region europe-central2 --project local-axle-425708-t0 --image europe-central2-docker.pkg.dev/local-axle-425708-t0/project-repository/label-owner-service --no-allow-unauthenticated

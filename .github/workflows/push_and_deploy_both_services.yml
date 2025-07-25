@@ -12,7 +12,7 @@ jobs:
         uses: google-github-actions/auth@v2
         with:
           credentials_json: '${{ secrets.LOCAL_AXLE_425708_T0 }}'
-      - name: Push and deploy Main Owner Service
-        run: ./main-owner-service/push_and_deploy.sh
       - name: Push and deploy Label Owner Service
         run: ./label-owner-service/push_and_deploy.sh
+      - name: Push and deploy Main Owner Service
+        run: ./main-owner-service/push_and_deploy.sh

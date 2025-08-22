@@ -28,6 +28,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.3.3'
     id 'org.gradlex.extra-java-module-info' version '1.12'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 repositories {
@@ -41,15 +42,15 @@ group = 'demo'
 version = '1.0.0-SNAPSHOT'
 description = 'Spring Cloud GCP Pub/Sub Code Sample'
 java.sourceCompatibility = JavaVersion.VERSION_21
-
+java.modularity.inferModulePath = true
 
 //tasks.withType(JavaCompile).configureEach {
 //    options.compilerArgs << '-parameters'
 //}
 
-compileJava {
+//compileJava {
     //inputs.property("moduleName", moduleName)
-    doFirst {
+ //   doFirst {
 
    //     options.compilerArgs += [
    //             '--add-modules', 'spring.cloud.gcp.pubsub'
@@ -137,19 +138,47 @@ compileJava {
       //   classpath = files()
 
 
-        System.out.println(options.compilerArgs.stream().collect(Collectors.joining("\n\n")).replace(":", "\n"))
+     //   System.out.println(options.compilerArgs.stream().collect(Collectors.joining("\n\n")).replace(":", "\n"))
+ //   }
+//}
+
+
+    //dependsOn tasks.named('shadowJar')
+
+configurations {
+    fatJarLibs
+    fatJarClasspath {
+        // ShadowJar musi być wykonany, żeby ta konfiguracja miała dostępny plik
+        canBeResolved = true
+        canBeConsumed = false
     }
+  //  fatJar
 }
 
 dependencies {
+
     implementation(
-           // gradleApi(),
-            project(':main-owner-service:domain'),
-            //fileTree(dir: 'jar/modified', include: ['**/*.jar']),
-            'com.google.cloud:spring-cloud-gcp-starter-pubsub:5.6.1',
-            'org.springframework.boot:spring-boot-starter-web:3.3.3',
-            'org.springframework.integration:spring-integration-core:6.3.4',
+            //files(tasks.named('shadowJar').get().archiveFile),
+            //shadowJar.outputs.files,
+            //files('build/libs/fat-jar-1.0.0-all.jar'),
+            project(':main-owner-service:domain')
     )
+// implementation(
+           // gradleApi(),
+          //  project(':main-owner-service:domain'),
+            //fileTree(dir: 'jar/modified', include: ['**/*.jar']),
+         //   'com.google.cloud:spring-cloud-gcp-starter-pubsub:5.6.1',
+       //     'org.springframework.boot:spring-boot-starter-web:3.3.3',
+       //     'org.springframework.integration:spring-integration-core:6.3.4',
+    // )
+
+    fatJarLibs 'com.google.cloud:spring-cloud-gcp-starter-pubsub:5.6.1'
+    fatJarLibs 'org.springframework.boot:spring-boot-starter-web:3.3.3'
+    fatJarLibs 'org.springframework.integration:spring-integration-core:6.3.4'
+
+    fatJarClasspath files(tasks.named('shadowJar').get().archiveFile)
+
+   // fatJar files(tasks.named('shadowJar').get().archiveFile)
 
     testImplementation(
             'org.junit.jupiter:junit-jupiter-api:5.11.4',
@@ -163,11 +192,26 @@ dependencies {
 //    deriveAutomaticModuleNamesFromFileNames = true
 //}
 
+//configurations {
+ //   shadowCompile.extendsFrom implementation
+//    compileOnly.extendsFrom shadowCompile
+//}
+
+shadowJar {
+    configurations = [project.configurations.fatJarLibs]
+    archiveBaseName.set('fat-jar')
+    archiveClassifier.set('all')  // domyślnie 'all'
+    archiveVersion.set('1.0.0')
+   // exclude 'com/main_owner_service/**'
+}
 
 extraJavaModuleInfo {
-    automaticModule('com.google.cloud:spring-cloud-gcp-pubsub', 'spring.cloud.gcp.pubsub')
+    skipLocalJars = true
+
+    automaticModule('fat-jar-1.0.0-all.jar', 'com.example.fatmodule')
+ /*   automaticModule('com.google.cloud:spring-cloud-gcp-pubsub', 'spring.cloud.gcp.pubsub')
     automaticModule('com.google.cloud:spring-cloud-gcp-starter-pubsub', 'spring.cloud.gcp.starter.pubsub')
-    /*  automaticModule('com.google.cloud:spring-cloud-gcp-starter', 'spring.cloud.gcp.starter')
+    automaticModule('com.google.cloud:spring-cloud-gcp-starter', 'spring.cloud.gcp.starter')
       automaticModule('com.google.cloud:spring-cloud-gcp-autoconfigure', 'spring.cloud.gcp.autoconfigure')
       automaticModule('com.google.cloud:spring-cloud-gcp-core', 'spring.cloud.gcp.core')
       automaticModule('com.google.cloud:google-cloud-pubsub', 'google.cloud.pubsub')
@@ -184,7 +228,22 @@ extraJavaModuleInfo {
       automaticModule('io.opencensus:opencensus-api', 'opencensus.api')
       automaticModule('io.opencensus:opencensus-contrib-http-util', 'opencensus.contrib.http.util')
       automaticModule('io.grpc:grpc-context', 'grpc.context')
-      automaticModule('org.springframework.retry:spring-retry', 'spring.retry')*/
+      automaticModule('org.springframework.retry:spring-retry', 'spring.retry') */
+}
+
+compileJava {
+//tasks.named('compileJava') {
+  //  dependsOn configurations.fatJarClasspath
+
+    doFirst {
+        def fatJar = configurations.fatJarClasspath.asPath
+        def subModuleOutput = project(':main-owner-service:domain').sourceSets.main.output
+
+        options.compilerArgs += [
+                '--module-path', files(fatJar, subModuleOutput).asPath
+        ]
+    }
+
 }
 
 /*

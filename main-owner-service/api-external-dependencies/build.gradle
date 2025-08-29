@@ -27,7 +27,7 @@ plugins {
     id 'application'
     id 'java'
     id 'org.springframework.boot' version '3.3.3'
-    id 'org.gradlex.extra-java-module-info' version '1.12'
+    //id 'org.gradlex.extra-java-module-info' version '1.12'
     //id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
@@ -155,40 +155,19 @@ configurations {
   //  fatJar
 }
 */
-
-compileJava {
-    dependsOn project(":main-owner-service:api-external-dependencies").tasks.named('compileJava')
-    dependsOn project(":main-owner-service:api-external-dependencies").tasks.named('jar')//('shadowJarTask')
-}
-
 dependencies {
 
-    implementation(
-            //files(tasks.named('shadowJar').get().archiveFile),
-            //shadowJar.outputs.files,
-            files('../api-external-dependencies/build/libs/api-external-dependencies-1.0.0-SNAPSHOT-plain.jar'),
-            project(':main-owner-service:domain')
-    )
-// implementation(
-           // gradleApi(),
-          //  project(':main-owner-service:domain'),
-            //fileTree(dir: 'jar/modified', include: ['**/*.jar']),
-         //   'com.google.cloud:spring-cloud-gcp-starter-pubsub:5.6.1',
-       //     'org.springframework.boot:spring-boot-starter-web:3.3.3',
-       //     'org.springframework.integration:spring-integration-core:6.3.4',
-    // )
+ implementation(
+            'com.google.cloud:spring-cloud-gcp-starter-pubsub:5.6.1',
+            'org.springframework.boot:spring-boot-starter-web:3.3.3',
+            'org.springframework.integration:spring-integration-core:6.3.4',
+     )
 
 
-   // fatJarClasspath files(tasks.named('shadowJar').get().archiveFile)
+    //fatJarClasspath files(tasks.named('shadowJar').get().archiveFile)
 
    // fatJar files(tasks.named('shadowJar').get().archiveFile)
 
-    testImplementation(
-            'org.junit.jupiter:junit-jupiter-api:5.11.4',
-            'org.assertj:assertj-core:3.27.3',
-            'org.springframework.boot:spring-boot-test-autoconfigure:3.3.3',
-    )
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.11.4'
 }
 
 //extraJavaModuleInfo {
@@ -200,18 +179,23 @@ dependencies {
 //    compileOnly.extendsFrom shadowCompile
 //}
 /*
+tasks.register('shadowJarTask') {
+    dependsOn compileJava
+    dependsOn shadowJar
+}
+
 shadowJar {
-    configurations = [project.configurations.fatJarLibs]
+    //configurations = [project.configurations.fatJarLibs]
     archiveBaseName.set('fat-jar')
     archiveClassifier.set('all')  // domyślnie 'all'
     archiveVersion.set('1.0.0')
    // exclude 'com/main_owner_service/**'
 }
 */
-extraJavaModuleInfo {
-    //skipLocalJars = true
+//extraJavaModuleInfo {
+ //   skipLocalJars = true
 
-    automaticModule('api-external-dependencies-1.0.0-SNAPSHOT-plain.jar', 'com.example.fatmodule')
+ //   automaticModule('fat-jar-1.0.0-all.jar', 'com.example.fatmodule')
  /*   automaticModule('com.google.cloud:spring-cloud-gcp-pubsub', 'spring.cloud.gcp.pubsub')
     automaticModule('com.google.cloud:spring-cloud-gcp-starter-pubsub', 'spring.cloud.gcp.starter.pubsub')
     automaticModule('com.google.cloud:spring-cloud-gcp-starter', 'spring.cloud.gcp.starter')
@@ -232,12 +216,14 @@ extraJavaModuleInfo {
       automaticModule('io.opencensus:opencensus-contrib-http-util', 'opencensus.contrib.http.util')
       automaticModule('io.grpc:grpc-context', 'grpc.context')
       automaticModule('org.springframework.retry:spring-retry', 'spring.retry') */
-}
-/*
-compileJava {
-//tasks.named('compileJava') {
-  //  dependsOn configurations.fatJarClasspath
+//}
 
+
+//compileJava {
+//tasks.named('compileJava') {
+ //   dependsOn configurations.fatJarClasspath
+ //  }
+/*
     doFirst {
         def fatJar = configurations.fatJarClasspath.asPath
         def subModuleOutput = project(':main-owner-service:domain').sourceSets.main.output
@@ -269,6 +255,8 @@ tasks.withType(JavaCompile).configureEach {
 
 }
 */
-test {
-    useJUnitPlatform()
-}
+//test {
+//    useJUnitPlatform()
+//}
+
+jar {}

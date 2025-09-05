@@ -156,7 +156,7 @@ configurations {
 }
 */
 
-def shadowJarB = project(":main-owner-service:api-external-dependencies").tasks.matching { it.name == "shadowJar" }.first()
+//def shadowJarB = project(":main-owner-service:api-external-dependencies").tasks.matching { it.name == "shadowJar" }.first()
 
 dependencies {
 
@@ -164,7 +164,7 @@ dependencies {
             //files(tasks.named('shadowJar').get().archiveFile),
             //shadowJar.outputs.files,
             //project(":main-owner-service:api-external-dependencies"),
-            files(shadowJarB.outputs.files),
+            //files(shadowJarB.outputs.files),
             files('../api-external-dependencies/build/libs/fat-jar-1.0.0-all.jar'),
             project(':main-owner-service:domain')
     )
@@ -190,10 +190,10 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.11.4'
 }
 
-compileJava {
-    dependsOn shadowJarB
-    //dependsOn project(":main-owner-service:api-external-dependencies").tasks.named('shadowJar')
-}
+//compileJava {
+    //dependsOn shadowJarB
+ //   dependsOn project(":main-owner-service:api-external-dependencies").tasks.named('shadowJar')
+//}
 
 //extraJavaModuleInfo {
 //    deriveAutomaticModuleNamesFromFileNames = true

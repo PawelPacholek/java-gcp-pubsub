@@ -156,17 +156,16 @@ configurations {
 }
 */
 
-compileJava {
-    dependsOn project(":main-owner-service:api-external-dependencies").tasks.named('compileJava')
-    dependsOn project(":main-owner-service:api-external-dependencies").tasks.named('jar')//('shadowJarTask')
-}
+def shadowJarB = project(":main-owner-service:api-external-dependencies").tasks.matching { it.name == "shadowJar" }.first()
 
 dependencies {
 
     implementation(
             //files(tasks.named('shadowJar').get().archiveFile),
             //shadowJar.outputs.files,
-            files('../api-external-dependencies/build/libs/api-external-dependencies-1.0.0-SNAPSHOT-plain.jar'),
+            //project(":main-owner-service:api-external-dependencies"),
+            files(shadowJarB.outputs.files),
+            files('../api-external-dependencies/build/libs/fat-jar-1.0.0-all.jar'),
             project(':main-owner-service:domain')
     )
 // implementation(
@@ -191,6 +190,11 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.11.4'
 }
 
+compileJava {
+    dependsOn shadowJarB
+    //dependsOn project(":main-owner-service:api-external-dependencies").tasks.named('shadowJar')
+}
+
 //extraJavaModuleInfo {
 //    deriveAutomaticModuleNamesFromFileNames = true
 //}
@@ -211,7 +215,7 @@ shadowJar {
 extraJavaModuleInfo {
     //skipLocalJars = true
 
-    automaticModule('api-external-dependencies-1.0.0-SNAPSHOT-plain.jar', 'com.example.fatmodule')
+    automaticModule('fat-jar-1.0.0-all.jar', 'com.example.fatmodule')
  /*   automaticModule('com.google.cloud:spring-cloud-gcp-pubsub', 'spring.cloud.gcp.pubsub')
     automaticModule('com.google.cloud:spring-cloud-gcp-starter-pubsub', 'spring.cloud.gcp.starter.pubsub')
     automaticModule('com.google.cloud:spring-cloud-gcp-starter', 'spring.cloud.gcp.starter')

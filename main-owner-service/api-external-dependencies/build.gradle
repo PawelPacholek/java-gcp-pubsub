@@ -1,3 +1,5 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 import java.util.stream.Collectors
 
 /*
@@ -24,11 +26,11 @@ import java.util.stream.Collectors
 
 plugins {
     //id 'java-gradle-plugin'
-    id 'application'
+    //id 'application' - should be absent!
     id 'java'
     id 'org.springframework.boot' version '3.3.3'
     //id 'org.gradlex.extra-java-module-info' version '1.12'
-    //id 'com.github.johnrengelman.shadow' version '8.1.1'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 repositories {
@@ -178,11 +180,12 @@ dependencies {
  //   shadowCompile.extendsFrom implementation
 //    compileOnly.extendsFrom shadowCompile
 //}
-/*
-tasks.register('shadowJarTask') {
-    dependsOn compileJava
-    dependsOn shadowJar
-}
+
+//tasks.register('shadowJarTask') {
+//    dependsOn compileJava
+//    dependsOn shadowJar
+//}
+
 
 shadowJar {
     //configurations = [project.configurations.fatJarLibs]
@@ -191,7 +194,19 @@ shadowJar {
     archiveVersion.set('1.0.0')
    // exclude 'com/main_owner_service/**'
 }
-*/
+
+//artifacts {
+//    add("default", tasks.named("shadowJar"))
+//}
+
+//tasks.register("fatJar") {
+//    dependsOn shadowJar
+//}
+
+//tasks.build {
+ //   dependsOn(tasks.shadowJar)
+//}
+
 //extraJavaModuleInfo {
  //   skipLocalJars = true
 
@@ -259,4 +274,4 @@ tasks.withType(JavaCompile).configureEach {
 //    useJUnitPlatform()
 //}
 
-jar {}
+//jar {}

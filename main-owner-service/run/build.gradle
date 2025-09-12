@@ -19,6 +19,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.3.3'
     id 'com.google.cloud.tools.jib' version '3.4.3'
+    id 'org.gradlex.extra-java-module-info' version '1.12'
 }
 
 jib.to.image = 'europe-central2-docker.pkg.dev/local-axle-425708-t0/project-repository/main-owner-service'
@@ -42,10 +43,11 @@ dependencies {
     implementation(
             project(':main-owner-service:api'),
             project(':main-owner-service:persistence'),
-            'org.springframework.boot:spring-boot-starter-web:3.3.3',
-            'org.springframework.integration:spring-integration-core:6.3.4',
+            files('../api-external-dependencies/build/libs/fat-jar-1.0.0-all.jar'),
+            //'org.springframework.boot:spring-boot-starter-web:3.3.3',
+            //'org.springframework.integration:spring-integration-core:6.3.4',
 
-            platform('com.google.cloud:libraries-bom:26.55.0') // For e2e tests
+            //platform('com.google.cloud:libraries-bom:26.55.0') // For e2e tests
     )
     testImplementation(
             project(':pubsub-emulator'),
@@ -57,6 +59,12 @@ dependencies {
             'com.google.cloud:spring-cloud-gcp-starter-pubsub:5.6.1',
     )
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.11.4'
+}
+
+extraJavaModuleInfo {
+    //skipLocalJars = true
+
+    automaticModule('fat-jar-1.0.0-all.jar', 'com.example.fatrun')
 }
 
 test {

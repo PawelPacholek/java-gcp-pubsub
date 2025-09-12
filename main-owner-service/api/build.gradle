@@ -1,5 +1,3 @@
-import java.util.stream.Collectors
-
 /*
  * Copyright 2021 Google LLC
  *
@@ -16,25 +14,14 @@ import java.util.stream.Collectors
  * limitations under the License.
  */
 
-/*buildscript {
-    repositories {
-        mavenCentral()
-    }
-}*/
-
 plugins {
-    //id 'java-gradle-plugin'
     id 'application'
     id 'java'
     id 'org.springframework.boot' version '3.3.3'
     id 'org.gradlex.extra-java-module-info' version '1.12'
-    //id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 repositories {
- //   flatDir {
- //       dirs "../../jar/modified"
- //   }
     mavenCentral()
 }
 
@@ -44,143 +31,12 @@ description = 'Spring Cloud GCP Pub/Sub Code Sample'
 java.sourceCompatibility = JavaVersion.VERSION_21
 java.modularity.inferModulePath = true
 
-//tasks.withType(JavaCompile).configureEach {
-//    options.compilerArgs << '-parameters'
-//}
-
-//compileJava {
-    //inputs.property("moduleName", moduleName)
- //   doFirst {
-
-   //     options.compilerArgs += [
-   //             '--add-modules', 'spring.cloud.gcp.pubsub'
-   //     ]
-
-    //     options.compilerArgs += [
-     //     '--module-path',
-    //      classpath.asPath.replace(":/home/pawel/.gradle/caches/modules-2/files-2.1/com.google.api/gax/2.53.0/a9fecddbbd2e40e82a646618cae6c17c449e1557/gax-2.53.0.jar", "")
-    //     ]
-
-  /*      options.compilerArgs += [
-                     '--module-path',
-                      """
-/home/pawel/java-gcp-pubsub/main-owner-service/domain/build/libs/domain-1.0.0-SNAPSHOT.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-starter-web/3.3.3/f19325fefd33dc920c0f68547a798ed731a8c70c/spring-boot-starter-web-3.3.3.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/org.springframework.integration/spring-integration-core/6.3.4/c02abcc0b2e14baadbe12ed785c9aa1bc78b8ac1/spring-integration-core-6.3.4.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-starter-json/3.3.3/3dde3b6089f772a77763020cc97a219307a8f39f/spring-boot-starter-json-3.3.3.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-starter/3.3.3/174d6cb1c59036a01756d6bf4d8945325f94155f/spring-boot-starter-3.3.3.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-starter-logging/3.3.3/43d07b2e6bbb628c7fc5df103d35ee2eb091522/spring-boot-starter-logging-3.3.3.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/ch.qos.logback/logback-classic/1.5.7/ad4ff8ca015737ade8e8a9de07de565c423e5b7a/logback-classic-1.5.7.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-to-slf4j/2.23.1/425ad1eb8a39904d2830e907a324e956fb456520/log4j-to-slf4j-2.23.1.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/org.slf4j/jul-to-slf4j/2.0.16/6d57da3e961daac65bcca0dd3def6cd11e48a24a/jul-to-slf4j-2.0.16.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/2.0.16/172931663a09a1fa515567af5fbef00897d3c04/slf4j-api-2.0.16.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-starter-tomcat/3.3.3/8ca660b0ecba2f0ff8ce27603fe89953dc4ec18d/spring-boot-starter-tomcat-3.3.3.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/org.springframework/spring-webmvc/6.1.12/86bb0c203d68adb4b2675765f5a372f4c5254b2d/spring-webmvc-6.1.12.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/org.springframework/spring-web/6.1.12/b60e69b3ec87f8e001537a0fa7e3e2732dfafa7e/spring-web-6.1.12.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-autoconfigure/3.3.3/4445f0bbf838c1e3aeb5a83bf2367fbd1013237f/spring-boot-autoconfigure-3.3.3.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot/3.3.3/f34dba93611823e521800a47043267715184911b/spring-boot-3.3.3.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/org.springframework/spring-context/6.1.13/d5163ddae069c5d78c841cd3a60c4db25bf16401/spring-context-6.1.13.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/org.springframework/spring-aop/6.1.13/ad2c631e1717fdc6d91d56c06d4fd61e0215c19a/spring-aop-6.1.13.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/org.springframework/spring-messaging/6.1.13/97691b76bf2bbacd07e8e2af31cd3d5aee56ce22/spring-messaging-6.1.13.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/org.springframework/spring-tx/6.1.13/ed041ecf9a5f480e1b11d0b58a06d8034ff8cfea/spring-tx-6.1.13.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/io.projectreactor/reactor-core/3.6.10/6860a576ae0bd1957c5d4c87e861025248818c01/reactor-core-3.6.10.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/io.micrometer/micrometer-observation/1.13.4/2673c9b181ab2512002b23b7ad0f1dd02212696c/micrometer-observation-1.13.4.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/jakarta.annotation/jakarta.annotation-api/2.1.1/48b9bda22b091b1f48b13af03fe36db3be6e1ae3/jakarta.annotation-api-2.1.1.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/org.springframework/spring-beans/6.1.13/90bbee6278b46b145e64e5ae29316bdd459c6826/spring-beans-6.1.13.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/org.springframework/spring-expression/6.1.13/be30254712ca0549cbd539ba05c57064917253f3/spring-expression-6.1.13.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/org.springframework/spring-core/6.1.13/ddbd765408d2665f47017c8f05a7682012f91da3/spring-core-6.1.13.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/org.yaml/snakeyaml/2.2/3af797a25458550a16bf89acc8e4ab2b7f2bfce0/snakeyaml-2.2.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.datatype/jackson-datatype-jsr310/2.17.2/267b85e9ba2892a37be6d80aa9ca1438a0d8c210/jackson-datatype-jsr310-2.17.2.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.module/jackson-module-parameter-names/2.17.2/d27b9f95ccce98984c1ba58d61c5a9c072b1ad95/jackson-module-parameter-names-2.17.2.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-annotations/2.17.2/147b7b9412ffff24339f8aba080b292448e08698/jackson-annotations-2.17.2.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-core/2.17.2/969a35cb35c86512acbadcdbbbfb044c877db814/jackson-core-2.17.2.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.datatype/jackson-datatype-jdk8/2.17.2/efd3dd0e1d0db8bc72abbe71c15e697bb83b4b45/jackson-datatype-jdk8-2.17.2.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-databind/2.17.2/e6deb029e5901e027c129341fac39e515066b68c/jackson-databind-2.17.2.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/org.apache.tomcat.embed/tomcat-embed-websocket/10.1.28/1a5ee88106795215e8a7b6cfea46e57cdfc96430/tomcat-embed-websocket-10.1.28.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/org.apache.tomcat.embed/tomcat-embed-core/10.1.28/624f53789b7ba96bc3c8e871fb5eed4cab5a7c89/tomcat-embed-core-10.1.28.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/org.apache.tomcat.embed/tomcat-embed-el/10.1.28/3220f687c5ffc8650559f08ecac5b149838627b3/tomcat-embed-el-10.1.28.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/org.reactivestreams/reactive-streams/1.0.4/3864a1320d97d7b045f729a326e1e077661f31b7/reactive-streams-1.0.4.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/io.micrometer/micrometer-commons/1.13.4/edcf69518a4c382c48e19c7fb7d4aedfb115c0c3/micrometer-commons-1.13.4.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-lang3/3.14.0/1ed471194b02f2c6cb734a0cd6f6f107c673afae/commons-lang3-3.14.0.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/io.grpc/grpc-api/1.66.0/a2d48c8f3d22296c4a9e71a42b3ba457717889b3/grpc-api-1.66.0.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/io.grpc/grpc-protobuf/1.66.0/6b1960e9b536f40dfaf1a949a00bd1b815edf0b6/grpc-protobuf-1.66.0.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/com.google.api/api-common/2.36.0/1da1fbd51b7d2e3e1c84b05aab23bef4fbafce79/api-common-2.36.0.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/com.google.auth/google-auth-library-oauth2-http/1.25.0/ccbd01e4455240b8e35ff043b31e6490bf396ba2/google-auth-library-oauth2-http-1.25.0.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/com.google.protobuf/protobuf-java-util/3.25.4/fda33dd4f9b023c685cdd01a036c3ac4da3df6d4/protobuf-java-util-3.25.4.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client-gson/1.45.0/98af6041ca1d4654a2210cf1c6c06a9401ac6c90/google-http-client-gson-1.45.0.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client/1.45.0/63eb7643e01797d6aa67c75ae31ffcc6c365db18/google-http-client-1.45.0.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/33.3.0-jre/13b4d0924e6023eda04b4c7aa83b32dfedf735a7/guava-33.3.0-jre.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/com.google.j2objc/j2objc-annotations/3.0.0/7399e65dd7e9ff3404f4535b2f017093bdb134c7/j2objc-annotations-3.0.0.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/com.google.protobuf/protobuf-java/3.25.4/43fcb86e4a411516c7fc681450f1516de0b862a2/protobuf-java-3.25.4.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/com.google.auth/google-auth-library-credentials/1.25.0/b45be7c2e76cdc63014a8dfdf5eedb40938b97e1/google-auth-library-credentials-1.25.0.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/com.google.guava/failureaccess/1.0.2/c4a06a64e650562f30b7bf9aaec1bfed43aca12b/failureaccess-1.0.2.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/org.checkerframework/checker-qual/3.47.0/2b3cbe34a6af46bb3692aac208caa4f55cd28584/checker-qual-3.47.0.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/io.grpc/grpc-inprocess/1.66.0/7f2693bf7e02797d3d75b48e523ec6f208a2f104/grpc-inprocess-1.66.0.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/io.grpc/grpc-core/1.66.0/3a23ac1e0adf6c95efb5b8cd8429154cd5239c03/grpc-core-1.66.0.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/io.grpc/grpc-alts/1.66.0/673ed7a2724a26a1347897e8594b1ff2e88383e3/grpc-alts-1.66.0.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/io.grpc/grpc-grpclb/1.66.0/3f1a73b6cf63dc4e20c6fbe94014b388fbee692f/grpc-grpclb-1.66.0.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/org.conscrypt/conscrypt-openjdk-uber/2.5.2/d858f142ea189c62771c505a6548d8606ac098fe/conscrypt-openjdk-uber-2.5.2.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/io.grpc/grpc-auth/1.66.0/aefd902c0bd1656f5ce801fe9cd1b13cef9a4f5f/grpc-auth-1.66.0.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/io.grpc/grpc-netty-shaded/1.66.0/41662eda67d8e131e2c87cc82070cd8102499ed6/grpc-netty-shaded-1.66.0.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.11.0/527175ca6d81050b53bdd4c457a6d6e017626b0e/gson-2.11.0.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/org.threeten/threetenbp/1.6.9/39c822e33f202e7c25b54172d8235d484b4966fc/threetenbp-1.6.9.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/com.google.errorprone/error_prone_annotations/2.31.0/c3ba307b915d6d506e98ffbb49e6d2d12edad65b/error_prone_annotations-2.31.0.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/javax.annotation/javax.annotation-api/1.3.2/934c04d3cfef185a8008e7bf34331b79730a9d43/javax.annotation-api-1.3.2.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/org.springframework/spring-jcl/6.1.13/37291ff008a66a9dbf2c98e11bd468cfadaa7ebc/spring-jcl-6.1.13.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/ch.qos.logback/logback-core/1.5.7/ba0d0cbac3f21abd28faed3b4931d5b49cc5887e/logback-core-1.5.7.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-api/2.23.1/9c15c29c526d9c6783049c0a77722693c66706e1/log4j-api-2.23.1.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient/4.5.14/1194890e6f56ec29177673f2f12d0b8e627dec98/httpclient-4.5.14.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpcore/4.4.16/51cf043c87253c9f58b539c9f7e44c8894223850/httpcore-4.4.16.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/commons-codec/commons-codec/1.11/3acb4705652e16236558f0f4f2192cc33c3bd189/commons-codec-1.11.jar:
-/home/pawel/.gradle/caches/modules-2/files-2.1/com.google.cloud/spring-cloud-gcp-pubsub/5.6.1/cadd0fe84ed4094c6203eb748405cf5cd0cebfcd/spring-cloud-gcp-pubsub-5.6.1.jar""".replace("\n", "")
-                     ]*/
-
-      //   classpath = files()
-
-
-     //   System.out.println(options.compilerArgs.stream().collect(Collectors.joining("\n\n")).replace(":", "\n"))
- //   }
-//}
-
-
-    //dependsOn tasks.named('shadowJar')
-/*
-configurations {
-    fatJarLibs
-    fatJarClasspath {
-        // ShadowJar musi być wykonany, żeby ta konfiguracja miała dostępny plik
-        canBeResolved = true
-        canBeConsumed = false
-    }
-  //  fatJar
-}
-*/
-
-//def shadowJarB = project(":main-owner-service:api-external-dependencies").tasks.matching { it.name == "shadowJar" }.first()
-
 dependencies {
 
     implementation(
-            //files(tasks.named('shadowJar').get().archiveFile),
-            //shadowJar.outputs.files,
-            //project(":main-owner-service:api-external-dependencies"),
-            //files(shadowJarB.outputs.files),
             files('../api-external-dependencies/build/libs/fat-jar-1.0.0-all.jar'),
             project(':main-owner-service:domain')
     )
-// implementation(
-           // gradleApi(),
-          //  project(':main-owner-service:domain'),
-            //fileTree(dir: 'jar/modified', include: ['**/*.jar']),
-         //   'com.google.cloud:spring-cloud-gcp-starter-pubsub:5.6.1',
-       //     'org.springframework.boot:spring-boot-starter-web:3.3.3',
-       //     'org.springframework.integration:spring-integration-core:6.3.4',
-    // )
-
-
-   // fatJarClasspath files(tasks.named('shadowJar').get().archiveFile)
-
-   // fatJar files(tasks.named('shadowJar').get().archiveFile)
 
     testImplementation(
             'org.junit.jupiter:junit-jupiter-api:5.11.4',
@@ -190,89 +46,12 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.11.4'
 }
 
-//compileJava {
-    //dependsOn shadowJarB
- //   dependsOn project(":main-owner-service:api-external-dependencies").tasks.named('shadowJar')
-//}
-
-//extraJavaModuleInfo {
-//    deriveAutomaticModuleNamesFromFileNames = true
-//}
-
-//configurations {
- //   shadowCompile.extendsFrom implementation
-//    compileOnly.extendsFrom shadowCompile
-//}
-/*
-shadowJar {
-    configurations = [project.configurations.fatJarLibs]
-    archiveBaseName.set('fat-jar')
-    archiveClassifier.set('all')  // domyślnie 'all'
-    archiveVersion.set('1.0.0')
-   // exclude 'com/main_owner_service/**'
-}
-*/
 extraJavaModuleInfo {
     //skipLocalJars = true
 
     automaticModule('fat-jar-1.0.0-all.jar', 'com.example.fatmodule')
- /*   automaticModule('com.google.cloud:spring-cloud-gcp-pubsub', 'spring.cloud.gcp.pubsub')
-    automaticModule('com.google.cloud:spring-cloud-gcp-starter-pubsub', 'spring.cloud.gcp.starter.pubsub')
-    automaticModule('com.google.cloud:spring-cloud-gcp-starter', 'spring.cloud.gcp.starter')
-      automaticModule('com.google.cloud:spring-cloud-gcp-autoconfigure', 'spring.cloud.gcp.autoconfigure')
-      automaticModule('com.google.cloud:spring-cloud-gcp-core', 'spring.cloud.gcp.core')
-      automaticModule('com.google.cloud:google-cloud-pubsub', 'google.cloud.pubsub')
-      automaticModule('com.google.cloud:google-cloud-core', 'google.cloud.core')
-      automaticModule('com.google.api:gax', 'gax')
-      automaticModule('com.google.api:gax-grpc', 'gax.grpc')
-      automaticModule('com.google.api:gax-httpjson', 'gax.httpjson')
-      automaticModule('com.google.api.grpc:proto-google-cloud-pubsub-v1', 'proto.google.cloud.pubsub.v1')
-      automaticModule('com.google.api.grpc:proto-google-iam-v1', 'proto.google.iam.v1')
-      automaticModule('com.google.api.grpc:proto-google-common-protos', 'proto.google.common.protos')
-      automaticModule('com.google.auto.value:auto-value-annotations', 'auto.value.annotations')
-      automaticModule('com.google.code.findbugs:jsr305', 'jsr305')
-      automaticModule('com.google.guava:listenablefuture', 'listenablefuture')
-      automaticModule('io.opencensus:opencensus-api', 'opencensus.api')
-      automaticModule('io.opencensus:opencensus-contrib-http-util', 'opencensus.contrib.http.util')
-      automaticModule('io.grpc:grpc-context', 'grpc.context')
-      automaticModule('org.springframework.retry:spring-retry', 'spring.retry') */
 }
-/*
-compileJava {
-//tasks.named('compileJava') {
-  //  dependsOn configurations.fatJarClasspath
 
-    doFirst {
-        def fatJar = configurations.fatJarClasspath.asPath
-        def subModuleOutput = project(':main-owner-service:domain').sourceSets.main.output
-
-        options.compilerArgs += [
-                '--module-path', files(fatJar, subModuleOutput).asPath
-        ]
-    }
-
-}
-*/
-/*
-tasks.jar {
-    manifest {
-        attributes("Automatic-Module-Name": "spring-cloud-gcp-pubsub")
-    }
-}
-*/
-
-/*
-tasks.withType(JavaCompile).configureEach {
-    //javaCompiler.
-    modularity.inferModulePath.set(true)
-    /*List<String> args = options.getCompilerArgs()
-    options.setCompilerArgs(List.of(
-            '--module-path',
-            '/home/pawel/.gradle/caches/modules-2/files-2.1/com.google.cloud/spring-cloud-gcp-pubsub/5.6.1/cadd0fe84ed4094c6203eb748405cf5cd0cebfcd/spring-cloud-gcp-pubsub-5.6.1.jar'
-    ))
-
-}
-*/
 test {
     useJUnitPlatform()
 }

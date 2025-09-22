@@ -60,8 +60,7 @@ public class FetchLabeledOwnerControllerTest {
     @Test
     public void happyPath() throws Exception {
         Long ownerId = 4L;
-        LabeledOwner labeledOwner =
-          new LabeledOwner(ownerId, "name", "address", "phone", "email", Set.of());
+        LabeledOwner labeledOwner = new LabeledOwner(ownerId, "name", "address", "phone", "email", Set.of());
         String serialized = DataClassSerialization.serialize(labeledOwner);
         PubSubEmulator.publish("labeledOwner", serialized);
 

@@ -38,35 +38,50 @@ group = 'demo'
 version = '1.0.0-SNAPSHOT'
 description = 'Spring Cloud GCP Pub/Sub Code Sample'
 java.sourceCompatibility = JavaVersion.VERSION_21
+java.modularity.inferModulePath = true
 
 dependencies {
     implementation(
-            project(':main-owner-service:api'),
-            project(':main-owner-service:persistence'),
             files('../api-external-dependencies/build/libs/fat-jar-1.0.0-all.jar'),
+            project(':main-owner-service:api'),
+            project(':main-owner-service:persistence')//,
+
             //'org.springframework.boot:spring-boot-starter-web:3.3.3',
             //'org.springframework.integration:spring-integration-core:6.3.4',
 
             //platform('com.google.cloud:libraries-bom:26.55.0') // For e2e tests
     )
+
     testImplementation(
             project(':pubsub-emulator'),
             project(':redis-instance'),
-            project(':main-owner-service:domain'),
+            project(':main-owner-service:domain'), // should not be necessary
             'org.junit.jupiter:junit-jupiter-api:5.11.4',
             'org.assertj:assertj-core:3.27.3',
             'org.springframework.boot:spring-boot-test-autoconfigure:3.3.3',
-            'com.google.cloud:spring-cloud-gcp-starter-pubsub:5.6.1',
+           // 'com.google.cloud:spring-cloud-gcp-starter-pubsub:5.6.1',
     )
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.11.4'
 }
 
 extraJavaModuleInfo {
     //skipLocalJars = true
+ //   configureClasspathConfigurations { config ->
+  //      config.name == 'runtimeClasspath' || config.name == 'compileClasspath'
+ //   }
 
     automaticModule('fat-jar-1.0.0-all.jar', 'com.example.fatrun')
+  //  automaticModule('pubsub-emulator-1.0.0-SNAPSHOT-plain.jar', 'pubsub.emulator')
+  //  automaticModule('redis-instance-1.0.0-SNAPSHOT-plain.jar', 'redis.instance')
+  //  automaticModule('fat-jar-persistence-1.0.0-all.jar', 'fat.jar.persistence')
+ //   automaticModule('spring-cloud-gcp-starter-pubsub-5.6.1.jar', 'spring.cloud.gcp.starter.pubsub')
 }
 
 test {
     useJUnitPlatform()
+   // modularity.inferModulePath = false
+
+   // doFirst {
+   //     jvmArgs = (jvmArgs ?: []).findAll { !it.startsWith('--module-path') }
+   // }
 }

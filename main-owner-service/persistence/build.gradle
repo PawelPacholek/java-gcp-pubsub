@@ -29,16 +29,12 @@ group = 'demo'
 version = '1.0.0-SNAPSHOT'
 description = 'Spring Cloud GCP Pub/Sub Code Sample'
 java.sourceCompatibility = JavaVersion.VERSION_21
+java.modularity.inferModulePath = true
 
 dependencies {
     implementation(
             files('../persistence-external-dependencies/build/libs/fat-jar-persistence-1.0.0-all.jar'),
             project(':main-owner-service:domain'),
-      //      'com.google.cloud:spring-cloud-gcp-starter-pubsub:5.6.1',
-       //     'org.springframework.boot:spring-boot-starter-web:3.3.3',
-       //     'org.springframework.integration:spring-integration-core:6.3.4',
-       //     'org.springframework.data:spring-data-redis:3.3.3',
-       //     'redis.clients:jedis:5.2.0'
     )
 
     testImplementation(

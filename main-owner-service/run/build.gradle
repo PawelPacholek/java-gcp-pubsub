@@ -54,7 +54,6 @@ dependencies {
             'org.junit.jupiter:junit-jupiter-api:5.11.4',
             'org.assertj:assertj-core:3.27.3',
             'org.springframework.boot:spring-boot-test-autoconfigure:3.3.3',
-           // 'com.google.cloud:spring-cloud-gcp-starter-pubsub:5.6.1',
     )
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.11.4'
 }
@@ -67,13 +66,37 @@ extraJavaModuleInfo {
 
     automaticModule('fat-jar-1.0.0-all.jar', 'com.example.fatrun')
 
+    //Lines below necessary in run tests only
     automaticModule('pubsub-emulator-1.0.0-SNAPSHOT-plain.jar', 'pubsub.emulator')
     automaticModule('redis-instance-1.0.0-SNAPSHOT-plain.jar', 'redis.instance')
-
     automaticModule('fat-jar-persistence-1.0.0-all.jar', 'fat.jar.persistence')
 
     automaticModule('spring-cloud-gcp-starter-pubsub-5.6.1.jar', 'spring.cloud.gcp.starter.pubsub')
     automaticModule('gcloud-1.20.1.jar', 'gcloud')
+    automaticModule('spring-cloud-gcp-starter-5.6.1.jar', 'spring.cloud.gcp.starter')
+    automaticModule('spring-cloud-gcp-autoconfigure-5.6.1.jar', 'spring.cloud.gcp.autoconfigure')
+    automaticModule('spring-cloud-gcp-pubsub-5.6.1.jar', 'spring.cloud.gcp.pubsub')
+    automaticModule('testcontainers-1.20.1.jar', 'testcontainers')
+    automaticModule('spring-cloud-gcp-core-5.6.1.jar', 'spring.cloud.gcp.core')
+    automaticModule('google-cloud-pubsub-1.132.2.jar', 'google.cloud.pubsub')
+    automaticModule('duct-tape-1.0.8.jar', 'duct.tape')
+    automaticModule('google-cloud-core-2.43.0.jar', 'google.cloud.core')
+    automaticModule('gax-2.53.0.jar', 'gax')
+    automaticModule('opencensus-contrib-http-util-0.31.1.jar', 'opencensus.contrib.http.util')
+    automaticModule('opencensus-api-0.31.1.jar', 'opencensus.api')
+    automaticModule('grpc-context-1.66.0.jar', 'grpc.context')
+    automaticModule('proto-google-cloud-pubsub-v1-1.114.2.jar', 'proto.google.cloud.pubsub')
+    automaticModule('proto-google-iam-v1-1.39.0.jar', 'proto.google.iam')
+    automaticModule('proto-google-common-protos-2.44.0.jar', 'proto.google.common.protos')
+    automaticModule('listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar', 'listenablefuture.empty.to.avoid.conflict.with.guava')
+    automaticModule('gax-grpc-2.53.0.jar', 'gax.grpc')
+    automaticModule('annotations-4.1.1.4.jar', 'annotations')
+    automaticModule('animal-sniffer-annotations-1.24.jar', 'animal.sniffer.annotations')
+    automaticModule('re2j-1.7.jar', 're2j')
+    automaticModule('gax-httpjson-2.53.0.jar', 'gax.httpjson')
+    automaticModule('jsr305-3.0.2.jar', 'jsr305')
+    automaticModule('auto-value-annotations-1.11.0.jar', 'auto.value.annotations')
+    automaticModule('hamcrest-core-1.3.jar', 'hamcrest.core')
 }
 
 test {

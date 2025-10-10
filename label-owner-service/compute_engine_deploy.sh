@@ -9,8 +9,6 @@ gcloud compute ssh "$VM_NAME" --zone="$ZONE" --command="\
   echo '===> Stopping old container (if any)...' && \
   docker stop $CONTAINER_NAME || true && \
   docker rm $CONTAINER_NAME || true && \
-  echo '===> Pulling new image...' && \
-  docker pull $IMAGE && \
   echo '===> Starting new container...' && \
   docker run -d --name $CONTAINER_NAME -p 8080:8080 $IMAGE \
 "

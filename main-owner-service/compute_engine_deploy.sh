@@ -13,5 +13,5 @@ gcloud compute ssh "$USER_NAME@$VM_NAME" --zone="$ZONE" --command="\
   echo '===> Fetching new image...' && \
   docker pull $IMAGE && \
   echo '===> Starting new container...' && \
-  docker run -d --name $CONTAINER_NAME -p 8080:8080 $IMAGE \
+  docker run -d --name $CONTAINER_NAME -e REDIS_HOST=127.0.0.1 -e REDIS_PORT=6379 -p 8080:8080 $IMAGE \
 "

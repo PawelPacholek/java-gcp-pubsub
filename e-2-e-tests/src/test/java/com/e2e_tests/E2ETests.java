@@ -122,22 +122,19 @@ public class E2ETests {
   }
 
   @Test
-  public void simpleProductionTestComputeEngine() throws IOException {
-    String url = "https://34.118.0.253"; // not stable
+  public void simpleProductionTestComputeEngine() {
+    String url = "http://34.118.0.253"; // not stable
     int mainOwnerServicePort = 8080;
-    String authorization = "Bearer " + new String(E2ETests.class.getResourceAsStream("/token.log").readAllBytes());
 
     Long ownerId = System.currentTimeMillis();
 
     ClassicHttpRequest uploadRequest = createUploadRequest(ownerId, url, mainOwnerServicePort);
-    uploadRequest.setHeader("Authorization", authorization);
     MyResponse uploadResponse = sendRequest(uploadRequest);
     System.out.println(uploadResponse);
 
     sleep(10);
 
     ClassicHttpRequest fetchRequest = createFetchRequest(ownerId, url, mainOwnerServicePort);
-    fetchRequest.setHeader("Authorization", authorization);
     MyResponse fetchResponse = sendRequest(fetchRequest);
     System.out.println(fetchResponse);
   }

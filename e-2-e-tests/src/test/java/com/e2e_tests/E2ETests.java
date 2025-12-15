@@ -123,7 +123,8 @@ public class E2ETests {
 
   @Test
   public void simpleProductionTestComputeEngine() {
-    String url = "http://34.118.0.253"; // not stable
+    String host = "34.118.1.57"; // not stable
+    String url = "http://" + host;
     int mainOwnerServicePort = 8080;
 
     Long ownerId = System.currentTimeMillis();

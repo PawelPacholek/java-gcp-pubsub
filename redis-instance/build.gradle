@@ -16,7 +16,6 @@ java.sourceCompatibility = JavaVersion.VERSION_21
 dependencies {
   implementation(
           'org.junit.jupiter:junit-jupiter-api:5.11.4',
-          'org.testcontainers:gcloud:1.21.3',
           'org.testcontainers:testcontainers:2.0.2'
   )
 }

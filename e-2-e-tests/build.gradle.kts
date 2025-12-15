@@ -19,7 +19,6 @@ dependencies {
     testImplementation(project(":redis-instance"))
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.4")
     testImplementation("org.springframework.boot:spring-boot-test-autoconfigure:3.3.3")
-    testImplementation("org.testcontainers:gcloud:1.21.3")
     testImplementation("org.testcontainers:testcontainers:2.0.2")
     testImplementation("com.google.cloud.tools:jib-core:0.26.0")
     testImplementation("org.apache.httpcomponents.client5:httpclient5:5.3.1")

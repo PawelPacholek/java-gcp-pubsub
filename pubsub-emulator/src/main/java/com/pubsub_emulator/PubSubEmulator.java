@@ -35,7 +35,7 @@ public class PubSubEmulator {
     PubSubEmulator.template = new MemoizedSupplier<>(templateSupplier);
     if (shared != null)
       return;
-    var imageName = DockerImageName.parse("gcr.io/google.com/cloudsdktool/cloud-sdk:420.0.0-emulators");
+    var imageName = DockerImageName.parse("gcr.io/google.com/cloudsdktool/cloud-sdk:539.0.0-emulators");
     shared = new PubSubEmulatorContainer(imageName).withLogConsumer(frame -> System.out.println(frame.getUtf8String()));
     shared.start();
     EMULATOR_HOST = requireNonNull(shared).getEmulatorEndpoint();

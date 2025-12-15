@@ -22,7 +22,8 @@ public class OwnerGatewayImp implements OwnerGateway {
 
     @Override
     public LabeledOwner fetch(Long id) {
-      return deserialize(redisClient.opsForValue().get(id), LabeledOwner.class);
+      String raw = redisClient.opsForValue().get(id);
+      return raw == null ? null : deserialize(raw, LabeledOwner.class);
     }
 
 }

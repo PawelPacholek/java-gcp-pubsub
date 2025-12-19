@@ -33,10 +33,6 @@ springBoot {
     mainClass.set("com.main_owner_service.run.MainOwnerServiceApplication")
 }
 
-//bootRun {
-//    mainClassName = 'com.main_owner_service.run.MainOwnerServiceApplication'
-//}
-
 group = 'demo'
 version = '1.0.0-SNAPSHOT'
 description = 'Spring Cloud GCP Pub/Sub Code Sample'
@@ -55,12 +51,12 @@ dependencies {
             project(':pubsub-emulator'),
             project(':redis-instance'),
             project(':main-owner-service:domain'),
-            'org.junit.jupiter:junit-jupiter-api:5.11.4',
+            'org.junit.jupiter:junit-jupiter-api:6.0.1',
             'org.assertj:assertj-core:3.27.3',
             'org.springframework.boot:spring-boot-test-autoconfigure:3.3.3',
             'com.google.cloud:spring-cloud-gcp-starter-pubsub:5.6.1',
     )
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.11.4'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:6.0.1'
 }
 
 test {

@@ -29,9 +29,13 @@ repositories {
     mavenCentral()
 }
 
-bootRun {
-    mainClassName = 'com.main_owner_service.run.MainOwnerServiceApplication'
+springBoot {
+    mainClass.set("com.main_owner_service.run.MainOwnerServiceApplication")
 }
+
+//bootRun {
+//    mainClassName = 'com.main_owner_service.run.MainOwnerServiceApplication'
+//}
 
 group = 'demo'
 version = '1.0.0-SNAPSHOT'

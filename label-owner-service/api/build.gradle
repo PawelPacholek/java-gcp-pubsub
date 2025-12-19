@@ -24,8 +24,8 @@ repositories {
     mavenCentral()
 }
 
-bootRun {
-    mainClassName = 'com.label_owner_service.api.LabelOwnerServiceApplication'
+springBoot {
+    mainClass.set("com.label_owner_service.api.LabelOwnerServiceApplication")
 }
 
 group = 'demo'

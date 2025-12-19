@@ -29,6 +29,10 @@ version = '1.0.0-SNAPSHOT'
 description = 'Spring Cloud GCP Pub/Sub Code Sample'
 java.sourceCompatibility = JavaVersion.VERSION_21
 
+springBoot {
+    mainClass.set("com.main_owner_service.api.MainOwnerServiceApplication")
+}
+
 dependencies {
     implementation(
             project(':main-owner-service:domain'),

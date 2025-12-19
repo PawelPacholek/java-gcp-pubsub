@@ -4,8 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MainOwnerServiceApi {
+public class MainOwnerServiceApplication {
   public static void main(String[] args) {
-    SpringApplication.run(MainOwnerServiceApi.class, args);
+    SpringApplication.run(MainOwnerServiceApplication.class, args);
   }
 }
